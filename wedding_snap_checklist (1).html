@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>웨딩 스냅 완전 준비 가이드 💍</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ivory:#fdf7f0;--petal:#f5e6df;--petal2:#eecfc4;
+  --rose:#d4856e;--rose-deep:#b86650;--blush:#e8b4a2;
+  --gold:#c4975a;--gold-lt:#ddb97c;--gold-pale:#f0e0c0;
+  --sage:#8fa88c;--sage-lt:#c8d8c6;
+  --ink:#2a2220;--ink2:#4a3f3b;--muted:#8a7d78;--muted2:#b5a9a5;
+  --line:#edddd6;--card-bg:#fffcf8;
+  --shadow:rgba(180,120,100,.10);--shadow2:rgba(180,120,100,.18);
+  --edit-accent:#7c9fbf;--edit-lt:#e8f0f8;--edit-border:#adc6de;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--ivory);color:var(--ink);font-family:'Noto Sans KR',sans-serif;font-weight:300;line-height:1.7;min-height:100vh;-webkit-font-smoothing:antialiased;}
+
+/* ── HERO ── */
+.hero{position:relative;background:linear-gradient(170deg,#2b1f1b 0%,#3e2b25 45%,#4f372e 100%);padding:56px 24px 52px;text-align:center;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 60%,rgba(196,151,90,.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 20%,rgba(232,180,162,.12) 0%,transparent 60%);pointer-events:none;}
+.hero-inner{position:relative;z-index:1;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold-lt);border:1px solid rgba(196,151,90,.45);padding:6px 18px;border-radius:30px;margin-bottom:22px;font-weight:400;}
+.hero-badge::before,.hero-badge::after{content:'✦';font-size:8px;opacity:.7;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,7vw,52px);font-weight:400;color:#fff;letter-spacing:1px;line-height:1.15;margin-bottom:6px;}
+.hero h1 em{font-style:italic;background:linear-gradient(135deg,var(--gold-lt),#f0c880,var(--gold-lt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:13px;color:rgba(253,247,240,.55);letter-spacing:.8px;margin-top:6px;}
+.hero-rings{display:flex;align-items:center;justify-content:center;gap:10px;margin:22px 0 0;}
+.hero-rings .rl{width:50px;height:1px;background:linear-gradient(to right,transparent,rgba(196,151,90,.6));}
+.hero-rings .rl.rev{background:linear-gradient(to left,transparent,rgba(196,151,90,.6));}
+.hero-rings .ri{font-size:16px;}
+
+/* ── PROGRESS PILL ── */
+.progress-pill{position:relative;margin:20px 16px 0;background:var(--card-bg);border:1px solid var(--line);border-radius:20px;padding:18px 22px;box-shadow:0 4px 20px var(--shadow);}
+.pill-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.pill-label{font-size:13px;font-weight:500;color:var(--ink2);}
+.pill-pct{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--rose);}
+.pill-bar{height:7px;background:var(--petal);border-radius:10px;overflow:hidden;}
+.pill-fill{height:100%;border-radius:10px;width:0%;background:linear-gradient(to right,var(--blush),var(--rose),var(--rose-deep));transition:width .6s cubic-bezier(.4,0,.2,1);}
+.pill-msg{font-size:12px;color:var(--muted);margin-top:9px;min-height:16px;}
+.reset-btn{position:absolute;top:16px;right:16px;background:none;border:1px solid var(--line);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--muted2);cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .2s;}
+.reset-btn:hover{border-color:var(--rose);color:var(--rose);}
+
+/* ── EDIT MODE BANNER ── */
+.edit-banner{
+  display:none;
+  margin:12px 16px 0;
+  background:linear-gradient(135deg,var(--edit-lt),#ddeaf5);
+  border:1.5px dashed var(--edit-border);
+  border-radius:14px;
+  padding:12px 18px;
+  font-size:12.5px;color:var(--edit-accent);
+  align-items:center;gap:10px;
+}
+.edit-banner.show{display:flex;}
+.edit-banner .eb-icon{font-size:18px;flex-shrink:0;}
+.edit-banner span{flex:1;line-height:1.5;}
+.edit-banner strong{color:#5a85a8;}
+
+/* ── BOTTOM TAB NAV ── */
+.tab-nav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(255,252,248,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;padding:6px 8px calc(env(safe-area-inset-bottom,0px) + 6px);box-shadow:0 -4px 20px rgba(0,0,0,.07);}
+.tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;background:none;border:none;cursor:pointer;color:var(--muted2);transition:all .25s;border-radius:12px;}
+.tab-btn .t-icon{font-size:20px;transition:transform .25s;}
+.tab-btn .t-label{font-size:10px;font-family:'Noto Sans KR',sans-serif;font-weight:400;white-space:nowrap;}
+.tab-btn.active{color:var(--rose-deep);}
+.tab-btn.active .t-icon{transform:scale(1.15);}
+.tab-btn.active .t-label{font-weight:500;}
+
+/* edit mode toggle in nav */
+.tab-btn.edit-toggle.edit-on{color:var(--edit-accent);}
+.tab-btn.edit-toggle.edit-on .t-icon{transform:scale(1.15);}
+
+/* ── CONTAINER ── */
+.container{max-width:680px;margin:0 auto;padding:16px 14px calc(env(safe-area-inset-bottom,0px) + 90px);}
+
+/* ── SECTION ── */
+.section{display:none;}
+.section.active{display:block;animation:fadeUp .3s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── CATEGORY CARD ── */
+.cat-card{background:var(--card-bg);border:1px solid var(--line);border-radius:20px;margin-bottom:14px;overflow:hidden;transition:box-shadow .25s;}
+.cat-card:hover{box-shadow:0 6px 24px var(--shadow2);}
+.cat-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;user-select:none;gap:12px;}
+.cat-left{display:flex;align-items:center;gap:13px;}
+.cat-icon{width:44px;height:44px;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;background:linear-gradient(135deg,var(--petal),var(--petal2));box-shadow:0 2px 8px rgba(212,133,110,.15);transition:transform .2s;}
+.cat-card:hover .cat-icon{transform:scale(1.05);}
+.cat-name{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:var(--ink);line-height:1.3;}
+.cat-desc{font-size:11.5px;color:var(--muted2);margin-top:2px;}
+.cat-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.cat-prog{font-size:12px;color:var(--rose);font-weight:500;background:var(--petal);padding:3px 9px;border-radius:20px;transition:background .2s;}
+.cat-card.done .cat-prog{background:var(--sage-lt);color:var(--sage);}
+.cat-arrow{width:22px;height:22px;border-radius:50%;background:var(--petal);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--rose);transition:transform .3s;flex-shrink:0;}
+.cat-card.open .cat-arrow{transform:rotate(180deg);}
+.cat-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);}
+.cat-card.open .cat-body{max-height:3000px;}
+.cat-body-inner{border-top:1px solid var(--line);padding:6px 18px 14px;}
+
+/* ── CHECK ITEMS ── */
+.check-item{display:flex;align-items:center;gap:13px;padding:11px 6px;border-bottom:1px solid rgba(237,221,214,.5);cursor:pointer;transition:all .15s;border-radius:10px;min-height:48px;position:relative;}
+.check-item:last-child{border-bottom:none;}
+.check-item:active{background:var(--petal);}
+@media(hover:hover){.check-item:hover{background:var(--petal);}}
+
+.chk{width:22px;height:22px;border-radius:7px;border:2px solid var(--blush);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s cubic-bezier(.4,0,.2,1);background:#fff;}
+.check-item.checked .chk{background:linear-gradient(135deg,var(--blush),var(--rose));border-color:transparent;box-shadow:0 2px 8px rgba(212,133,110,.35);}
+.chk-mark{width:11px;height:8px;border-left:2.5px solid white;border-bottom:2.5px solid white;transform:rotate(-45deg) scale(0);transition:transform .18s cubic-bezier(.4,0,.2,1);margin-top:-2px;}
+.check-item.checked .chk-mark{transform:rotate(-45deg) scale(1);}
+.chk-label{font-size:13.5px;color:var(--ink2);flex:1;line-height:1.5;transition:all .2s;}
+.check-item.checked .chk-label{color:var(--muted2);text-decoration:line-through;text-decoration-color:var(--blush);}
+.badge-opt{font-size:10px;background:var(--sage-lt);color:var(--sage);padding:2px 8px;border-radius:20px;white-space:nowrap;font-weight:500;flex-shrink:0;}
+.badge-season{font-size:10px;background:var(--gold-pale);color:var(--gold);padding:2px 8px;border-radius:20px;white-space:nowrap;font-weight:500;flex-shrink:0;}
+
+/* ── EDIT MODE STYLES ── */
+body.edit-mode .check-item{cursor:default;padding-right:6px;}
+body.edit-mode .check-item:hover{background:none;}
+body.edit-mode .check-item .chk{pointer-events:none;opacity:.45;}
+body.edit-mode .cat-card{border-color:var(--edit-border);border-style:dashed;}
+body.edit-mode .cat-body-inner{background:rgba(232,240,248,.18);}
+
+/* edit controls on item */
+.edit-controls{display:none;align-items:center;gap:4px;flex-shrink:0;}
+body.edit-mode .edit-controls{display:flex;}
+
+.btn-del{width:26px;height:26px;border-radius:8px;border:none;background:rgba(212,100,90,.12);color:#c04040;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0;}
+.btn-del:hover{background:rgba(212,100,90,.25);}
+.btn-badge-toggle{font-size:11px;border:1px solid var(--sage);background:transparent;color:var(--sage);border-radius:8px;padding:2px 7px;cursor:pointer;transition:all .18s;white-space:nowrap;}
+.btn-badge-toggle:hover{background:var(--sage-lt);}
+.btn-drag{width:22px;height:26px;cursor:grab;color:var(--muted2);font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.btn-drag:active{cursor:grabbing;}
+
+/* inline text editing */
+.chk-label[contenteditable="true"]{
+  outline:none;
+  border-bottom:1.5px dashed var(--edit-border);
+  padding-bottom:1px;
+  caret-color:var(--edit-accent);
+  background:transparent;
+}
+
+/* add item row */
+.add-item-row{
+  display:none;
+  align-items:center;gap:10px;
+  padding:10px 6px 6px;
+  margin-top:4px;
+  border-top:1.5px dashed var(--edit-border);
+}
+body.edit-mode .add-item-row{display:flex;}
+.add-input{
+  flex:1;border:1.5px solid var(--edit-border);border-radius:10px;
+  padding:8px 12px;font-size:13px;font-family:'Noto Sans KR',sans-serif;
+  background:#fff;color:var(--ink2);outline:none;
+  transition:border-color .2s;
+}
+.add-input:focus{border-color:var(--edit-accent);}
+.add-input::placeholder{color:var(--muted2);}
+.btn-add-item{
+  flex-shrink:0;background:var(--edit-lt);border:1.5px solid var(--edit-border);
+  border-radius:10px;padding:8px 14px;font-size:13px;color:var(--edit-accent);
+  font-family:'Noto Sans KR',sans-serif;cursor:pointer;font-weight:500;
+  transition:all .18s;white-space:nowrap;
+}
+.btn-add-item:hover{background:var(--edit-border);color:#fff;}
+.add-badge-select{
+  flex-shrink:0;background:#fff;border:1.5px solid var(--edit-border);
+  border-radius:10px;padding:8px 10px;font-size:12px;color:var(--ink2);
+  font-family:'Noto Sans KR',sans-serif;cursor:pointer;outline:none;
+}
+
+/* edit category header */
+.cat-edit-bar{
+  display:none;
+  align-items:center;gap:8px;
+  padding:8px 18px 10px;
+  border-bottom:1px dashed var(--edit-border);
+  background:rgba(232,240,248,.25);
+}
+body.edit-mode .cat-edit-bar{display:flex;}
+.cat-name-input,.cat-icon-input{
+  border:1.5px solid var(--edit-border);border-radius:8px;
+  padding:5px 10px;font-size:13px;font-family:'Noto Serif KR',serif;
+  background:#fff;color:var(--ink);outline:none;
+}
+.cat-name-input{flex:1;}
+.cat-icon-input{width:54px;text-align:center;font-size:16px;}
+.cat-desc-input{
+  flex:1;border:none;background:transparent;
+  font-size:12px;font-family:'Noto Sans KR',sans-serif;color:var(--muted);
+  outline:none;border-bottom:1px dashed var(--edit-border);
+}
+
+/* add category button */
+.btn-add-cat{
+  display:none;
+  width:100%;margin-bottom:14px;
+  background:rgba(232,240,248,.5);
+  border:1.5px dashed var(--edit-border);border-radius:20px;
+  padding:14px;font-size:13.5px;color:var(--edit-accent);
+  font-family:'Noto Sans KR',sans-serif;cursor:pointer;
+  transition:all .2s;font-weight:500;
+}
+body.edit-mode .btn-add-cat{display:block;}
+.btn-add-cat:hover{background:var(--edit-lt);}
+
+/* ── GUIDE CARDS ── */
+.guide-card{background:var(--card-bg);border:1px solid var(--line);border-radius:20px;padding:22px 20px;margin-bottom:14px;transition:box-shadow .2s;}
+.guide-card:hover{box-shadow:0 6px 24px var(--shadow);}
+.guide-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.g-icon{width:38px;height:38px;border-radius:12px;flex-shrink:0;background:linear-gradient(135deg,var(--petal),var(--petal2));display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 2px 8px var(--shadow);}
+.guide-head h3{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:var(--ink);}
+.guide-list{list-style:none;}
+.guide-list li{font-size:13.5px;color:var(--ink2);padding:9px 0;border-bottom:1px dashed rgba(237,221,214,.7);display:flex;gap:10px;align-items:flex-start;line-height:1.65;position:relative;}
+.guide-list li:last-child{border-bottom:none;}
+.guide-list li::before{content:'';flex-shrink:0;width:5px;height:5px;border-radius:50%;background:var(--blush);margin-top:8px;}
+
+/* guide edit */
+.guide-list li span[contenteditable="true"]{outline:none;border-bottom:1.5px dashed var(--edit-border);flex:1;}
+.guide-head h3[contenteditable="true"]{outline:none;border-bottom:1.5px dashed var(--edit-border);}
+body.edit-mode .guide-list li .btn-del-li{display:flex;}
+.btn-del-li{display:none;width:22px;height:22px;border-radius:6px;border:none;background:rgba(212,100,90,.1);color:#c04040;font-size:12px;cursor:pointer;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0;margin-left:auto;}
+.btn-del-li:hover{background:rgba(212,100,90,.25);}
+
+/* add guide item */
+.add-guide-row{display:none;gap:8px;margin-top:10px;border-top:1.5px dashed var(--edit-border);padding-top:10px;}
+body.edit-mode .add-guide-row{display:flex;}
+.add-guide-input{flex:1;border:1.5px solid var(--edit-border);border-radius:10px;padding:8px 12px;font-size:13px;font-family:'Noto Sans KR',sans-serif;background:#fff;color:var(--ink2);outline:none;}
+.btn-add-guide-item{flex-shrink:0;background:var(--edit-lt);border:1.5px solid var(--edit-border);border-radius:10px;padding:8px 14px;font-size:13px;color:var(--edit-accent);font-family:'Noto Sans KR',sans-serif;cursor:pointer;font-weight:500;transition:all .18s;}
+.btn-add-guide-item:hover{background:var(--edit-border);color:#fff;}
+
+.tip-box,.warn-box{border-radius:0 14px 14px 0;padding:13px 16px;margin-top:14px;font-size:13px;color:var(--muted);line-height:1.7;}
+.tip-box{background:linear-gradient(135deg,#fdf4f0,#f9ebe4);border:1px solid var(--petal2);border-left:4px solid var(--rose);}
+.warn-box{background:linear-gradient(135deg,#faf5e8,#f5ecda);border:1px solid #e8d8b0;border-left:4px solid var(--gold);}
+.tip-box strong,.warn-box strong{display:block;margin-bottom:4px;font-size:11px;font-weight:700;letter-spacing:.6px;}
+.tip-box strong{color:var(--rose);}
+.warn-box strong{color:var(--gold);}
+body.edit-mode .tip-box p[contenteditable],.warn-box p[contenteditable]{outline:none;border-bottom:1.5px dashed var(--edit-border);}
+
+/* contract card */
+.contract-card{background:var(--card-bg);border:1px solid var(--line);border-radius:20px;padding:22px 20px;margin-bottom:14px;}
+.contract-card h3{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.q-item{display:flex;align-items:center;gap:12px;padding:11px 6px;border-bottom:1px dashed rgba(237,221,214,.7);font-size:13.5px;color:var(--ink2);cursor:pointer;border-radius:10px;min-height:48px;transition:all .15s;position:relative;}
+.q-item:last-child{border-bottom:none;}
+@media(hover:hover){.q-item:hover{background:var(--gold-pale);}}
+.q-chk{width:20px;height:20px;border-radius:6px;border:2px solid var(--gold-lt);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;background:#fff;}
+.q-item.checked .q-chk{background:linear-gradient(135deg,var(--gold-lt),var(--gold));border-color:transparent;}
+.q-chk-mark{width:10px;height:7px;border-left:2.5px solid white;border-bottom:2.5px solid white;transform:rotate(-45deg) scale(0);transition:transform .18s;margin-top:-2px;}
+.q-item.checked .q-chk-mark{transform:rotate(-45deg) scale(1);}
+.q-item.checked span{color:var(--muted2);text-decoration:line-through;text-decoration-color:var(--gold-lt);}
+body.edit-mode .q-item{cursor:default;}
+body.edit-mode .q-item .q-chk{pointer-events:none;opacity:.45;}
+body.edit-mode .q-item span[contenteditable="true"]{outline:none;border-bottom:1.5px dashed var(--edit-border);flex:1;}
+body.edit-mode .q-item .btn-del{display:flex;}
+
+/* add q-item row */
+.add-q-row{display:none;gap:8px;margin-top:10px;border-top:1.5px dashed var(--edit-border);padding-top:10px;}
+body.edit-mode .add-q-row{display:flex;}
+.add-q-input{flex:1;border:1.5px solid var(--edit-border);border-radius:10px;padding:8px 12px;font-size:13px;font-family:'Noto Sans KR',sans-serif;background:#fff;color:var(--ink2);outline:none;}
+.btn-add-q{flex-shrink:0;background:var(--edit-lt);border:1.5px solid var(--edit-border);border-radius:10px;padding:8px 14px;font-size:13px;color:var(--edit-accent);font-family:'Noto Sans KR',sans-serif;cursor:pointer;font-weight:500;transition:all .18s;}
+.btn-add-q:hover{background:var(--edit-border);color:#fff;}
+
+/* ── SEC HEADER ── */
+.sec-header{display:flex;align-items:center;gap:10px;margin:20px 0 16px;padding:0 2px;}
+.sec-header-line{flex:1;height:1px;background:linear-gradient(to right,var(--line),transparent);}
+.sec-header-line.rev{background:linear-gradient(to left,var(--line),transparent);}
+.sec-header-text{font-size:10px;letter-spacing:2.5px;color:var(--muted);font-weight:400;white-space:nowrap;}
+
+/* ── FOOTER ── */
+.footer-note{text-align:center;padding:20px 16px 6px;font-size:12px;color:var(--muted2);border-top:1px solid var(--line);}
+.footer-note em{color:var(--rose);font-style:normal;font-weight:500;}
+
+/* ── SAVE TOAST ── */
+.toast{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 80px);left:50%;transform:translateX(-50%) translateY(20px);background:#2a2220;color:#fff;padding:10px 22px;border-radius:30px;font-size:13px;opacity:0;transition:all .3s;pointer-events:none;z-index:300;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── CONFETTI ── */
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:999;display:none;}
+.confetti-wrap.show{display:block;}
+.c-piece{position:absolute;top:-10px;animation:cfall linear both;}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1;}80%{opacity:1;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+/* ── RESPONSIVE ── */
+@media(min-width:600px){
+  .container{padding:20px 20px calc(env(safe-area-inset-bottom,0px) + 90px);}
+  .progress-pill,.edit-banner{margin-left:20px;margin-right:20px;}
+}
+@media(min-width:720px){
+  .container{padding:24px 24px calc(env(safe-area-inset-bottom,0px) + 90px);}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Wedding Snap · Complete Guide</div>
+    <h1>웨딩 스냅<br><em>완전 준비 가이드</em></h1>
+    <p class="hero-sub">준비물 · 사전 체크 · 당일 주의 · 업체 선택</p>
+    <div class="hero-rings"><div class="rl"></div><div class="ri">💍</div><div class="rl rev"></div></div>
+  </div>
+</header>
+
+<div class="progress-pill">
+  <button class="reset-btn" onclick="resetAll()">↺ 초기화</button>
+  <div class="pill-top"><span class="pill-label">전체 준비 진행률</span><span class="pill-pct" id="pct">0%</span></div>
+  <div class="pill-bar"><div class="pill-fill" id="fill"></div></div>
+  <div class="pill-msg" id="pill-msg">하나씩 체크하며 완벽하게 준비해봐요 💕</div>
+</div>
+
+<div class="edit-banner" id="editBanner">
+  <span class="eb-icon">✏️</span>
+  <span><strong>편집 모드</strong> — 항목 텍스트를 직접 탭해서 수정하고, + 버튼으로 항목을 추가하고, 🗑️ 버튼으로 삭제할 수 있어요.</span>
+</div>
+
+<div class="container">
+
+  <!-- ════ TAB 1: 체크리스트 ════ -->
+  <div id="sec-check" class="section active">
+    <div class="sec-header"><div class="sec-header-line"></div><div class="sec-header-text">CHECKLIST</div><div class="sec-header-line rev"></div></div>
+
+    <!-- 의상 -->
+    <div class="cat-card open" id="cat-의상">
+      <div class="cat-head" onclick="toggleCat('의상')">
+        <div class="cat-left"><div class="cat-icon" id="icon-의상">👗</div><div><div class="cat-name" id="name-의상">의상</div><div class="cat-desc">드레스 · 정장 · 속옷</div></div></div>
+        <div class="cat-right"><span class="cat-prog" id="cp-의상"></span><div class="cat-arrow">▾</div></div>
+      </div>
+      <div class="cat-body"><div class="cat-edit-bar">
+        <input class="cat-icon-input" value="👗" oninput="updateCatIcon('의상',this.value)">
+        <input class="cat-name-input" value="의상" oninput="updateCatName('의상',this.value)">
+      </div><div class="cat-body-inner" id="items-의상">
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">웨딩드레스</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)" title="삭제">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">드레스 속치마 (패티코트)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)" title="삭제">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">베일</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)" title="삭제">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">누드톤 속옷 (드레스 비침 방지)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)" title="삭제">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">신랑 정장</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)" title="삭제">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">셔츠 여분 1장</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)" title="삭제">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">넥타이 / 보타이</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)" title="삭제">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">벨트 / 서스펜더</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)" title="삭제">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">캐주얼 촬영용 의상</span><span class="badge-opt">선택</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)" title="삭제">🗑</button></div></div>
+      </div>
+      <div class="add-item-row" id="add-의상">
+        <select class="add-badge-select" id="sel-의상"><option value="">뱃지 없음</option><option value="opt">선택</option><option value="winter">겨울</option><option value="summer">여름</option></select>
+        <input class="add-input" id="inp-의상" placeholder="새 항목 입력..." onkeydown="if(event.key==='Enter')addItem('의상')">
+        <button class="btn-add-item" onclick="addItem('의상')">+ 추가</button>
+      </div></div>
+    </div>
+
+    <!-- 신발 -->
+    <div class="cat-card" id="cat-신발">
+      <div class="cat-head" onclick="toggleCat('신발')">
+        <div class="cat-left"><div class="cat-icon" id="icon-신발">👠</div><div><div class="cat-name" id="name-신발">신발</div><div class="cat-desc">구두 · 슬리퍼 · 보호용품</div></div></div>
+        <div class="cat-right"><span class="cat-prog" id="cp-신발"></span><div class="cat-arrow">▾</div></div>
+      </div>
+      <div class="cat-body"><div class="cat-edit-bar">
+        <input class="cat-icon-input" value="👠" oninput="updateCatIcon('신발',this.value)">
+        <input class="cat-name-input" value="신발" oninput="updateCatName('신발',this.value)">
+      </div><div class="cat-body-inner" id="items-신발">
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">웨딩 구두</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">신랑 구두</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">여분 편한 신발·슬리퍼 (이동용, 드레스 안 착용 가능)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">구두 패드 / 밴드 (까짐 방지)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">발바닥 패드 (오래 서 있을 때)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">덧신 / 스타킹</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">반창고 (구두 까짐 대비)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+      </div>
+      <div class="add-item-row" id="add-신발">
+        <select class="add-badge-select" id="sel-신발"><option value="">뱃지 없음</option><option value="opt">선택</option><option value="winter">겨울</option><option value="summer">여름</option></select>
+        <input class="add-input" id="inp-신발" placeholder="새 항목 입력..." onkeydown="if(event.key==='Enter')addItem('신발')">
+        <button class="btn-add-item" onclick="addItem('신발')">+ 추가</button>
+      </div></div>
+    </div>
+
+    <!-- 악세사리 -->
+    <div class="cat-card" id="cat-악세사리">
+      <div class="cat-head" onclick="toggleCat('악세사리')">
+        <div class="cat-left"><div class="cat-icon" id="icon-악세사리">💍</div><div><div class="cat-name" id="name-악세사리">악세사리</div><div class="cat-desc">주얼리 · 반지 · 헤어</div></div></div>
+        <div class="cat-right"><span class="cat-prog" id="cp-악세사리"></span><div class="cat-arrow">▾</div></div>
+      </div>
+      <div class="cat-body"><div class="cat-edit-bar">
+        <input class="cat-icon-input" value="💍" oninput="updateCatIcon('악세사리',this.value)">
+        <input class="cat-name-input" value="악세사리" oninput="updateCatName('악세사리',this.value)">
+      </div><div class="cat-body-inner" id="items-악세사리">
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">귀걸이</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">목걸이</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">팔찌</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">웨딩 반지 + 케이스 / 링박스 (손·디테일 샷용)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">예단 반지</span><span class="badge-opt">선택</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">시계 (신랑)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">헤어 악세사리 (티아라 / 헤어핀 / 화관)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+      </div>
+      <div class="add-item-row" id="add-악세사리">
+        <select class="add-badge-select" id="sel-악세사리"><option value="">뱃지 없음</option><option value="opt">선택</option><option value="winter">겨울</option><option value="summer">여름</option></select>
+        <input class="add-input" id="inp-악세사리" placeholder="새 항목 입력..." onkeydown="if(event.key==='Enter')addItem('악세사리')">
+        <button class="btn-add-item" onclick="addItem('악세사리')">+ 추가</button>
+      </div></div>
+    </div>
+
+    <!-- 렌즈 -->
+    <div class="cat-card" id="cat-렌즈">
+      <div class="cat-head" onclick="toggleCat('렌즈')">
+        <div class="cat-left"><div class="cat-icon" id="icon-렌즈">👁️</div><div><div class="cat-name" id="name-렌즈">웨딩 렌즈</div><div class="cat-desc">컬러렌즈 · 케어용품</div></div></div>
+        <div class="cat-right"><span class="cat-prog" id="cp-렌즈"></span><div class="cat-arrow">▾</div></div>
+      </div>
+      <div class="cat-body"><div class="cat-edit-bar">
+        <input class="cat-icon-input" value="👁️" oninput="updateCatIcon('렌즈',this.value)">
+        <input class="cat-name-input" value="웨딩 렌즈" oninput="updateCatName('렌즈',this.value)">
+      </div><div class="cat-body-inner" id="items-렌즈">
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">컬러렌즈</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">렌즈 케이스</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">렌즈 세척액</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">인공눈물</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+      </div>
+      <div class="add-item-row" id="add-렌즈">
+        <select class="add-badge-select" id="sel-렌즈"><option value="">뱃지 없음</option><option value="opt">선택</option><option value="winter">겨울</option><option value="summer">여름</option></select>
+        <input class="add-input" id="inp-렌즈" placeholder="새 항목 입력..." onkeydown="if(event.key==='Enter')addItem('렌즈')">
+        <button class="btn-add-item" onclick="addItem('렌즈')">+ 추가</button>
+      </div></div>
+    </div>
+
+    <!-- 메이크업 -->
+    <div class="cat-card" id="cat-메이크업">
+      <div class="cat-head" onclick="toggleCat('메이크업')">
+        <div class="cat-left"><div class="cat-icon" id="icon-메이크업">💄</div><div><div class="cat-name" id="name-메이크업">메이크업 & 뷰티</div><div class="cat-desc">수정 파우치 · 헤어케어</div></div></div>
+        <div class="cat-right"><span class="cat-prog" id="cp-메이크업"></span><div class="cat-arrow">▾</div></div>
+      </div>
+      <div class="cat-body"><div class="cat-edit-bar">
+        <input class="cat-icon-input" value="💄" oninput="updateCatIcon('메이크업',this.value)">
+        <input class="cat-name-input" value="메이크업 & 뷰티" oninput="updateCatName('메이크업',this.value)">
+      </div><div class="cat-body-inner" id="items-메이크업">
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">립스틱 / 립틴트 (수정용)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">쿠션 / 파우더</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">면봉</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">기름종이</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">빗 / 브러쉬</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">헤어스프레이</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">여분 머리끈 · 헤어핀</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">향수</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+      </div>
+      <div class="add-item-row" id="add-메이크업">
+        <select class="add-badge-select" id="sel-메이크업"><option value="">뱃지 없음</option><option value="opt">선택</option><option value="winter">겨울</option><option value="summer">여름</option></select>
+        <input class="add-input" id="inp-메이크업" placeholder="새 항목 입력..." onkeydown="if(event.key==='Enter')addItem('메이크업')">
+        <button class="btn-add-item" onclick="addItem('메이크업')">+ 추가</button>
+      </div></div>
+    </div>
+
+    <!-- 소품 -->
+    <div class="cat-card" id="cat-소품">
+      <div class="cat-head" onclick="toggleCat('소품')">
+        <div class="cat-left"><div class="cat-icon" id="icon-소품">📸</div><div><div class="cat-name" id="name-소품">촬영 소품</div><div class="cat-desc">부케 · 데코 · 추억 소품</div></div></div>
+        <div class="cat-right"><span class="cat-prog" id="cp-소품"></span><div class="cat-arrow">▾</div></div>
+      </div>
+      <div class="cat-body"><div class="cat-edit-bar">
+        <input class="cat-icon-input" value="📸" oninput="updateCatIcon('소품',this.value)">
+        <input class="cat-name-input" value="촬영 소품" oninput="updateCatName('소품',this.value)">
+      </div><div class="cat-body-inner" id="items-소품">
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">부케</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">부토니에 (코사지)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">꽃잎 / 꽃다발</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">선글라스 (컨셉용)</span><span class="badge-opt">선택</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">풍선 / 리본</span><span class="badge-opt">선택</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">사진 액자 / 폴라로이드</span><span class="badge-opt">선택</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">레터보드 · 메시지 보드</span><span class="badge-opt">선택</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">컨페티 (글리터)</span><span class="badge-opt">선택</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">웨딩 피켓</span><span class="badge-opt">선택</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">둘의 추억 담긴 물건 (티켓, 편지, 폴라로이드 등)</span><span class="badge-opt">선택</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+      </div>
+      <div class="add-item-row" id="add-소품">
+        <select class="add-badge-select" id="sel-소품"><option value="">뱃지 없음</option><option value="opt">선택</option><option value="winter">겨울</option><option value="summer">여름</option></select>
+        <input class="add-input" id="inp-소품" placeholder="새 항목 입력..." onkeydown="if(event.key==='Enter')addItem('소품')">
+        <button class="btn-add-item" onclick="addItem('소품')">+ 추가</button>
+      </div></div>
+    </div>
+
+    <!-- 기타 -->
+    <div class="cat-card" id="cat-기타">
+      <div class="cat-head" onclick="toggleCat('기타')">
+        <div class="cat-left"><div class="cat-icon" id="icon-기타">🎒</div><div><div class="cat-name" id="name-기타">기타 준비물</div><div class="cat-desc">기기 · 간식 · 비상용품</div></div></div>
+        <div class="cat-right"><span class="cat-prog" id="cp-기타"></span><div class="cat-arrow">▾</div></div>
+      </div>
+      <div class="cat-body"><div class="cat-edit-bar">
+        <input class="cat-icon-input" value="🎒" oninput="updateCatIcon('기타',this.value)">
+        <input class="cat-name-input" value="기타 준비물" oninput="updateCatName('기타',this.value)">
+      </div><div class="cat-body-inner" id="items-기타">
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">물 (빨대 있는 음료 추천)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">간단한 간식 (초콜릿 / 에너지바)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">휴대폰 + 충전기 + 보조배터리</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">안전핀</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">물티슈 / 휴지</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">작은 가방</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">현금 · 봉투 (헬퍼비, 작가님 팁 등)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">핫팩</span><span class="badge-season">겨울</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">숄 / 코트</span><span class="badge-season">겨울</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+        <div class="check-item" onclick="handleItemClick(event,this)"><div class="chk"><div class="chk-mark"></div></div><span class="chk-label">선크림 + 휴대용 선풍기</span><span class="badge-season">여름</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+      </div>
+      <div class="add-item-row" id="add-기타">
+        <select class="add-badge-select" id="sel-기타"><option value="">뱃지 없음</option><option value="opt">선택</option><option value="winter">겨울</option><option value="summer">여름</option></select>
+        <input class="add-input" id="inp-기타" placeholder="새 항목 입력..." onkeydown="if(event.key==='Enter')addItem('기타')">
+        <button class="btn-add-item" onclick="addItem('기타')">+ 추가</button>
+      </div></div>
+    </div>
+
+    <div class="footer-note"><em>10월 3일</em> 그레이스파크, 완벽한 스냅이 되길 바라요 💕</div>
+  </div><!-- /check -->
+
+  <!-- ════ TAB 2: 사전 준비 ════ -->
+  <div id="sec-prep" class="section">
+    <div class="sec-header"><div class="sec-header-line"></div><div class="sec-header-text">PREPARATION</div><div class="sec-header-line rev"></div></div>
+
+    <div class="guide-card">
+      <div class="guide-head"><div class="g-icon">🎨</div><h3 contenteditable="false">스타일 & 컨셉 정하기</h3></div>
+      <ul class="guide-list">
+        <li><span>원하는 스타일 결정하기 — 감성 다큐 / 잡지 느낌 / 러블리·코믹 / 동화 컨셉 등</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>작가 포트폴리오 보고 "이런 톤·구도 좋아요" 예시 이미지 미리 준비해두기</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>보정 스타일 비교 — 쨍한 컬러 vs 필름 감성 vs 밝고 깔끔한 피부톤. 계약 전 샘플 여러 개 비교 필수</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+      </ul>
+      <div class="add-guide-row"><input class="add-guide-input" placeholder="항목 추가..." onkeydown="if(event.key==='Enter')addGuideItem(event)"><button class="btn-add-guide-item" onclick="addGuideItem(event)">+ 추가</button></div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-head"><div class="g-icon">✨</div><h3 contenteditable="false">꼭 찍고 싶은 컷 추리기</h3></div>
+      <ul class="guide-list">
+        <li><span>부모님 3인 사진, 반지·손 클로즈업, 프러포즈 포즈, 베일샷 등 필수 샷 정리</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>"완전 꼭 필요한 샷" 5개 이내로 추리기 — 리스트가 너무 길면 진행이 어려워짐</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>작가님과 당일 전에 우선순위 컷 사전 상의</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+      </ul>
+      <div class="add-guide-row"><input class="add-guide-input" placeholder="항목 추가..." onkeydown="if(event.key==='Enter')addGuideItem(event)"><button class="btn-add-guide-item" onclick="addGuideItem(event)">+ 추가</button></div>
+      <div class="tip-box"><strong>💡 Tip</strong><p contenteditable="false">5개 이내의 '필수 컷'을 명확히 정해두면 당일 여유가 생기고 결과물 퀄리티도 높아져요.</p></div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-head"><div class="g-icon">📍</div><h3 contenteditable="false">장소 & 시간대 체크</h3></div>
+      <ul class="guide-list">
+        <li><span>야외 스냅: 햇빛 방향, 노을 지는 시간, 이동 동선 미리 파악</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>실내 스튜디오: 어떤 세트를 꼭 사용하고 싶은지 미리 체크</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>우천·강풍 대비 — 머리 고정용 스프레이, 여분 헤어핀 준비</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+      </ul>
+      <div class="add-guide-row"><input class="add-guide-input" placeholder="항목 추가..." onkeydown="if(event.key==='Enter')addGuideItem(event)"><button class="btn-add-guide-item" onclick="addGuideItem(event)">+ 추가</button></div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-head"><div class="g-icon">💅</div><h3 contenteditable="false">손·발 관리</h3></div>
+      <ul class="guide-list">
+        <li><span>촬영 1~2일 전 손톱 정리 · 보습 · 네일 정돈 필수 — 손이 정말 많이 찍혀요</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>너무 화려한 네일보다 깔끔한 톤이 어떤 드레스에도 잘 어울려요</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+      </ul>
+      <div class="add-guide-row"><input class="add-guide-input" placeholder="항목 추가..." onkeydown="if(event.key==='Enter')addGuideItem(event)"><button class="btn-add-guide-item" onclick="addGuideItem(event)">+ 추가</button></div>
+      <div class="warn-box"><strong>🔔 포인트</strong><p contenteditable="false">반지·손 클로즈업 샷은 거의 필수 컷이에요. 네일은 반드시 촬영 전날까지 정리해두세요.</p></div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-head"><div class="g-icon">👥</div><h3 contenteditable="false">동행 인원 추천</h3></div>
+      <ul class="guide-list">
+        <li><span>친한 친구 1명과 함께 가면 짐 들기, 드레스 잡기, 표정 체크, 간식 챙기기까지 실질적인 도움이 돼요</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>혼자 가는 것보다 표정도 훨씬 자연스럽게 나와요</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+      </ul>
+      <div class="add-guide-row"><input class="add-guide-input" placeholder="항목 추가..." onkeydown="if(event.key==='Enter')addGuideItem(event)"><button class="btn-add-guide-item" onclick="addGuideItem(event)">+ 추가</button></div>
+    </div>
+  </div>
+
+  <!-- ════ TAB 3: 당일 주의 ════ -->
+  <div id="sec-day" class="section">
+    <div class="sec-header"><div class="sec-header-line"></div><div class="sec-header-text">DAY OF</div><div class="sec-header-line rev"></div></div>
+
+    <div class="guide-card">
+      <div class="guide-head"><div class="g-icon">🍽️</div><h3 contenteditable="false">컨디션 관리</h3></div>
+      <ul class="guide-list">
+        <li><span>헤어·메이크업 전 든든하게 식사해두기 — 옷 입은 후엔 먹기 어려워요</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>전날 과음·야식·밤샘 금지 — 붓기·다크서클은 사진에 바로 보여요</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>수분 보충 충분히, 빨대 있는 음료 추천</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+      </ul>
+      <div class="add-guide-row"><input class="add-guide-input" placeholder="항목 추가..." onkeydown="if(event.key==='Enter')addGuideItem(event)"><button class="btn-add-guide-item" onclick="addGuideItem(event)">+ 추가</button></div>
+      <div class="warn-box"><strong>⚠️ 주의</strong><p contenteditable="false">전날 컨디션이 사진 퀄리티를 좌우해요. 전날만큼은 일찍 자고 과식·음주를 피하세요.</p></div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-head"><div class="g-icon">😊</div><h3 contenteditable="false">표정 & 포즈 연습</h3></div>
+      <ul class="guide-list">
+        <li><span>무표정 / 은은한 미소 / 활짝 웃는 표정, 세 가지 미리 거울 연습</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>본인 마음에 드는 얼굴 각도(좌/우), 턱 살짝 내리기 등 폰으로 미리 셀카 테스트</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>포즈 참고 사진을 미리 모아두고 촬영 당일 작가님께 보여주기</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+      </ul>
+      <div class="add-guide-row"><input class="add-guide-input" placeholder="항목 추가..." onkeydown="if(event.key==='Enter')addGuideItem(event)"><button class="btn-add-guide-item" onclick="addGuideItem(event)">+ 추가</button></div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-head"><div class="g-icon">🕴️</div><h3 contenteditable="false">자세 & 라인</h3></div>
+      <ul class="guide-list">
+        <li><span>서 있을 때: 등 펴고 어깨 살짝 뒤로, 턱 약간 당기기</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>팔은 몸에 딱 붙이지 말고 살짝 띄워야 라인이 예쁘게 나와요</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>신부는 폭 넓은 드레스일 경우 계단·야외에서 보폭 줄이기, 드레스 안에 슬리퍼 착용 추천</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+      </ul>
+      <div class="add-guide-row"><input class="add-guide-input" placeholder="항목 추가..." onkeydown="if(event.key==='Enter')addGuideItem(event)"><button class="btn-add-guide-item" onclick="addGuideItem(event)">+ 추가</button></div>
+      <div class="tip-box"><strong>💡 Tip</strong><p contenteditable="false">팔을 몸통에서 살짝 떼는 것만으로도 전체적인 실루엣이 훨씬 날씬하고 예쁘게 나와요.</p></div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-head"><div class="g-icon">⏰</div><h3 contenteditable="false">시간 관리</h3></div>
+      <ul class="guide-list">
+        <li><span>촬영장 도착은 여유 있게 — 지각하면 컷 수가 줄고 표정에도 티가 나요</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>소품 세팅·의상 교체 시간까지 감안해 "우선순위 컷"을 작가와 사전 상의</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>"꼭 필요한 컷 우선" 순서를 작가님과 미리 합의해두기</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+      </ul>
+      <div class="add-guide-row"><input class="add-guide-input" placeholder="항목 추가..." onkeydown="if(event.key==='Enter')addGuideItem(event)"><button class="btn-add-guide-item" onclick="addGuideItem(event)">+ 추가</button></div>
+    </div>
+  </div>
+
+  <!-- ════ TAB 4: 업체 선택 ════ -->
+  <div id="sec-vendor" class="section">
+    <div class="sec-header"><div class="sec-header-line"></div><div class="sec-header-text">VENDOR</div><div class="sec-header-line rev"></div></div>
+
+    <div class="guide-card">
+      <div class="guide-head"><div class="g-icon">🖼️</div><h3 contenteditable="false">포트폴리오 확인 포인트</h3></div>
+      <ul class="guide-list">
+        <li><span>내 웨딩홀 또는 비슷한 컨셉의 샘플이 있는지 확인</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>인물 피부·표정·색감이 마음에 드는지 꼭 직접 확인</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>어두운 실내에서도 노이즈·색감이 괜찮은지 체크</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+      </ul>
+      <div class="add-guide-row"><input class="add-guide-input" placeholder="항목 추가..." onkeydown="if(event.key==='Enter')addGuideItem(event)"><button class="btn-add-guide-item" onclick="addGuideItem(event)">+ 추가</button></div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-head"><div class="g-icon">📷</div><h3 contenteditable="false">촬영 방식 확인</h3></div>
+      <ul class="guide-list">
+        <li><span>전통 카메라 vs 아이폰 스냅 — 아이폰은 자연스럽지만 어두운 곳·줌에 제한 있을 수 있음</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>다큐 스타일(자연스럽게 담기) vs 포즈 리드형 — 본인 취향에 맞게 선택</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>스냅 퀄리티는 "업체 이름"보다 "작가 개개인 스타일"에 많이 좌우돼요</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+      </ul>
+      <div class="add-guide-row"><input class="add-guide-input" placeholder="항목 추가..." onkeydown="if(event.key==='Enter')addGuideItem(event)"><button class="btn-add-guide-item" onclick="addGuideItem(event)">+ 추가</button></div>
+      <div class="tip-box"><strong>💡 핵심 조언</strong><p contenteditable="false">유명 업체라도 실제 촬영 작가에 따라 결과물이 완전히 달라요. 담당 작가 포트폴리오 직접 확인 필수!</p></div>
+    </div>
+
+    <div class="contract-card">
+      <h3>📋 계약 전 반드시 물어볼 것</h3>
+      <div class="q-item" onclick="handleQClick(event,this)"><div class="q-chk"><div class="q-chk-mark"></div></div><span>촬영 시간은 얼마나 되는지</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+      <div class="q-item" onclick="handleQClick(event,this)"><div class="q-chk"><div class="q-chk-mark"></div></div><span>제공 컷 수 (후보정 기준)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+      <div class="q-item" onclick="handleQClick(event,this)"><div class="q-chk"><div class="q-chk-mark"></div></div><span>원본 파일 제공 여부</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+      <div class="q-item" onclick="handleQClick(event,this)"><div class="q-chk"><div class="q-chk-mark"></div></div><span>실제 촬영 작가가 누구인지 (대표 직접 여부)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+      <div class="q-item" onclick="handleQClick(event,this)"><div class="q-chk"><div class="q-chk-mark"></div></div><span>작가 지정 시 추가 비용 여부</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+      <div class="q-item" onclick="handleQClick(event,this)"><div class="q-chk"><div class="q-chk-mark"></div></div><span>우천 시 연기 가능 여부 및 추가 비용</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+      <div class="q-item" onclick="handleQClick(event,this)"><div class="q-chk"><div class="q-chk-mark"></div></div><span>실내 대체 장소 제공 여부 (야외 스냅인 경우)</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+      <div class="q-item" onclick="handleQClick(event,this)"><div class="q-chk"><div class="q-chk-mark"></div></div><span>보정 완료 후 수정 가능 여부 및 횟수</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div></div>
+      <div class="add-q-row"><input class="add-q-input" placeholder="질문 추가..." onkeydown="if(event.key==='Enter')addQItem(event)"><button class="btn-add-q" onclick="addQItem(event)">+ 추가</button></div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-head"><div class="g-icon">🌤️</div><h3 contenteditable="false">날씨 & 계절 대비</h3></div>
+      <ul class="guide-list">
+        <li><span>겨울 야외: 핫팩, 숄·코트 준비 필수</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>여름 야외: 땀 닦을 티슈, 선크림, 휴대용 선풍기 고려</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+        <li><span>강풍·비 대비 머리 고정용 스프레이, 여분 헤어핀</span><button class="btn-del-li" onclick="delGuideItem(event,this)">🗑</button></li>
+      </ul>
+      <div class="add-guide-row"><input class="add-guide-input" placeholder="항목 추가..." onkeydown="if(event.key==='Enter')addGuideItem(event)"><button class="btn-add-guide-item" onclick="addGuideItem(event)">+ 추가</button></div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- BOTTOM NAV -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('check',this)"><span class="t-icon">✅</span><span class="t-label">준비물</span></button>
+  <button class="tab-btn" onclick="switchTab('prep',this)"><span class="t-icon">📋</span><span class="t-label">사전 준비</span></button>
+  <button class="tab-btn" onclick="switchTab('day',this)"><span class="t-icon">💄</span><span class="t-label">당일 주의</span></button>
+  <button class="tab-btn" onclick="switchTab('vendor',this)"><span class="t-icon">📸</span><span class="t-label">업체 선택</span></button>
+  <button class="tab-btn edit-toggle" id="editToggleBtn" onclick="toggleEditMode(this)"><span class="t-icon">✏️</span><span class="t-label">편집</span></button>
+</nav>
+
+<div class="toast" id="toast"></div>
+<div class="confetti-wrap" id="confetti"></div>
+
+<script>
+/* ═══════════════════════════════
+   STATE
+═══════════════════════════════ */
+let editMode = false;
+const CATS = ['의상','신발','악세사리','렌즈','메이크업','소품','기타'];
+
+/* ═══════════════════════════════
+   TAB
+═══════════════════════════════ */
+function switchTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn:not(.edit-toggle)').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════════════════
+   ACCORDION
+═══════════════════════════════ */
+function toggleCat(name) {
+  if (editMode) return; // in edit mode header click opens edit bar, not toggle
+  document.getElementById('cat-' + name).classList.toggle('open');
+}
+
+/* ═══════════════════════════════
+   CHECK
+═══════════════════════════════ */
+function handleItemClick(e, el) {
+  if (editMode) return;
+  if (e.target.closest('.edit-controls')) return;
+  el.classList.toggle('checked');
+  updateProgress();
+}
+
+function handleQClick(e, el) {
+  if (editMode) return;
+  if (e.target.closest('.edit-controls')) return;
+  el.classList.toggle('checked');
+}
+
+/* ═══════════════════════════════
+   PROGRESS
+═══════════════════════════════ */
+let lastPct = 0;
+function updateProgress() {
+  let total = 0, done = 0;
+  CATS.forEach(name => {
+    const card = document.getElementById('cat-' + name);
+    const items = card.querySelectorAll('.check-item');
+    const checked = card.querySelectorAll('.check-item.checked');
+    total += items.length; done += checked.length;
+    const el = document.getElementById('cp-' + name);
+    if (el) el.textContent = checked.length + '/' + items.length;
+    card.classList.toggle('done', checked.length === items.length && items.length > 0);
+  });
+  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+  document.getElementById('pct').textContent = pct + '%';
+  document.getElementById('fill').style.width = pct + '%';
+  const msgs = [[0,'하나씩 체크하며 완벽하게 준비해봐요 💕'],[1,'준비를 시작했어요! 꼼꼼하게 챙겨봐요 ✨'],[30,'절반을 향해 가는 중이에요 🌸'],[50,'딱 절반 왔어요! 잘 하고 있어요 🌿'],[70,'거의 다 됐어요! 마무리만 남았어요 💪'],[90,'마지막 확인! 완벽한 스냅이 기다려요 🎀'],[100,'완벽 준비 완료! 아름다운 하루가 될 거예요 🎉']];
+  let msg = msgs[0][1];
+  for (const [t, m] of msgs) { if (pct >= t) msg = m; }
+  document.getElementById('pill-msg').textContent = msg;
+  if (pct === 100 && lastPct < 100) launchConfetti();
+  lastPct = pct;
+}
+
+function resetAll() {
+  if (!confirm('체크 내용을 모두 초기화할까요?')) return;
+  document.querySelectorAll('.check-item.checked, .q-item.checked').forEach(el => el.classList.remove('checked'));
+  updateProgress();
+}
+
+/* ═══════════════════════════════
+   EDIT MODE
+═══════════════════════════════ */
+function toggleEditMode(btn) {
+  editMode = !editMode;
+  document.body.classList.toggle('edit-mode', editMode);
+  btn.classList.toggle('edit-on', editMode);
+  document.getElementById('editBanner').classList.toggle('show', editMode);
+
+  // toggle contenteditable on all guide h3 and guide list spans and tip/warn p
+  document.querySelectorAll('.guide-head h3, .guide-list li span, .tip-box p, .warn-box p').forEach(el => {
+    el.contentEditable = editMode ? 'true' : 'false';
+  });
+  // toggle contenteditable on chk-labels
+  document.querySelectorAll('.chk-label').forEach(el => {
+    el.contentEditable = editMode ? 'true' : 'false';
+  });
+  // toggle contenteditable on q-item spans
+  document.querySelectorAll('.q-item > span').forEach(el => {
+    el.contentEditable = editMode ? 'true' : 'false';
+  });
+
+  if (editMode) {
+    // open all cat cards in edit mode
+    CATS.forEach(name => document.getElementById('cat-' + name).classList.add('open'));
+    showToast('✏️ 편집 모드 켜짐 — 텍스트를 직접 탭해서 수정하세요');
+  } else {
+    showToast('✅ 편집 내용이 저장되었어요');
+  }
+  updateProgress();
+}
+
+function updateCatIcon(name, val) {
+  document.getElementById('icon-' + name).textContent = val;
+}
+function updateCatName(name, val) {
+  document.getElementById('name-' + name).textContent = val;
+}
+
+/* ═══════════════════════════════
+   ADD / DELETE ITEMS
+═══════════════════════════════ */
+function makeCheckItem(label, badgeType) {
+  const div = document.createElement('div');
+  div.className = 'check-item';
+  div.setAttribute('onclick', 'handleItemClick(event,this)');
+
+  const chk = document.createElement('div');
+  chk.className = 'chk';
+  const mark = document.createElement('div');
+  mark.className = 'chk-mark';
+  chk.appendChild(mark);
+
+  const span = document.createElement('span');
+  span.className = 'chk-label';
+  span.textContent = label;
+  if (editMode) span.contentEditable = 'true';
+
+  const controls = document.createElement('div');
+  controls.className = 'edit-controls';
+  const delBtn = document.createElement('button');
+  delBtn.className = 'btn-del';
+  delBtn.setAttribute('onclick', 'delItem(event,this)');
+  delBtn.textContent = '🗑';
+  controls.appendChild(delBtn);
+
+  div.appendChild(chk);
+  div.appendChild(span);
+
+  if (badgeType === 'opt') {
+    const b = document.createElement('span');
+    b.className = 'badge-opt'; b.textContent = '선택';
+    div.appendChild(b);
+  } else if (badgeType === 'winter') {
+    const b = document.createElement('span');
+    b.className = 'badge-season'; b.textContent = '겨울';
+    div.appendChild(b);
+  } else if (badgeType === 'summer') {
+    const b = document.createElement('span');
+    b.className = 'badge-season'; b.textContent = '여름';
+    div.appendChild(b);
+  }
+  div.appendChild(controls);
+  return div;
+}
+
+function addItem(catName) {
+  const inp = document.getElementById('inp-' + catName);
+  const sel = document.getElementById('sel-' + catName);
+  const text = inp.value.trim();
+  if (!text) { inp.focus(); return; }
+  const container = document.getElementById('items-' + catName);
+  container.appendChild(makeCheckItem(text, sel.value));
+  inp.value = '';
+  sel.value = '';
+  updateProgress();
+  showToast('✅ 항목이 추가됐어요');
+}
+
+function delItem(e, btn) {
+  e.stopPropagation();
+  const item = btn.closest('.check-item, .q-item');
+  if (item) { item.remove(); updateProgress(); showToast('🗑 항목 삭제됨'); }
+}
+
+/* guide list items */
+function addGuideItem(e) {
+  const row = e.target.closest('.add-guide-row');
+  const inp = row.querySelector('.add-guide-input');
+  const text = inp.value.trim();
+  if (!text) { inp.focus(); return; }
+  const ul = row.closest('.guide-card').querySelector('.guide-list');
+  const li = document.createElement('li');
+  const span = document.createElement('span');
+  span.textContent = text;
+  if (editMode) span.contentEditable = 'true';
+  const delBtn = document.createElement('button');
+  delBtn.className = 'btn-del-li';
+  delBtn.setAttribute('onclick', 'delGuideItem(event,this)');
+  delBtn.textContent = '🗑';
+  li.appendChild(span); li.appendChild(delBtn);
+  ul.appendChild(li);
+  inp.value = '';
+  showToast('✅ 항목이 추가됐어요');
+}
+
+function delGuideItem(e, btn) {
+  e.stopPropagation();
+  btn.closest('li').remove();
+  showToast('🗑 항목 삭제됨');
+}
+
+/* contract q-items */
+function addQItem(e) {
+  const row = e.target.closest('.add-q-row');
+  const inp = row.querySelector('.add-q-input');
+  const text = inp.value.trim();
+  if (!text) { inp.focus(); return; }
+  const card = row.closest('.contract-card');
+  const newQ = document.createElement('div');
+  newQ.className = 'q-item';
+  newQ.setAttribute('onclick', 'handleQClick(event,this)');
+  newQ.innerHTML = `<div class="q-chk"><div class="q-chk-mark"></div></div><span>${text}</span><div class="edit-controls"><button class="btn-del" onclick="delItem(event,this)">🗑</button></div>`;
+  if (editMode) newQ.querySelector('span').contentEditable = 'true';
+  card.insertBefore(newQ, row);
+  inp.value = '';
+  showToast('✅ 항목이 추가됐어요');
+}
+
+/* ═══════════════════════════════
+   TOAST
+═══════════════════════════════ */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+/* ═══════════════════════════════
+   CONFETTI
+═══════════════════════════════ */
+const COLORS = ['#e8b4a2','#d4856e','#c4975a','#ddb97c','#8fa88c','#c8d8c6','#f5e6df','#b86650'];
+function launchConfetti() {
+  const wrap = document.getElementById('confetti');
+  wrap.innerHTML = ''; wrap.classList.add('show');
+  for (let i = 0; i < 70; i++) {
+    const el = document.createElement('div');
+    el.className = 'c-piece';
+    const sz = Math.random() * 9 + 5;
+    el.style.cssText = `left:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:${COLORS[Math.floor(Math.random()*COLORS.length)]};animation-duration:${Math.random()*2+1.5}s;animation-delay:${Math.random()*.9}s;border-radius:${Math.random()>.5?'50%':'3px'};`;
+    wrap.appendChild(el);
+  }
+  setTimeout(() => wrap.classList.remove('show'), 4500);
+}
+
+/* ═══════════════════════════════
+   INIT
+═══════════════════════════════ */
+updateProgress();
+</script>
+</body>
+</html>
