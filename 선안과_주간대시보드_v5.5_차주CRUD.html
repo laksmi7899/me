@@ -1,0 +1,3572 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#FAFAF7">
+<title>선안과 주간업무 대시보드 · 가오픈 D-8</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👁️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Light editorial palette — warm paper */
+  --bg:#FAFAF7;
+  --bg-warm:#F5F2EA;
+  --surface:#FFFFFF;
+  --surface-alt:#F8F6F0;
+  --surface-3:#EFEDE5;
+  --line:#E6E2D6;
+  --line-soft:#EFEDE5;
+  --line-strong:#D6D2C4;
+
+  --text:#14171F;
+  --text-2:#3F4658;
+  --text-3:#6B7286;
+  --text-4:#9499AA;
+  --text-5:#B8BDCB;
+
+  --ink:#0A0E1A;     /* solid blacks for headlines */
+
+  /* Track colors — refined, calmer */
+  --t-edu:#1E50C9;
+  --t-edu-bg:#EEF3FE;
+  --t-edu-line:#C9D9F7;
+  --t-edu-deep:#143C9C;
+
+  --t-install:#B45309;
+  --t-install-bg:#FCF4E6;
+  --t-install-line:#F4DCB0;
+  --t-install-deep:#7C3D08;
+
+  --t-meet:#B91C1C;
+  --t-meet-bg:#FCEDED;
+  --t-meet-line:#F4C9C9;
+  --t-meet-deep:#7F1212;
+
+  --t-event:#6D28D9;
+  --t-event-bg:#F3EEFC;
+  --t-event-line:#DCCAF5;
+  --t-event-deep:#4B17A2;
+
+  --t-visit:#047857;
+  --t-visit-bg:#E8F6EF;
+  --t-visit-line:#BCE4D2;
+  --t-visit-deep:#03543E;
+
+  --t-ops:#A16207;
+  --t-ops-bg:#FBF4DC;
+  --t-ops-line:#EFE0A6;
+  --t-ops-deep:#723F04;
+
+  --t-hr:#0F766E;
+  --t-hr-bg:#E5F4F2;
+  --t-hr-line:#B0DFD9;
+  --t-hr-deep:#084B45;
+
+  --t-usp:#1B3A6B;
+  --t-usp-bg:#EAF0F8;
+  --t-usp-line:#BCC9DE;
+  --t-usp-deep:#0E2342;
+
+  /* Status */
+  --st-critical:#C8324C;
+  --st-warning:#B45309;
+  --st-success:#047857;
+
+  --r-sm:6px;
+  --r-md:10px;
+  --r-lg:16px;
+  --r-xl:24px;
+
+  --shadow-sm:0 1px 2px rgba(20,23,31,.04);
+  --shadow-md:0 4px 14px rgba(20,23,31,.06),0 1px 3px rgba(20,23,31,.04);
+  --shadow-lg:0 12px 32px rgba(20,23,31,.08),0 2px 6px rgba(20,23,31,.04);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  font-size:15px;
+  letter-spacing:-0.011em;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 0% 0%,rgba(180,83,9,.04),transparent 55%),
+    radial-gradient(ellipse 60% 50% at 100% 30%,rgba(109,40,217,.03),transparent 55%);
+  background-attachment:fixed;
+}
+
+.serif{font-family:'Fraunces',Georgia,serif;font-feature-settings:"ss01","ss02"}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+
+.wrap{max-width:1200px;margin:0 auto;padding:32px 20px 96px}
+
+/* ─────────  Masthead  ───────── */
+.masthead{
+  margin-bottom:36px;padding-bottom:28px;
+  border-bottom:1.5px solid var(--ink);
+}
+.masthead-top{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text-3);font-weight:600;margin-bottom:18px;
+  font-family:'JetBrains Mono',monospace;
+}
+.masthead-top .vol{display:flex;gap:18px;align-items:center}
+.masthead-top .vol .sep{width:3px;height:3px;border-radius:50%;background:var(--text-4)}
+.masthead-title{
+  font-family:'Fraunces',serif;
+  font-size:clamp(40px,5.5vw,64px);
+  line-height:.95;letter-spacing:-0.035em;
+  font-weight:600;color:var(--ink);
+}
+.masthead-title em{font-style:italic;font-weight:400;color:var(--text-2)}
+.masthead-sub{
+  margin-top:14px;font-size:15px;color:var(--text-2);
+  display:flex;justify-content:space-between;align-items:flex-end;
+  flex-wrap:wrap;gap:12px;
+}
+.masthead-sub .tag{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;
+  color:var(--text-3);text-transform:uppercase;
+}
+
+/* ─────────  Hero — D-day  ───────── */
+.hero{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:14px;
+  margin-bottom:32px;
+}
+.dday{
+  background:var(--ink);color:#fff;
+  border-radius:var(--r-lg);padding:22px 26px;
+  position:relative;overflow:hidden;
+  box-shadow:var(--shadow-md);
+}
+.dday::before{
+  content:'';position:absolute;top:0;right:0;
+  width:160px;height:160px;
+  background:radial-gradient(circle at 70% 30%,rgba(200,50,76,.35),transparent 60%);
+  pointer-events:none;
+}
+.dday-l{
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  font-weight:600;color:rgba(255,255,255,.6);font-family:'JetBrains Mono',monospace;
+}
+.dday-v{
+  font-family:'Fraunces',serif;font-size:64px;font-weight:600;
+  line-height:1;margin-top:6px;color:#fff;font-style:italic;
+  letter-spacing:-.04em;
+}
+.dday-v sup{
+  font-size:24px;color:#FF8888;vertical-align:super;font-style:normal;
+  font-weight:500;margin:0 4px 0 2px;
+}
+.dday-d{font-size:13px;color:rgba(255,255,255,.75);margin-top:6px;line-height:1.55}
+.dday-d strong{color:#fff;font-weight:600}
+
+.kpi{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:18px 20px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  box-shadow:var(--shadow-sm);
+  position:relative;
+  transition:transform .2s,box-shadow .2s;
+}
+.kpi:hover{box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.kpi-l{
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text-3);font-weight:600;font-family:'JetBrains Mono',monospace;
+}
+.kpi-v{
+  font-family:'Fraunces',serif;font-size:44px;font-weight:600;
+  line-height:1;margin-top:10px;letter-spacing:-.03em;color:var(--ink);
+}
+.kpi-v .unit{font-size:14px;color:var(--text-3);margin-left:6px;font-family:'Pretendard',sans-serif}
+.kpi-d{font-size:12px;color:var(--text-3);margin-top:8px;line-height:1.45}
+.kpi.warn{border-left:3px solid var(--st-critical)}
+.kpi.warn .kpi-v{color:var(--st-critical)}
+
+/* ─────────  Alerts  ───────── */
+.alerts{margin-bottom:36px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.alert{
+  border-radius:var(--r-md);padding:16px 20px;
+  display:flex;align-items:flex-start;gap:14px;
+  font-size:14px;line-height:1.55;background:var(--surface);
+  box-shadow:var(--shadow-sm);
+}
+.alert-icon{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+.alert-c{flex:1}
+.alert-t{
+  font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:5px;font-family:'JetBrains Mono',monospace;
+}
+.alert.critical{border:1px solid #F4C9C9;background:linear-gradient(180deg,#FCEDED,#FFFFFF)}
+.alert.critical .alert-icon{background:#FCEDED;color:var(--st-critical)}
+.alert.critical .alert-t{color:var(--st-critical)}
+.alert.warning{border:1px solid #F4DCB0;background:linear-gradient(180deg,#FCF4E6,#FFFFFF)}
+.alert.warning .alert-icon{background:#FCF4E6;color:var(--st-warning)}
+.alert.warning .alert-t{color:var(--st-warning)}
+.alert b{color:var(--ink);font-weight:600}
+
+/* ─────────  Day strip  ───────── */
+.strip{
+  display:grid;grid-template-columns:repeat(7,1fr);gap:10px;
+  margin-bottom:40px;
+}
+.strip-day{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-md);padding:14px 8px;
+  text-align:center;cursor:pointer;
+  transition:all .2s;text-decoration:none;color:inherit;
+  position:relative;display:block;
+  box-shadow:var(--shadow-sm);
+}
+.strip-day:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--line-strong)}
+.strip-day.weekend{opacity:.55}
+.strip-dn{font-size:10px;color:var(--text-3);letter-spacing:.08em;text-transform:uppercase;font-weight:600;font-family:'JetBrains Mono',monospace}
+.strip-dd{font-family:'Fraunces',serif;font-size:30px;font-weight:600;line-height:1;margin:6px 0;font-style:italic;color:var(--ink)}
+.strip-cnt{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-3)}
+.strip-cnt b{color:var(--ink);font-weight:600}
+.strip-day.has-critical::after{
+  content:'';position:absolute;top:8px;right:8px;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--st-critical);
+  box-shadow:0 0 0 4px rgba(200,50,76,.12);
+}
+.strip-day.dday-mark{
+  background:var(--ink);border-color:var(--ink);
+}
+.strip-day.dday-mark .strip-dn{color:#FF8888}
+.strip-day.dday-mark .strip-dd{color:#fff}
+.strip-day.dday-mark .strip-cnt{color:rgba(255,255,255,.65)}
+.strip-day.dday-mark .strip-cnt b{color:#fff}
+
+/* ─────────  Section title  ───────── */
+.sec-title{
+  display:flex;align-items:baseline;gap:18px;
+  margin:48px 0 22px;
+  padding-top:8px;
+}
+.sec-title .num{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--text-4);font-weight:600;letter-spacing:.06em;
+  align-self:flex-start;margin-top:14px;
+}
+.sec-title h2{
+  font-family:'Fraunces',serif;font-size:34px;font-weight:600;
+  letter-spacing:-.025em;line-height:1.1;color:var(--ink);
+}
+.sec-title h2 em{font-style:italic;color:var(--text-2);font-weight:400}
+.sec-title .line{flex:1;height:1px;background:var(--line);margin-bottom:8px}
+.sec-title .badge{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;
+  align-self:flex-end;margin-bottom:10px;
+}
+
+/* ─────────  Day cards  ───────── */
+.days{display:flex;flex-direction:column;gap:16px}
+.day{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  box-shadow:var(--shadow-sm);
+  transition:box-shadow .2s;
+}
+.day:hover{box-shadow:var(--shadow-md)}
+.day-header{
+  padding:22px 26px;
+  border-bottom:1px solid var(--line-soft);
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(180deg,var(--surface-alt),var(--surface));
+  gap:16px;flex-wrap:wrap;
+}
+.day-headL{display:flex;align-items:center;gap:20px}
+.day-num{
+  font-family:'Fraunces',serif;font-size:52px;font-weight:600;line-height:1;
+  letter-spacing:-.03em;font-style:italic;color:var(--ink);
+}
+.day-info{}
+.day-dow{
+  font-size:11px;color:var(--text-3);letter-spacing:.12em;text-transform:uppercase;
+  font-weight:600;font-family:'JetBrains Mono',monospace;
+}
+.day-tag{font-size:14px;color:var(--text-2);margin-top:3px}
+.day-tag b{color:var(--ink);font-weight:600}
+.day-headR{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.dday-pill{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;
+  padding:5px 9px;border-radius:6px;letter-spacing:.04em;
+  background:var(--surface-3);color:var(--text-2);
+}
+.dday-pill.crit{background:#FCEDED;color:var(--st-critical)}
+.dday-pill.star{background:#F3EEFC;color:var(--t-event-deep)}
+.dday-pill.warn{background:#FCF4E6;color:var(--st-warning)}
+.day.is-empty .day-num{color:var(--text-5)}
+.day.is-saturday .day-header{background:var(--bg-warm)}
+
+.day-body{padding:14px 18px}
+.day-empty{
+  padding:32px;text-align:center;color:var(--text-4);
+  font-style:italic;font-family:'Fraunces',serif;font-size:16px;
+}
+
+.tracks{display:flex;flex-direction:column;gap:4px}
+.event{
+  display:grid;
+  grid-template-columns:72px 32px 1fr;
+  align-items:center;
+  gap:14px;
+  padding:11px 14px;
+  border-radius:var(--r-md);
+  transition:background .15s;
+  position:relative;
+}
+.event:hover{background:var(--surface-alt)}
+.event-time{
+  font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;
+  color:var(--text-2);letter-spacing:.02em;
+}
+.event-time.tbd{color:var(--text-4);font-style:italic;font-family:'Pretendard',sans-serif;font-size:11px;font-weight:400}
+.event-icon{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;
+  font-family:'Pretendard',sans-serif;
+}
+.event-c{display:flex;flex-direction:column;gap:3px}
+.event-title{font-size:14.5px;font-weight:500;color:var(--ink);line-height:1.4}
+.event-title b{color:var(--st-critical);font-weight:600}
+.event-title .sub{color:var(--text-3);font-size:12px;font-weight:400;margin-left:4px}
+.event-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:1px}
+.event-team{font-size:11.5px;color:var(--text-3);font-weight:500}
+.tag{
+  font-size:9.5px;font-weight:700;letter-spacing:.06em;
+  padding:2px 7px;border-radius:4px;text-transform:uppercase;
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* Track variants */
+.event.track-edu .event-icon{background:var(--t-edu-bg);color:var(--t-edu);border:1px solid var(--t-edu-line)}
+.event.track-install .event-icon{background:var(--t-install-bg);color:var(--t-install);border:1px solid var(--t-install-line)}
+.event.track-meet .event-icon{background:var(--t-meet-bg);color:var(--t-meet);border:1px solid var(--t-meet-line)}
+.event.track-event .event-icon{background:var(--t-event-bg);color:var(--t-event);border:1px solid var(--t-event-line)}
+.event.track-visit .event-icon{background:var(--t-visit-bg);color:var(--t-visit);border:1px solid var(--t-visit-line)}
+.event.track-ops .event-icon{background:var(--t-ops-bg);color:var(--t-ops);border:1px solid var(--t-ops-line)}
+.event.track-usp .event-icon{background:var(--t-usp-bg);color:var(--t-usp);border:1px solid var(--t-usp-line);font-weight:700;font-size:10px}
+.event.track-sop .event-icon{background:var(--t-hr-bg);color:var(--t-hr-deep);border:1px solid var(--t-hr-line);font-weight:700;font-size:10px}
+.event.is-sop{background:linear-gradient(90deg,var(--t-hr-bg),transparent 60%);border-left:3px solid var(--t-hr-deep);padding-left:11px}
+.event.is-usp{background:linear-gradient(90deg,var(--t-usp-bg),transparent 60%);border-left:3px solid var(--t-usp);padding-left:11px}
+.tag.usp{background:var(--t-usp-bg);color:var(--t-usp-deep);border:1px solid var(--t-usp-line)}
+.tag.sop{background:var(--t-hr-bg);color:var(--t-hr-deep);border:1px solid var(--t-hr-line)}
+
+/* ─────────  P1~P6 Framework  ───────── */
+.framework{
+  margin:0 0 36px;
+  background:var(--bg-warm);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  box-shadow:var(--shadow-sm);
+}
+.fw-header{
+  padding:14px 24px;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  border-bottom:1px solid var(--line-soft);
+  background:var(--surface-alt);
+}
+.fw-icon{
+  font-size:20px;color:var(--t-install-deep);
+  width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--t-install-bg);border:1px solid var(--t-install-line);
+  font-weight:600;line-height:1;
+}
+.fw-header h3{
+  font-family:'Pretendard',sans-serif;font-size:16px;font-weight:700;
+  color:var(--ink);letter-spacing:-.01em;margin:0;
+}
+.fw-header h3 span{font-weight:400;color:var(--text-3);font-size:13px;margin-left:6px}
+.fw-sub{
+  font-size:12.5px;color:var(--text-3);
+  padding-left:10px;margin-left:auto;
+  border-left:1px solid var(--line-soft);
+}
+.fw-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+}
+.fw-card{
+  padding:16px 24px;
+  border-right:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+  background:var(--surface);
+  position:relative;
+}
+.fw-card:nth-child(2n){border-right:none}
+.fw-card:nth-last-child(-n+2){border-bottom:none}
+.fw-title{
+  font-family:'Pretendard',sans-serif;font-size:15px;font-weight:700;
+  color:var(--ink);letter-spacing:-.005em;
+  display:flex;align-items:baseline;gap:8px;
+}
+.fw-title .pn{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:600;
+  color:var(--t-meet-deep);font-size:15px;
+}
+.fw-meta{
+  margin-top:6px;font-size:13px;color:var(--text-2);line-height:1.5;
+  display:flex;align-items:flex-start;gap:6px;
+}
+.fw-meta .ar{color:var(--text-4);flex-shrink:0;margin-top:1px}
+.fw-deliv{
+  margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;
+}
+.fw-deliv .chip{
+  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
+  padding:2px 6px;border-radius:3px;letter-spacing:.04em;
+}
+.fw-deliv .chip.usp{background:#EAF0F8;color:var(--t-usp-deep);border:1px solid var(--t-usp-line)}
+.fw-deliv .chip.kor{background:#E8F6EF;color:var(--t-visit-deep);border:1px solid var(--t-visit-line)}
+.fw-deliv .chip.nzw{background:#FCF4E6;color:var(--t-install-deep);border:1px solid var(--t-install-line)}
+.fw-deliv .chip.sop{background:var(--t-hr-bg);color:var(--t-hr-deep);border:1px solid var(--t-hr-line)}
+@media (max-width:880px){
+  .fw-grid{grid-template-columns:1fr}
+  .fw-card{border-right:none}
+  .fw-card:nth-last-child(-n+2){border-bottom:1px solid var(--line-soft)}
+  .fw-card:last-child{border-bottom:none}
+  .fw-header{padding:12px 18px}
+  .fw-card{padding:14px 18px}
+  .fw-sub{margin-left:0;padding-left:0;border-left:none;width:100%}
+}
+
+/* ─────────  Next Week Preview  ───────── */
+.next-week{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  overflow:hidden;box-shadow:var(--shadow-sm);
+}
+.nw-header{
+  padding:24px 28px;
+  background:linear-gradient(180deg,#FCEDED,var(--surface));
+  border-bottom:1px solid var(--line-soft);
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:20px;flex-wrap:wrap;
+}
+.nw-header-L{flex:1;min-width:280px}
+.nw-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--st-critical);font-weight:600;
+}
+.nw-header h3{
+  font-family:'Fraunces',serif;font-size:26px;font-weight:600;
+  margin-top:4px;line-height:1.2;color:var(--ink);letter-spacing:-.025em;
+}
+.nw-header h3 em{font-style:italic;color:var(--text-2);font-weight:400}
+.nw-desc{font-size:13.5px;color:var(--text-2);margin-top:8px;line-height:1.55;max-width:700px}
+.nw-desc b{color:var(--ink);font-weight:600}
+
+.nw-dday{
+  padding:14px 22px;background:var(--ink);color:#fff;
+  border-radius:var(--r-md);text-align:center;min-width:110px;
+}
+.nw-dday-l{
+  font-size:9px;letter-spacing:.14em;color:rgba(255,255,255,.65);
+  font-weight:700;font-family:'JetBrains Mono',monospace;
+}
+.nw-dday-v{
+  font-family:'Fraunces',serif;font-size:30px;font-weight:600;
+  margin-top:4px;font-style:italic;letter-spacing:-.02em;
+}
+.nw-dday-d{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px}
+
+.nw-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.nw-kpi-c{
+  padding:18px 20px;text-align:center;
+  border-right:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+}
+.nw-kpi-c:nth-child(4){border-right:none}
+.nw-kpi-l{
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-3);font-weight:600;font-family:'JetBrains Mono',monospace;
+}
+.nw-kpi-v{
+  font-family:'Fraunces',serif;font-size:32px;font-weight:600;
+  margin-top:4px;line-height:1;color:var(--ink);letter-spacing:-.02em;font-style:italic;
+}
+.nw-kpi-v span{
+  font-size:14px;color:var(--text-3);margin-left:2px;
+  font-family:'Pretendard',sans-serif;font-style:normal;font-weight:500;
+}
+.nw-kpi-d{font-size:11.5px;color:var(--text-3);margin-top:6px;line-height:1.4}
+
+.nw-strip-grid{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  border-bottom:1px solid var(--line-soft);
+}
+.nw-day-c{
+  padding:14px 8px;text-align:center;
+  border-right:1px solid var(--line-soft);
+}
+.nw-day-c:last-child{border-right:none}
+.nw-day-c.d-day{background:var(--ink);color:#fff}
+.nw-day-c.d-day .nw-dn{color:#FF8888}
+.nw-day-c.d-day .nw-dd{color:#fff}
+.nw-day-c.d-day .nw-dl{color:rgba(255,255,255,.85)}
+.nw-day-c.off{opacity:.5;background:var(--bg-warm)}
+.nw-day-c.hybrid{background:linear-gradient(180deg,#FCF4E6,var(--surface))}
+.nw-day-c.hybrid .nw-dl{color:var(--st-warning);font-weight:600}
+.nw-dn{
+  font-size:10px;letter-spacing:.06em;color:var(--text-3);
+  font-weight:600;font-family:'JetBrains Mono',monospace;
+}
+.nw-dd{
+  font-family:'Fraunces',serif;font-size:24px;font-weight:600;
+  margin:4px 0;font-style:italic;color:var(--ink);
+}
+.nw-dl{font-size:10.5px;color:var(--text-2);line-height:1.3}
+
+.nw-bottom-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--line-soft);
+}
+.nw-actions,.nw-risks{padding:22px 26px}
+.nw-actions{border-right:1px solid var(--line-soft)}
+.nw-bh{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);
+  font-weight:700;margin-bottom:12px;
+}
+.nw-bh.risk{color:var(--st-critical)}
+
+/* nw items CRUD */
+.nw-actions ol li, .nw-risks ol li{position:relative;padding-right:96px}
+.nw-actions ol li .action-btns,
+.nw-risks ol li .action-btns{
+  position:absolute;top:8px;right:6px;
+}
+body.edit-mode .nw-actions ol li:hover,
+body.edit-mode .nw-risks ol li:hover{background:var(--surface-alt);border-radius:4px}
+body.edit-mode .nw-actions ol li:hover .action-btns,
+body.edit-mode .nw-risks ol li:hover .action-btns{display:flex}
+.nw-add-btn{
+  display:none;width:100%;
+  margin-top:10px;padding:9px;
+  background:transparent;border:1.5px dashed var(--line-strong);
+  border-radius:6px;color:var(--text-3);
+  font-family:'Pretendard',sans-serif;font-size:11.5px;font-weight:500;
+  cursor:pointer;transition:all .15s;
+}
+.nw-add-btn:hover{background:var(--surface-alt);color:var(--ink);border-color:var(--ink)}
+.nw-add-btn.risk:hover{color:var(--st-critical);border-color:var(--st-critical)}
+body.edit-mode .nw-add-btn{display:block}
+.nw-actions ol,.nw-risks ol{list-style:none;padding:0;margin:0;counter-reset:item}
+.nw-actions li,.nw-risks li{
+  font-size:13px;line-height:1.55;color:var(--text-2);
+  padding:8px 0 8px 24px;position:relative;
+  border-bottom:1px dashed var(--line-soft);
+}
+.nw-actions li:last-child,.nw-risks li:last-child{border-bottom:none}
+.nw-actions li::before,.nw-risks li::before{
+  counter-increment:item;content:counter(item)".";
+  position:absolute;left:0;top:8px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  color:var(--text-3);width:18px;
+}
+.nw-actions li b,.nw-risks li b{color:var(--ink);font-weight:600}
+.nw-actions li.prio{
+  background:linear-gradient(90deg,#FCEDED,transparent 70%);
+  margin:0 -26px;padding-left:50px;padding-right:26px;
+}
+.nw-actions li.prio::before{color:var(--st-critical);left:26px}
+.nw-risks li.high b{color:var(--st-critical)}
+.nw-risks li.high::before{color:var(--st-critical)}
+
+.nw-pmap{padding:22px 26px}
+.nw-pmap-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:10px 14px;margin-top:8px;
+}
+.nw-p{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;color:var(--text-2);
+  padding:9px 12px;background:var(--surface-alt);
+  border:1px solid var(--line);border-radius:var(--r-sm);
+}
+.nw-p .pn{
+  font-family:'Fraunces',serif;color:var(--t-meet-deep);
+  font-style:italic;font-size:14px;font-weight:700;
+}
+.nw-p .pl{flex:1;font-weight:500;color:var(--ink)}
+.nw-p .ok,.nw-p .active{
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;
+  padding:2px 6px;border-radius:3px;letter-spacing:.04em;
+}
+.nw-p .ok{background:var(--t-visit-bg);color:var(--t-visit-deep);border:1px solid var(--t-visit-line)}
+.nw-p .active{background:var(--t-edu-bg);color:var(--t-edu-deep);border:1px solid var(--t-edu-line)}
+
+@media (max-width:920px){
+  .nw-kpi-grid{grid-template-columns:1fr 1fr}
+  .nw-kpi-c:nth-child(2n){border-right:none}
+  .nw-bottom-grid{grid-template-columns:1fr}
+  .nw-actions{border-right:none;border-bottom:1px solid var(--line-soft)}
+  .nw-pmap-grid{grid-template-columns:1fr}
+  .nw-day-c{padding:10px 4px}
+  .nw-dd{font-size:20px}
+  .nw-dl{font-size:9.5px}
+  .nw-header{padding:20px}
+  .nw-actions,.nw-risks,.nw-pmap{padding:18px 20px}
+  .nw-actions li.prio{margin:0 -20px;padding-left:42px;padding-right:20px}
+  .nw-actions li.prio::before{left:20px}
+}
+
+/* ─────────  SOP Boost Section  ───────── */
+.sop-block{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  overflow:hidden;box-shadow:var(--shadow-sm);
+}
+.sop-header{
+  padding:24px 28px;
+  background:linear-gradient(180deg,var(--t-hr-bg),var(--surface));
+  border-bottom:1px solid var(--line-soft);
+  display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;
+}
+.sop-header-L .sop-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--t-hr-deep);font-weight:600;
+}
+.sop-header-L h3{
+  font-family:'Fraunces',serif;font-size:26px;font-weight:600;
+  letter-spacing:-.025em;color:var(--ink);margin-top:4px;line-height:1.2;
+}
+.sop-header-L h3 em{font-style:italic;color:var(--text-2);font-weight:400}
+.sop-header-L .sop-desc{font-size:13.5px;color:var(--text-2);margin-top:8px;max-width:600px;line-height:1.55}
+.sop-stat{display:flex;gap:10px}
+.sop-stat-b{
+  text-align:right;background:var(--surface);
+  padding:8px 12px;border-radius:var(--r-md);
+  border:1px solid var(--line);min-width:64px;
+}
+.sop-stat-l{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);font-weight:600;font-family:'JetBrains Mono',monospace}
+.sop-stat-v{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--ink);line-height:1;margin-top:3px;font-style:italic}
+
+.sop-tracks{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.sop-track{
+  padding:22px 24px;
+  border-right:1px solid var(--line-soft);
+  position:relative;
+}
+.sop-track:last-child{border-right:none}
+.sop-track-h{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:6px;gap:8px;
+}
+.sop-track-letter{
+  width:30px;height:30px;border-radius:8px;
+  background:var(--t-hr-bg);color:var(--t-hr-deep);
+  border:1px solid var(--t-hr-line);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',serif;font-size:16px;font-weight:600;font-style:italic;
+  flex-shrink:0;
+}
+.sop-track-name{
+  font-family:'Fraunces',serif;font-size:17px;font-weight:600;
+  letter-spacing:-.015em;color:var(--ink);line-height:1.3;
+}
+.sop-track-name em{font-style:italic;color:var(--text-2);font-weight:400}
+.sop-track-sub{
+  font-size:12px;color:var(--text-3);line-height:1.5;margin:6px 0 14px;
+  padding-bottom:10px;border-bottom:1px dashed var(--line);
+}
+.sop-track-sub b{color:var(--text-2);font-weight:600}
+.sop-milestones{list-style:none;padding:0;margin:0}
+.sop-ms{
+  display:grid;grid-template-columns:48px 1fr;gap:10px;align-items:flex-start;
+  padding:7px 0;font-size:13px;color:var(--text-2);line-height:1.4;
+}
+.sop-ms-num{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  color:var(--t-hr-deep);background:var(--t-hr-bg);
+  padding:2px 6px;border-radius:4px;border:1px solid var(--t-hr-line);
+  text-align:center;letter-spacing:.04em;align-self:flex-start;margin-top:1px;
+}
+.sop-ms-c b{color:var(--ink);font-weight:600}
+.sop-ms-c .when{
+  display:block;font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;color:var(--text-3);margin-top:2px;letter-spacing:.02em;
+}
+.sop-ms.final .sop-ms-num{background:#FCEDED;color:var(--st-critical);border-color:#F4C9C9}
+
+/* SOP CRUD — action buttons */
+.sop-track{position:relative}
+.sop-track .action-btns{
+  position:absolute;top:14px;right:14px;
+}
+.sop-ms{position:relative;border-radius:6px;transition:background .15s}
+body.edit-mode .sop-ms:hover{background:var(--surface-alt)}
+.sop-ms .action-btns{
+  position:absolute;top:50%;right:6px;transform:translateY(-50%);
+}
+body.edit-mode .sop-track:hover > .action-btns,
+body.edit-mode .sop-ms:hover .action-btns{display:flex}
+.sop-add-ms{
+  display:none;width:calc(100% + 8px);
+  margin:8px -4px 0;padding:7px;
+  background:transparent;border:1.5px dashed var(--line-strong);
+  border-radius:6px;color:var(--text-3);
+  font-family:'Pretendard',sans-serif;font-size:11px;font-weight:500;
+  cursor:pointer;transition:all .15s;
+}
+.sop-add-ms:hover{background:var(--surface-alt);color:var(--ink);border-color:var(--ink)}
+body.edit-mode .sop-add-ms{display:block}
+.sop-add-track{
+  display:none;grid-column:1/-1;
+  margin:0;padding:14px;
+  background:transparent;border:1.5px dashed var(--line-strong);
+  border-top:none;border-radius:0 0 var(--r-lg) var(--r-lg);
+  color:var(--text-3);
+  font-family:'Pretendard',sans-serif;font-size:13px;font-weight:500;
+  cursor:pointer;transition:all .15s;width:100%;
+}
+.sop-add-track:hover{background:var(--surface-alt);color:var(--ink);border-color:var(--ink)}
+body.edit-mode .sop-add-track{display:block}
+@media (max-width:880px){
+  .sop-tracks{grid-template-columns:1fr}
+  .sop-track{border-right:none;border-bottom:1px solid var(--line-soft)}
+  .sop-track:last-child{border-bottom:none}
+}
+
+.event.is-critical{background:linear-gradient(90deg,#FCEDED,transparent 60%);border-left:3px solid var(--st-critical);padding-left:11px}
+.event.is-critical .event-time{color:var(--st-critical);font-weight:600}
+.event.is-star{background:linear-gradient(90deg,#F3EEFC,transparent 60%);border-left:3px solid var(--t-event);padding-left:11px}
+.event.is-conflict{background:linear-gradient(90deg,#FCF4E6,transparent 60%)}
+
+.tag.crit{background:#FCEDED;color:var(--st-critical);border:1px solid #F4C9C9}
+.tag.star{background:#F3EEFC;color:var(--t-event-deep);border:1px solid #DCCAF5}
+.tag.conflict{background:#FCF4E6;color:var(--st-warning);border:1px solid #F4DCB0}
+.tag.new{background:#E5F4F2;color:var(--t-hr-deep);border:1px solid #B0DFD9}
+.tag.todo{background:var(--surface-3);color:var(--text-2);border:1px solid var(--line-strong)}
+
+/* Sub-section banner */
+.day-divider{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 14px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--t-ops-deep);font-weight:700;
+  background:var(--t-ops-bg);border-radius:6px;
+  margin:0 0 8px;border:1px solid var(--t-ops-line);
+  font-family:'JetBrains Mono',monospace;
+}
+.day-divider .dot{width:6px;height:6px;border-radius:50%;background:var(--t-ops)}
+.day-divider .l{flex:1;height:1px;background:var(--t-ops-line)}
+
+/* ─────────  HR Compliance Section  ───────── */
+.hr-block{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  box-shadow:var(--shadow-sm);
+}
+.hr-header{
+  padding:24px 28px;
+  background:linear-gradient(180deg,var(--t-hr-bg),var(--surface));
+  border-bottom:1px solid var(--line-soft);
+  display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;
+}
+.hr-header-L .hr-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--t-hr-deep);
+  font-weight:600;
+}
+.hr-header-L h3{
+  font-family:'Fraunces',serif;font-size:26px;font-weight:600;
+  letter-spacing:-.025em;color:var(--ink);margin-top:4px;line-height:1.2;
+}
+.hr-header-L h3 em{font-style:italic;color:var(--text-2);font-weight:400}
+.hr-header-L .hr-desc{font-size:13.5px;color:var(--text-2);margin-top:8px;max-width:520px;line-height:1.55}
+.hr-stat{display:flex;gap:18px;align-items:flex-start}
+.hr-stat-b{
+  text-align:right;background:var(--surface);
+  padding:10px 14px;border-radius:var(--r-md);
+  border:1px solid var(--line);
+}
+.hr-stat-l{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);font-weight:600;font-family:'JetBrains Mono',monospace}
+.hr-stat-v{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--ink);line-height:1;margin-top:4px;font-style:italic}
+.hr-stat-d{font-size:11px;color:var(--text-3);margin-top:2px}
+
+.hr-list{padding:8px 0}
+.hr-item{
+  display:grid;grid-template-columns:48px 1fr 130px;
+  gap:18px;align-items:flex-start;
+  padding:18px 28px;
+  border-bottom:1px solid var(--line-soft);
+  transition:background .15s;
+}
+.hr-item:last-child{border-bottom:none}
+.hr-item:hover{background:var(--surface-alt)}
+.hr-num{
+  width:32px;height:32px;border-radius:8px;
+  background:var(--t-hr-bg);color:var(--t-hr-deep);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',serif;font-size:16px;font-weight:600;font-style:italic;
+  border:1px solid var(--t-hr-line);
+}
+.hr-c{}
+.hr-t{
+  font-size:15.5px;font-weight:600;color:var(--ink);line-height:1.4;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.hr-t .x{color:var(--st-critical);font-weight:700}
+.hr-t .ok{color:var(--st-success);font-weight:700}
+.hr-d{font-size:13.5px;color:var(--text-2);margin-top:6px;line-height:1.6}
+.hr-d ul{list-style:none;padding:0;margin-top:4px}
+.hr-d li{padding-left:14px;position:relative;margin-bottom:3px}
+.hr-d li::before{content:'';position:absolute;left:0;top:10px;width:6px;height:1px;background:var(--text-4)}
+.hr-d b{color:var(--ink);font-weight:600}
+.hr-d code{
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  background:var(--surface-3);padding:1px 6px;border-radius:4px;
+  color:var(--t-meet-deep);
+}
+.hr-due{
+  text-align:right;
+}
+.hr-due-pill{
+  display:inline-block;font-family:'JetBrains Mono',monospace;
+  font-size:11px;font-weight:700;letter-spacing:.04em;
+  padding:5px 10px;border-radius:6px;
+}
+.hr-due-pill.d7{background:#FCEDED;color:var(--st-critical);border:1px solid #F4C9C9}
+.hr-due-pill.onboard{background:var(--t-edu-bg);color:var(--t-edu-deep);border:1px solid var(--t-edu-line)}
+.hr-due-pill.run{background:var(--t-visit-bg);color:var(--t-visit-deep);border:1px solid var(--t-visit-line)}
+.hr-due-mark{font-size:10px;color:var(--text-3);margin-top:5px;letter-spacing:.04em;text-transform:uppercase;font-weight:500;font-family:'JetBrains Mono',monospace}
+
+/* HR risk banner */
+.hr-risk{
+  margin:0;padding:18px 28px;
+  background:linear-gradient(180deg,#FCEDED,var(--surface));
+  border-top:1px solid var(--line-soft);
+  display:flex;gap:16px;align-items:flex-start;
+}
+.hr-risk-icon{
+  width:38px;height:38px;border-radius:50%;
+  background:#F4C9C9;color:var(--st-critical);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+}
+.hr-risk-c{flex:1;font-size:13.5px;color:var(--text-2);line-height:1.6}
+.hr-risk-t{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--st-critical);font-weight:700;margin-bottom:5px;
+}
+.hr-risk-c b{color:var(--ink);font-weight:600}
+
+/* ─────────  USP Agenda Cards  ───────── */
+.usp-block{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  overflow:hidden;box-shadow:var(--shadow-sm);
+}
+.usp-header{
+  padding:24px 28px;
+  background:linear-gradient(180deg,var(--t-usp-bg),var(--surface));
+  border-bottom:1px solid var(--line-soft);
+  display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;
+}
+.usp-header-L .usp-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--t-usp-deep);font-weight:600;
+}
+.usp-header-L h3{
+  font-family:'Fraunces',serif;font-size:26px;font-weight:600;
+  letter-spacing:-.025em;color:var(--ink);margin-top:4px;line-height:1.2;
+}
+.usp-header-L h3 em{font-style:italic;color:var(--text-2);font-weight:400}
+.usp-header-L .usp-desc{font-size:13.5px;color:var(--text-2);margin-top:8px;max-width:560px;line-height:1.55}
+.usp-fixed-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--t-usp);color:#fff;padding:8px 14px;border-radius:var(--r-md);
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.06em;
+}
+.usp-fixed-pill .dot{width:6px;height:6px;border-radius:50%;background:#7CC3FF;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.usp-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+}
+.usp-card{
+  padding:24px 28px;
+  border-right:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+  position:relative;
+}
+.usp-card:nth-child(2n){border-right:none}
+.usp-card:nth-last-child(-n+2){border-bottom:none}
+.usp-card-h{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed var(--line);
+  gap:12px;
+}
+.usp-card-hL{display:flex;align-items:center;gap:14px}
+.usp-day-num{
+  font-family:'Fraunces',serif;font-size:38px;font-weight:600;font-style:italic;
+  color:var(--ink);line-height:1;letter-spacing:-.02em;
+}
+.usp-day-info{}
+.usp-day-dow{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);font-weight:600;
+}
+.usp-day-time{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);font-weight:600;margin-top:2px}
+.usp-day-tag{
+  font-size:12.5px;color:var(--text-2);margin-top:3px;line-height:1.4;
+}
+.usp-day-tag b{color:var(--ink);font-weight:600}
+.usp-card-hR{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.usp-dday-pill{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  padding:4px 9px;border-radius:6px;
+  background:var(--t-usp-bg);color:var(--t-usp-deep);border:1px solid var(--t-usp-line);
+  letter-spacing:.04em;
+}
+.usp-merge-pill{
+  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;
+  padding:3px 7px;border-radius:4px;letter-spacing:.04em;text-transform:uppercase;
+  background:var(--t-meet-bg);color:var(--t-meet-deep);border:1px solid var(--t-meet-line);
+}
+.usp-agenda{list-style:none;padding:0;margin:0}
+.usp-agenda li{
+  display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:flex-start;
+  padding:8px 0;font-size:13.5px;color:var(--text-2);line-height:1.5;
+}
+.usp-agenda .num{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--surface-3);color:var(--text-2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;
+  flex-shrink:0;margin-top:1px;
+}
+.usp-agenda li.priority .num{background:var(--t-usp-bg);color:var(--t-usp-deep);border:1px solid var(--t-usp-line)}
+.usp-agenda li.priority{color:var(--ink);font-weight:500}
+.usp-agenda li b{color:var(--ink);font-weight:600}
+.usp-agenda li code{
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;
+  background:var(--surface-3);padding:1px 6px;border-radius:4px;
+  color:var(--t-meet-deep);
+}
+.usp-agenda .deliv{
+  display:inline-block;font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;font-weight:700;letter-spacing:.04em;
+  padding:1px 6px;border-radius:3px;margin-right:5px;vertical-align:middle;
+}
+.usp-agenda .deliv.usp{background:#EAF0F8;color:var(--t-usp-deep);border:1px solid var(--t-usp-line)}
+.usp-agenda .deliv.kor{background:#E8F6EF;color:var(--t-visit-deep);border:1px solid var(--t-visit-line)}
+.usp-agenda .deliv.nzw{background:#FCF4E6;color:var(--t-install-deep);border:1px solid var(--t-install-line)}
+.usp-agenda .deliv.partner{background:#F3EEFC;color:var(--t-event-deep);border:1px solid var(--t-event-line)}
+.usp-agenda .trk{
+  display:inline-block;font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:700;letter-spacing:.04em;
+  padding:1px 5px;border-radius:3px;margin-left:4px;
+  text-transform:uppercase;vertical-align:middle;
+}
+.usp-agenda .trk.hr{background:var(--t-hr-bg);color:var(--t-hr-deep);border:1px solid var(--t-hr-line)}
+.usp-agenda .trk.collab{background:var(--t-meet-bg);color:var(--t-meet-deep);border:1px solid var(--t-meet-line)}
+.usp-agenda .trk.sys{background:var(--t-event-bg);color:var(--t-event-deep);border:1px solid var(--t-event-line)}
+@media (max-width:920px){
+  .usp-grid{grid-template-columns:1fr}
+  .usp-card{border-right:none}
+  .usp-card:nth-child(n){border-bottom:1px solid var(--line-soft)}
+  .usp-card:last-child{border-bottom:none}
+  .usp-header{padding:20px}
+  .usp-card{padding:20px}
+}
+
+/* ─────────  Legend / Notes  ───────── */
+.legend{
+  margin-top:36px;padding:24px 28px;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);
+}
+.legend-title{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);
+  font-weight:600;
+}
+.legend-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 22px;margin-top:16px}
+.lg-item{display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--text-2)}
+.lg-sw{
+  width:28px;height:28px;border-radius:8px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;
+}
+.lg-item b{color:var(--ink);font-weight:600}
+
+.notes{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.note{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-sm);
+}
+.note-t{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);font-weight:700;margin-bottom:10px}
+.note-c{font-size:13.5px;color:var(--text-2);line-height:1.7}
+.note-c b{color:var(--ink);font-weight:600}
+.note-c ul{list-style:none;padding-left:0}
+.note-c li{padding-left:16px;position:relative;margin-bottom:6px}
+.note-c li::before{content:'';position:absolute;left:0;top:9px;width:8px;height:1px;background:var(--text-4)}
+
+/* Legend item — make relative for action buttons + CRUD support */
+.lg-item{position:relative;padding:6px 8px;border-radius:6px;transition:background .15s}
+body.edit-mode .lg-item:hover{background:var(--surface-alt)}
+.lg-item .action-btns{
+  position:absolute;top:50%;right:6px;transform:translateY(-50%);
+}
+.lg-item .order-btns{
+  display:none;flex-direction:column;gap:1px;margin-left:auto;
+}
+.lg-item .order-btn{
+  width:18px;height:14px;background:var(--surface);border:1px solid var(--line);
+  cursor:pointer;font-size:9px;color:var(--text-3);padding:0;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+}
+.lg-item .order-btn:hover{background:var(--surface-alt);color:var(--ink)}
+body.edit-mode .lg-item:hover .order-btns{display:flex}
+body.edit-mode .lg-item:hover .action-btns{display:flex}
+.lg-add{
+  grid-column:1 / -1;margin-top:6px;display:none;width:100%;
+  padding:10px;background:transparent;border:1.5px dashed var(--line-strong);
+  border-radius:var(--r-md);color:var(--text-3);
+  font-family:'Pretendard',sans-serif;font-size:12.5px;font-weight:500;
+  cursor:pointer;transition:all .15s;letter-spacing:.02em;
+}
+.lg-add:hover{background:var(--surface-alt);color:var(--ink);border-color:var(--ink);border-style:solid}
+body.edit-mode .lg-add{display:block}
+.legend-title-row{display:flex;justify-content:space-between;align-items:center}
+.legend-count-tag{
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:600;
+  letter-spacing:.06em;color:var(--text-3);
+  padding:3px 8px;border-radius:4px;background:var(--surface-alt);
+  border:1px solid var(--line);
+}
+
+footer{
+  margin-top:48px;padding-top:22px;border-top:1px solid var(--line-soft);
+  text-align:center;color:var(--text-4);font-size:12px;line-height:1.7;
+}
+footer .mark{font-family:'Fraunces',serif;font-style:italic;color:var(--text-3)}
+
+/* ─────────  Edit Mode + CRUD UI  ───────── */
+.edit-toolbar{
+  display:flex;gap:8px;align-items:center;
+}
+.tb-btn{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:6px 12px;border-radius:var(--r-sm);
+  background:var(--surface);border:1px solid var(--line);
+  color:var(--text-2);cursor:pointer;transition:all .15s;
+}
+.tb-btn:hover{background:var(--surface-alt);border-color:var(--line-strong);color:var(--ink)}
+.tb-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tb-btn.danger{color:var(--st-critical);border-color:#F4C9C9}
+.tb-btn.danger:hover{background:#FCEDED;color:var(--st-critical)}
+.save-badge{
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:600;
+  color:var(--st-success);padding:4px 8px;border-radius:4px;
+  background:var(--t-visit-bg);border:1px solid var(--t-visit-line);
+  opacity:0;transition:opacity .3s;
+}
+.save-badge.show{opacity:1}
+
+.event,.usp-agenda li{position:relative}
+.action-btns{
+  position:absolute;top:50%;right:8px;transform:translateY(-50%);
+  display:none;gap:4px;z-index:5;
+}
+.act-btn{
+  width:26px;height:26px;border-radius:6px;
+  background:var(--surface);border:1px solid var(--line-strong);
+  color:var(--text-2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;padding:0;transition:all .15s;
+  box-shadow:var(--shadow-sm);
+}
+.act-btn:hover{background:var(--surface-alt);color:var(--ink);transform:scale(1.05)}
+.act-btn.del:hover{background:#FCEDED;color:var(--st-critical);border-color:#F4C9C9}
+body.edit-mode .event:hover .action-btns,
+body.edit-mode .usp-agenda li:hover .action-btns{display:flex}
+body.edit-mode .event,
+body.edit-mode .usp-agenda li{cursor:default}
+body.edit-mode .day,body.edit-mode .usp-block{outline:1px dashed transparent;transition:outline-color .2s}
+body.edit-mode .day:hover,body.edit-mode .usp-block:hover{outline-color:var(--line-strong)}
+
+.add-btn{
+  display:none;width:100%;
+  margin:8px 0 0;padding:10px;
+  background:transparent;border:1.5px dashed var(--line-strong);
+  border-radius:var(--r-md);color:var(--text-3);
+  font-family:'Pretendard',sans-serif;font-size:12.5px;font-weight:500;
+  cursor:pointer;transition:all .15s;letter-spacing:.02em;
+}
+.add-btn:hover{background:var(--surface-alt);color:var(--ink);border-color:var(--ink);border-style:solid}
+body.edit-mode .add-btn{display:block}
+
+/* Modal */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(20,23,31,.55);
+  display:none;align-items:center;justify-content:center;
+  z-index:1000;padding:20px;backdrop-filter:blur(4px);
+}
+.modal-overlay.show{display:flex;animation:fadein .15s}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.modal{
+  background:var(--surface);border-radius:var(--r-lg);
+  width:100%;max-width:540px;max-height:90vh;overflow-y:auto;
+  box-shadow:var(--shadow-lg);
+  animation:slideup .2s;
+}
+@keyframes slideup{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-h{
+  padding:22px 28px 16px;border-bottom:1px solid var(--line-soft);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.modal-h h3{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--ink);letter-spacing:-.02em}
+.modal-h h3 em{font-style:italic;color:var(--text-2);font-weight:400}
+.modal-x{
+  background:transparent;border:none;font-size:24px;color:var(--text-3);
+  cursor:pointer;width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;line-height:1;
+}
+.modal-x:hover{background:var(--surface-alt);color:var(--ink)}
+.modal-b{padding:22px 28px}
+.fld{margin-bottom:16px}
+.fld label{
+  display:block;font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);
+  font-weight:600;margin-bottom:6px;
+}
+.fld input,.fld select,.fld textarea{
+  width:100%;padding:10px 12px;
+  background:var(--surface-alt);border:1px solid var(--line);
+  border-radius:var(--r-sm);font-family:'Pretendard',sans-serif;
+  font-size:14px;color:var(--ink);transition:border-color .15s;
+}
+.fld input:focus,.fld select:focus,.fld textarea:focus{
+  outline:none;border-color:var(--ink);background:var(--surface);
+}
+.fld textarea{resize:vertical;min-height:60px;font-family:inherit}
+.fld-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld-check{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-2)}
+.fld-check input{width:auto;margin:0}
+.modal-f{
+  padding:16px 28px;border-top:1px solid var(--line-soft);
+  display:flex;justify-content:space-between;gap:10px;
+  background:var(--surface-alt);border-radius:0 0 var(--r-lg) var(--r-lg);
+}
+.btn{
+  padding:9px 18px;border-radius:var(--r-sm);
+  font-family:'Pretendard',sans-serif;font-size:13px;font-weight:600;
+  cursor:pointer;transition:all .15s;border:1px solid transparent;
+}
+.btn-primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn-primary:hover{background:#000;transform:translateY(-1px)}
+.btn-secondary{background:transparent;color:var(--text-2);border-color:var(--line-strong)}
+.btn-secondary:hover{background:var(--surface-alt);color:var(--ink)}
+.btn-danger{background:transparent;color:var(--st-critical);border-color:#F4C9C9}
+.btn-danger:hover{background:#FCEDED}
+
+@media (max-width:480px){
+  .edit-toolbar{flex-wrap:wrap;gap:4px}
+  .tb-btn{font-size:9px;padding:5px 8px}
+  .modal{max-width:100%}
+  .modal-h,.modal-b,.modal-f{padding-left:18px;padding-right:18px}
+  .fld-row{grid-template-columns:1fr}
+}
+
+/* ─────────  Responsive  ───────── */
+@media (max-width:920px){
+  .hero{grid-template-columns:1fr 1fr;gap:10px}
+  .dday{grid-column:1/-1}
+  .alerts{grid-template-columns:1fr}
+  .strip{gap:6px}
+  .strip-day{padding:10px 4px}
+  .strip-dd{font-size:24px}
+  .strip-cnt{font-size:9px}
+  .day-num{font-size:42px}
+  .day-header{padding:18px 20px}
+  .event{grid-template-columns:62px 28px 1fr;gap:12px;padding:10px 12px}
+  .event-icon{width:28px;height:28px;font-size:12px}
+  .event-title{font-size:13.5px}
+  .legend-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .notes{grid-template-columns:1fr}
+  .hr-item{grid-template-columns:36px 1fr;padding:16px 20px}
+  .hr-due{grid-column:2;text-align:left;margin-top:8px}
+  .hr-header,.hr-risk{padding:20px 20px}
+  .sec-title h2{font-size:26px}
+}
+@media (max-width:480px){
+  .wrap{padding:18px 14px 60px}
+  .masthead-title{font-size:34px}
+  .masthead-sub{flex-direction:column;align-items:flex-start;gap:6px}
+  .strip{grid-template-columns:repeat(7,1fr);gap:4px}
+  .day-num{font-size:36px}
+  .day-headL{gap:14px}
+  .hr-header-L h3{font-size:22px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Masthead -->
+  <header class="masthead">
+    <div class="masthead-top">
+      <div class="vol">
+        <span>SUNEYE OPERATIONS</span>
+        <span class="sep"></span>
+        <span>VOL. 03</span>
+        <span class="sep"></span>
+        <span>WEEK 5/11 — 5/18</span>
+      </div>
+      <div class="edit-toolbar">
+        <span class="save-badge" id="saveBadge">✓ 저장됨</span>
+        <span class="tb-btn" style="cursor:default;background:var(--ink);color:#fff;border-color:var(--ink)" title="편집모드 상시 활성화">✎ EDIT MODE · ON</span>
+        <button class="tb-btn" id="btnExport" title="JSON 백업 다운로드">⬇ 내보내기</button>
+        <button class="tb-btn" id="btnImport" title="JSON 복원 업로드">⬆ 가져오기</button>
+        <button class="tb-btn danger" id="btnReset" title="초기 상태로 복원">↺ 초기화</button>
+        <input type="file" id="importFile" accept=".json" style="display:none">
+      </div>
+    </div>
+    <h1 class="masthead-title">선안과 <em>주간업무 대시보드</em></h1>
+    <div class="masthead-sub">
+      <div>이미지 일정표 + 채팅창 추가건 + <b style="color:var(--ink);font-weight:600">3사 컨소시엄 19개 산출물 진척도</b> 통합 <span style="color:var(--text-4);font-size:12px">· 인사노무·진료협력·내부운영시스템화 3트랙</span></div>
+      <div class="tag">USP × KORSMES × NEWZWAVE</div>
+    </div>
+  </header>
+
+  <!-- Hero / D-day + KPI -->
+  <section class="hero">
+    <div class="dday">
+      <div class="dday-l">가오픈 카운트다운 · 5/18 (월)</div>
+      <div class="dday-v">D<sup>−</sup>8</div>
+      <div class="dday-d">개원 전 핵심 일정 <strong>42건</strong> · USP 일일회의 <strong>6일</strong> · SOP 보강 <strong>10건</strong></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-l">교육 일정</div>
+      <div><span class="kpi-v">9</span><span class="unit">건</span></div>
+      <div class="kpi-d">수술팀 · 검안팀 · CS · 리더 · CRM</div>
+    </div>
+    <div class="kpi" style="border-left:3px solid var(--t-hr-deep)">
+      <div class="kpi-l">SOP 보강 (NEW)</div>
+      <div><span class="kpi-v" style="color:var(--t-hr-deep)">10</span><span class="unit">건</span></div>
+      <div class="kpi-d">팀교육 3 · 동선 4 · 상품 3</div>
+    </div>
+    <div class="kpi" style="border-left:3px solid var(--t-usp)">
+      <div class="kpi-l">3사 산출물</div>
+      <div><span class="kpi-v" style="color:var(--t-usp-deep)">19</span><span class="unit">건</span></div>
+      <div class="kpi-d">유상 11 + 무상 8 · 7,600만 (VAT 별도)</div>
+    </div>
+  </section>
+
+  <!-- Alerts -->
+  <section class="alerts" style="grid-template-columns:1fr">
+    <div class="alert warning">
+      <div class="alert-icon">📋</div>
+      <div class="alert-c">
+        <div class="alert-t">중요 일정 · 12일(화) 15시 보건소 실사</div>
+        <div>개설신고 수리 직결 이벤트. 사전 시설·인력 점검 체크리스트 가동, 응대 책임자(원장님 또는 USP) 배정 필수.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Day strip -->
+  <section class="strip">
+    <a href="#d11" class="strip-day"><div class="strip-dn">월</div><div class="strip-dd">11</div><div class="strip-cnt"><b>6</b> 일정</div></a>
+    <a href="#d12" class="strip-day has-critical"><div class="strip-dn">화</div><div class="strip-dd">12</div><div class="strip-cnt"><b>5</b> 일정</div></a>
+    <a href="#d13" class="strip-day"><div class="strip-dn">수</div><div class="strip-dd">13</div><div class="strip-cnt"><b>5</b> 일정</div></a>
+    <a href="#d14" class="strip-day"><div class="strip-dn">목</div><div class="strip-dd">14</div><div class="strip-cnt"><b>11</b> 일정</div></a>
+    <a href="#d15" class="strip-day"><div class="strip-dn">금</div><div class="strip-dd">15</div><div class="strip-cnt"><b>7</b> 일정</div></a>
+    <a href="#d16" class="strip-day"><div class="strip-dn">토</div><div class="strip-dd">16</div><div class="strip-cnt"><b>3</b> 일정</div></a>
+    <a href="#d18" class="strip-day dday-mark"><div class="strip-dn">월·D+0★</div><div class="strip-dd">18</div><div class="strip-cnt"><b>5</b> 가오픈</div></a>
+  </section>
+
+  <!-- P1~P6 Consulting Phase Mapping -->
+  <section class="framework">
+    <header class="fw-header">
+      <span class="fw-icon">⌬</span>
+      <h3>P1~P6 컨설팅 매핑<span>대시보드는 산출물의 측정층</span></h3>
+      <span class="fw-sub">3사 19개 산출물 → P단계별 KPI로 측정·정렬</span>
+    </header>
+    <div class="fw-grid">
+
+      <div class="fw-card">
+        <div class="fw-title"><span class="pn">P1</span>시스템이식+안착</div>
+        <div class="fw-meta"><span class="ar">→</span><span>자동집계 인프라 · 데이터 파이프라인</span></div>
+        <div class="fw-deliv">
+          <span class="chip usp">A2 SOP21종</span>
+          <span class="chip nzw">AI 대시보드</span>
+          <span class="chip nzw">CRM</span>
+          <span class="chip sop">동선·팀교육</span>
+        </div>
+      </div>
+
+      <div class="fw-card">
+        <div class="fw-title"><span class="pn">P2</span>운영기획+사업계획</div>
+        <div class="fw-meta"><span class="ar">→</span><span>KPI 목표값 · BEP 라인 설정</span></div>
+        <div class="fw-deliv">
+          <span class="chip usp">A4 운영기획</span>
+          <span class="chip usp">A6 3열쇠매출</span>
+          <span class="chip usp">B5 성장기획</span>
+        </div>
+      </div>
+
+      <div class="fw-card">
+        <div class="fw-title"><span class="pn">P3</span>마케팅전략+신환</div>
+        <div class="fw-meta"><span class="ar">→</span><span>신환 달성률 · 상담 전환율</span></div>
+        <div class="fw-deliv">
+          <span class="chip nzw">A7-2 광고 4Phase</span>
+          <span class="chip nzw">FUNNEL</span>
+          <span class="chip nzw">CALL</span>
+          <span class="chip kor">A7-1 대외협력</span>
+        </div>
+      </div>
+
+      <div class="fw-card">
+        <div class="fw-title"><span class="pn">P4</span>조직체계+인사</div>
+        <div class="fw-meta"><span class="ar">→</span><span>부서 가중치 · 채용·평가 매트릭스</span></div>
+        <div class="fw-deliv">
+          <span class="chip usp">A3 조직설계</span>
+          <span class="chip sop">팀별 직무교육</span>
+          <span class="chip kor">노무법인 위</span>
+        </div>
+      </div>
+
+      <div class="fw-card">
+        <div class="fw-title"><span class="pn">P5</span>CRM+환자경험</div>
+        <div class="fw-meta"><span class="ar">→</span><span>NPS · 대기시간 · 재방문 추적</span></div>
+        <div class="fw-deliv">
+          <span class="chip nzw">CRM</span>
+          <span class="chip sop">환자동선 SOP</span>
+          <span class="chip sop">상품별 인수인계</span>
+          <span class="chip usp">A2 CS·서비스매니저</span>
+        </div>
+      </div>
+
+      <div class="fw-card">
+        <div class="fw-title"><span class="pn">P6</span>월간부스터</div>
+        <div class="fw-meta"><span class="ar">→</span><span>월간 회의체 · Composite 리뷰</span></div>
+        <div class="fw-deliv">
+          <span class="chip kor">A5 PM 코디</span>
+          <span class="chip usp">USP 일일회의</span>
+          <span class="chip nzw">AI Composite</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 01 -->
+  <div class="sec-title">
+    <span class="num">[01]</span>
+    <h2>일자별 <em>업무 트랙</em></h2>
+    <div class="line"></div>
+    <span class="badge">7 DAYS · 42 EVENTS</span>
+  </div>
+
+  <!-- Day cards -->
+  <section class="days">
+
+    <!-- 11일 (월) -->
+    <article class="day" id="d11">
+      <div class="day-header">
+        <div class="day-headL">
+          <div class="day-num">11</div>
+          <div class="day-info">
+            <div class="day-dow">월요일</div>
+            <div class="day-tag">설치 · 교육 집중일 · <b>주간 출발선</b></div>
+          </div>
+        </div>
+        <div class="day-headR">
+          <span class="dday-pill">D-7</span>
+          <span class="dday-pill">설치 4건</span>
+          <span class="dday-pill">USP 15시</span>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="tracks">
+          <div class="event track-edu">
+            <div class="event-time">10:00</div>
+            <div class="event-icon">교</div>
+            <div class="event-c">
+              <div class="event-title">수술팀 · 오토클레이브 교육</div>
+              <div class="event-meta"><span class="event-team">수술팀</span></div>
+            </div>
+          </div>
+          <div class="event track-install">
+            <div class="event-time">10:00</div>
+            <div class="event-icon">설</div>
+            <div class="event-c">
+              <div class="event-title">로덱 유니트 설치 <span class="sub">— 우선</span></div>
+              <div class="event-meta"><span class="event-team">시설팀 · 진료실</span></div>
+            </div>
+          </div>
+          <div class="event track-install">
+            <div class="event-time">10:30</div>
+            <div class="event-icon">설</div>
+            <div class="event-c">
+              <div class="event-title">유리필름 / 창문 블라인드 미팅</div>
+              <div class="event-meta"><span class="event-team">시설팀</span></div>
+            </div>
+          </div>
+          <div class="event track-install">
+            <div class="event-time">14:00</div>
+            <div class="event-icon">설</div>
+            <div class="event-c">
+              <div class="event-title">루시드드림 렌즈 셋팅</div>
+              <div class="event-meta"><span class="event-team">렌즈팀</span></div>
+            </div>
+          </div>
+          <div class="event track-usp is-usp">
+            <div class="event-time">15:00</div>
+            <div class="event-icon">USP</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-usp-deep)">USP 일일회의 — 주간 킥오프</b></div>
+              <div class="event-meta">
+                <span class="event-team">고정 슬롯 · D-8 주간 정렬</span>
+                <span class="tag usp">FIXED</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-install">
+            <div class="event-time tbd">시간미정</div>
+            <div class="event-icon">설</div>
+            <div class="event-c">
+              <div class="event-title">DS메디칼 설치 및 교육</div>
+              <div class="event-meta"><span class="event-team">시설팀 · 장비업체</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 12일 (화) -->
+    <article class="day" id="d12">
+      <div class="day-header">
+        <div class="day-headL">
+          <div class="day-num">12</div>
+          <div class="day-info">
+            <div class="day-dow">화요일</div>
+            <div class="day-tag"><b style="color:var(--st-critical)">⚠ 보건소 실사일</b> · MSO 인허가 회의</div>
+          </div>
+        </div>
+        <div class="day-headR">
+          <span class="dday-pill">D-6</span>
+          <span class="dday-pill crit">실사</span>
+          <span class="dday-pill">MSO</span>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="tracks">
+          <div class="event track-edu">
+            <div class="event-time">09:00</div>
+            <div class="event-icon">교</div>
+            <div class="event-c">
+              <div class="event-title">수술팀 · 항온항습기 실습</div>
+              <div class="event-meta"><span class="event-team">수술팀</span></div>
+            </div>
+          </div>
+          <div class="event track-install">
+            <div class="event-time">14:00</div>
+            <div class="event-icon">설</div>
+            <div class="event-c">
+              <div class="event-title">엠디 (MD) 설치</div>
+              <div class="event-meta"><span class="event-team">장비업체</span></div>
+            </div>
+          </div>
+          <div class="event track-meet is-critical">
+            <div class="event-time">15:00</div>
+            <div class="event-icon">실</div>
+            <div class="event-c">
+              <div class="event-title"><b>보건소 실사 — 개설신고 직결</b></div>
+              <div class="event-meta">
+                <span class="event-team">관할 보건소 · 원장님 입회</span>
+                <span class="tag crit">CRITICAL</span>
+                <span class="tag usp">USP 회의 동행</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-meet">
+            <div class="event-time">16:00</div>
+            <div class="event-icon">미</div>
+            <div class="event-c">
+              <div class="event-title">MSO 인허가 + 회계 관련 회의</div>
+              <div class="event-meta">
+                <span class="event-team">신승회계 · 행정팀</span>
+                <span class="tag new">UPDATE</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-sop is-sop">
+            <div class="event-time">17:00</div>
+            <div class="event-icon">직</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-hr-deep)">팀별 직무교육 1차</b> · 외래·원무·상담</div>
+              <div class="event-meta">
+                <span class="event-team">3개 팀 · 직무 매트릭스 정렬</span>
+                <span class="tag sop">SOP</span>
+                <span class="tag new">NEW</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 13일 (수) -->
+    <article class="day" id="d13">
+      <div class="day-header">
+        <div class="day-headL">
+          <div class="day-num">13</div>
+          <div class="day-info">
+            <div class="day-dow">수요일</div>
+            <div class="day-tag">사이니지 작업일 · <b>전직원 CS · 리더 교육</b></div>
+          </div>
+        </div>
+        <div class="day-headR">
+          <span class="dday-pill">D-5</span>
+          <span class="dday-pill">교육 3건</span>
+          <span class="dday-pill">노무사 방문</span>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-divider">
+          <span class="dot"></span>
+          <span>SIGNAGE WORK · 진료동선 영향 사전공유</span>
+          <div class="l"></div>
+        </div>
+        <div class="tracks">
+          <div class="event track-edu">
+            <div class="event-time">09:30</div>
+            <div class="event-icon">교</div>
+            <div class="event-c">
+              <div class="event-title">전직원 CS 교육 <span class="sub">(09:30~11:00)</span></div>
+              <div class="event-meta"><span class="event-team">전직원</span></div>
+            </div>
+          </div>
+          <div class="event track-edu">
+            <div class="event-time">11:00</div>
+            <div class="event-icon">교</div>
+            <div class="event-c">
+              <div class="event-title">리더 교육 <span class="sub">(11:00~12:00)</span></div>
+              <div class="event-meta">
+                <span class="event-team">팀장급</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-edu">
+            <div class="event-time">12:00</div>
+            <div class="event-icon">교</div>
+            <div class="event-c">
+              <div class="event-title">엠디 교육</div>
+              <div class="event-meta"><span class="event-team">장비 운용팀</span></div>
+            </div>
+          </div>
+          <div class="event track-meet">
+            <div class="event-time">15:00</div>
+            <div class="event-icon">미</div>
+            <div class="event-c">
+              <div class="event-title">노무사 방문</div>
+              <div class="event-meta">
+                <span class="event-team">노무법인 위 · 인사담당</span>
+                <span class="tag usp">USP 회의 동행</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-sop is-sop">
+            <div class="event-time">16:00</div>
+            <div class="event-icon">직</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-hr-deep)">팀별 직무교육 2차</b> · 검안·수술</div>
+              <div class="event-meta">
+                <span class="event-team">2개 팀 · 직무 매트릭스 정렬</span>
+                <span class="tag sop">SOP</span>
+                <span class="tag new">NEW</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 14일 (목) -->
+    <article class="day" id="d14">
+      <div class="day-header">
+        <div class="day-headL">
+          <div class="day-num">14</div>
+          <div class="day-info">
+            <div class="day-dow">목요일</div>
+            <div class="day-tag">검안팀 교육 집중 · <b>LBC 조중현 대표 강의</b></div>
+          </div>
+        </div>
+        <div class="day-headR">
+          <span class="dday-pill">D-4</span>
+          <span class="dday-pill star">★ 강의</span>
+          <span class="dday-pill">USP 15시</span>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-divider">
+          <span class="dot"></span>
+          <span>SIGNAGE WORK · 2일차</span>
+          <div class="l"></div>
+        </div>
+        <div class="tracks">
+          <div class="event track-install">
+            <div class="event-time">09:30</div>
+            <div class="event-icon">설</div>
+            <div class="event-c">
+              <div class="event-title">성민 CRM 세팅</div>
+              <div class="event-meta"><span class="event-team">성민 · IT</span></div>
+            </div>
+          </div>
+          <div class="event track-edu">
+            <div class="event-time">10:00</div>
+            <div class="event-icon">교</div>
+            <div class="event-c">
+              <div class="event-title">검안팀 · Optos 교육</div>
+              <div class="event-meta"><span class="event-team">검안팀</span></div>
+            </div>
+          </div>
+          <div class="event track-edu">
+            <div class="event-time">11:00</div>
+            <div class="event-icon">교</div>
+            <div class="event-c">
+              <div class="event-title">외래팀 · 소독기 교육 <span class="sub">(별도공간)</span></div>
+              <div class="event-meta"><span class="event-team">외래팀</span></div>
+            </div>
+          </div>
+          <div class="event track-edu">
+            <div class="event-time">11:00</div>
+            <div class="event-icon">교</div>
+            <div class="event-c">
+              <div class="event-title">검안팀 · FAG 교육 <span class="sub">(별도공간)</span></div>
+              <div class="event-meta"><span class="event-team">검안팀</span></div>
+            </div>
+          </div>
+          <div class="event track-edu">
+            <div class="event-time">12:00</div>
+            <div class="event-icon">교</div>
+            <div class="event-c">
+              <div class="event-title">검안팀 · 내피세포 교육</div>
+              <div class="event-meta"><span class="event-team">검안팀</span></div>
+            </div>
+          </div>
+          <div class="event track-event is-star">
+            <div class="event-time">14:00</div>
+            <div class="event-icon">★</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-event-deep)">LBC 조중현 대표 강의</b></div>
+              <div class="event-meta">
+                <span class="event-team">전직원 권장 · 외부 초청 강연</span>
+                <span class="tag star">STAR EVENT</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-usp is-usp">
+            <div class="event-time">15:00</div>
+            <div class="event-icon">USP</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-usp-deep)">USP 일일회의 — D-5 가오픈 점검</b></div>
+              <div class="event-meta">
+                <span class="event-team">고정 슬롯 · 검안팀 교육·LBC 후속</span>
+                <span class="tag usp">FIXED</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-sop is-sop">
+            <div class="event-time">16:00</div>
+            <div class="event-icon">동</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-hr-deep)">환자동선 시뮬레이션 1차</b></div>
+              <div class="event-meta">
+                <span class="event-team">접수→검안→진료→상담→결제 정상 케이스</span>
+                <span class="tag sop">SOP</span>
+                <span class="tag new">NEW</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-install">
+            <div class="event-time tbd">시간미정</div>
+            <div class="event-icon">설</div>
+            <div class="event-c">
+              <div class="event-title">단말기 설치</div>
+              <div class="event-meta"><span class="event-team">IT · 통신</span></div>
+            </div>
+          </div>
+          <div class="event track-install">
+            <div class="event-time tbd">시간미정</div>
+            <div class="event-icon">설</div>
+            <div class="event-c">
+              <div class="event-title">개통 (개운)</div>
+              <div class="event-meta"><span class="event-team">통신사</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 15일 (금) -->
+    <article class="day" id="d15">
+      <div class="day-header">
+        <div class="day-headL">
+          <div class="day-num">15</div>
+          <div class="day-info">
+            <div class="day-dow">금요일</div>
+            <div class="day-tag">사이니지 마무리 · <b>SOP 보강 3건 · 인터뷰</b></div>
+          </div>
+        </div>
+        <div class="day-headR">
+          <span class="dday-pill">D-3</span>
+          <span class="dday-pill" style="background:var(--t-hr-bg);color:var(--t-hr-deep)">SOP 3</span>
+          <span class="dday-pill">USP 15시</span>
+          <span class="dday-pill star">📹 인터뷰</span>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-divider">
+          <span class="dot"></span>
+          <span>SIGNAGE WORK · 3일차 마무리</span>
+          <div class="l"></div>
+        </div>
+        <div class="tracks">
+          <div class="event track-sop is-sop">
+            <div class="event-time">09:00</div>
+            <div class="event-icon">직</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-hr-deep)">팀별 직무교육 3차</b> · 진료협력·미디어</div>
+              <div class="event-meta">
+                <span class="event-team">2개 팀 + MSO · 직무 매트릭스 완료</span>
+                <span class="tag sop">SOP</span>
+                <span class="tag new">NEW</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-edu">
+            <div class="event-time">10:00</div>
+            <div class="event-icon">교</div>
+            <div class="event-c">
+              <div class="event-title">성민 CRM 교육</div>
+              <div class="event-meta"><span class="event-team">전직원</span></div>
+            </div>
+          </div>
+          <div class="event track-sop is-sop">
+            <div class="event-time">13:00</div>
+            <div class="event-icon">동</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-hr-deep)">환자동선 모의진료 1차</b></div>
+              <div class="event-meta">
+                <span class="event-team">신환 3 + 재진 2 시나리오</span>
+                <span class="tag sop">SOP</span>
+                <span class="tag new">NEW</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-usp is-usp">
+            <div class="event-time">15:00</div>
+            <div class="event-icon">USP</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-usp-deep)">USP 일일회의 — D-4 SOP 진척도</b></div>
+              <div class="event-meta">
+                <span class="event-team">고정 슬롯 · 모의진료·인터뷰 정렬</span>
+                <span class="tag usp">FIXED</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-event">
+            <div class="event-time tbd">시간미정</div>
+            <div class="event-icon">📹</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-event-deep)">원장님 인터뷰 촬영</b></div>
+              <div class="event-meta">
+                <span class="event-team">NEWZWAVE 마케팅팀 · 홍보영상</span>
+                <span class="tag star">PR / MEDIA</span>
+                <span class="tag new">UPDATE</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-sop is-sop">
+            <div class="event-time">16:00</div>
+            <div class="event-icon">SOP</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-hr-deep)">상품별 SOP 워크숍 1차</b> · 라식·라섹·렌즈삽입</div>
+              <div class="event-meta">
+                <span class="event-team">3개 상품 · 검안→상담→수술 인수인계</span>
+                <span class="tag sop">SOP</span>
+                <span class="tag new">NEW</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-event">
+            <div class="event-time tbd">시간미정</div>
+            <div class="event-icon">행</div>
+            <div class="event-c">
+              <div class="event-title">원장님 본원건물 개원 전 인사</div>
+              <div class="event-meta"><span class="event-team">원장님 · 대외협력</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 16일 (토) -->
+    <article class="day" id="d16">
+      <div class="day-header">
+        <div class="day-headL">
+          <div class="day-num">16</div>
+          <div class="day-info">
+            <div class="day-dow">토요일 · 13시 마감</div>
+            <div class="day-tag" style="color:var(--t-hr-deep)"><b>오전 집중 SOP</b> · 동선 + 상품 + USP 디브리프</div>
+          </div>
+        </div>
+        <div class="day-headR">
+          <span class="dday-pill">D-2</span>
+          <span class="dday-pill" style="background:var(--t-hr-bg);color:var(--t-hr-deep)">SOP 2</span>
+          <span class="dday-pill">USP 12시</span>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="tracks">
+          <div class="event track-sop is-sop">
+            <div class="event-time">09:00</div>
+            <div class="event-icon">동</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-hr-deep)">환자동선 오전 집중 시뮬레이션 2차</b></div>
+              <div class="event-meta">
+                <span class="event-team">노쇼·컴플레인·이상 케이스 포함 (09:00~11:00)</span>
+                <span class="tag sop">SOP</span>
+                <span class="tag new">NEW</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-sop is-sop">
+            <div class="event-time">11:00</div>
+            <div class="event-icon">SOP</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-hr-deep)">상품별 SOP 워크숍 2차</b> · 드림렌즈·백내장</div>
+              <div class="event-meta">
+                <span class="event-team">2개 상품 · 검안→수술→follow-up (11:00~12:00)</span>
+                <span class="tag sop">SOP</span>
+                <span class="tag new">NEW</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-usp is-usp">
+            <div class="event-time">12:00</div>
+            <div class="event-icon">USP</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-usp-deep)">USP 일일회의 — D-3 SOP 디브리프 (마감 전)</b></div>
+              <div class="event-meta">
+                <span class="event-team">고정 슬롯 · 13시 마감 직전 디브리프 (12:00~13:00)</span>
+                <span class="tag usp">FIXED</span>
+                <span class="tag new">UPDATE</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 18일 (월) -->
+    <article class="day" id="d18">
+      <div class="day-header">
+        <div class="day-headL">
+          <div class="day-num">18</div>
+          <div class="day-info">
+            <div class="day-dow">월요일 · <b style="color:var(--st-critical)">★ D+0 가오픈</b></div>
+            <div class="day-tag" style="color:var(--st-critical)"><b>가오픈 D-Day</b> · 진료 개시 · 캡 60% 첫날</div>
+          </div>
+        </div>
+        <div class="day-headR">
+          <span class="dday-pill crit">★ D+0</span>
+          <span class="dday-pill" style="background:var(--t-hr-bg);color:var(--t-hr-deep)">SOP 최종</span>
+          <span class="dday-pill">USP 15시</span>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="tracks">
+          <div class="event track-sop is-sop">
+            <div class="event-time">07:30</div>
+            <div class="event-icon">SOP</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-hr-deep)">최종 SOP 통합 점검</b> · 5종 통합 (가오픈 직전)</div>
+              <div class="event-meta">
+                <span class="event-team">팀별 직무 + 동선 + 상품 인수인계 · 07:30~08:30</span>
+                <span class="tag sop">SOP</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-sop is-sop is-critical">
+            <div class="event-time">08:30</div>
+            <div class="event-icon">동</div>
+            <div class="event-c">
+              <div class="event-title"><b>GO / NO-GO 결정</b> — 가오픈 개시 직전 최종</div>
+              <div class="event-meta">
+                <span class="event-team">3사 합동 · 08:30~09:00 (전 직원 브리핑)</span>
+                <span class="tag crit">CRITICAL</span>
+                <span class="tag sop">SOP</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-event is-critical is-star">
+            <div class="event-time">09:00</div>
+            <div class="event-icon">★</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--st-critical)">★ 가오픈 진료 개시</b> — 첫 환자 응대 시작</div>
+              <div class="event-meta">
+                <span class="event-team">전 부서 · 캡 60% (월·금 60명) · AI CRM LIVE · DB 5분룰</span>
+                <span class="tag crit">D+0 GAOPEN</span>
+                <span class="tag star">M1 W1 시작</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-usp is-usp">
+            <div class="event-time">15:00</div>
+            <div class="event-icon">USP</div>
+            <div class="event-c">
+              <div class="event-title"><b style="color:var(--t-usp-deep)">USP 일일회의 — D+0 첫 안착 모드</b></div>
+              <div class="event-meta">
+                <span class="event-team">고정 슬롯 · Tier 1 → Tier 3 안착 운영 전환</span>
+                <span class="tag usp">FIXED</span>
+                <span class="tag new">NEW</span>
+              </div>
+            </div>
+          </div>
+          <div class="event track-event">
+            <div class="event-time">18:00</div>
+            <div class="event-icon">📊</div>
+            <div class="event-c">
+              <div class="event-title"><b>D+0 마감 일일 운영보고</b> — 첫 진료일 결과</div>
+              <div class="event-meta">
+                <span class="event-team">3사 합동 AAR · 환자수·매출·노쇼·NPS·사고 0건 점검</span>
+                <span class="tag new">NEW</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- Section 02 — USP Daily Meeting Agenda -->
+  <div class="sec-title">
+    <span class="num">[02]</span>
+    <h2>USP 일일회의 <em>안건 리스트</em></h2>
+    <div class="line"></div>
+    <span class="badge">FIXED 15:00 · MON—SAT · 19 DELIVERABLES</span>
+  </div>
+
+  <section class="usp-block">
+    <header class="usp-header">
+      <div class="usp-header-L">
+        <div class="usp-eyebrow">USP DAILY STAND-UP — 3사 컨소시엄 산출물 기반</div>
+        <h3>매일 15:00 USP 일일회의 <em>6일치 안건</em></h3>
+        <div class="usp-desc">3사 경영지원계약서 <b>유상 11 + 무상 8 = 19개 산출물</b> 진척도 점검을 앵커로, <b>인사노무 · 진료협력 · 내부운영시스템화</b> 3대 트랙을 일일 정렬. 화·수는 보건소 실사·노무사 방문 동행으로 통합 운영. <b>금</b>은 SOP 진척도, <b>토(13시 마감)</b>는 오전 집중 SOP 디브리프 중심. <span style="color:var(--text-3)">USP 4,000만 · KORSMES 2,000만 · NEWZWAVE 1,600만</span></div>
+      </div>
+      <div class="usp-fixed-pill"><span class="dot"></span>FIXED · 15:00 KST</div>
+    </header>
+
+    <div class="usp-tracks-bar" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-bottom:1px solid var(--line-soft);background:var(--surface-alt)">
+      <div style="padding:14px 18px;border-right:1px solid var(--line-soft);text-align:center">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--t-hr-deep);font-weight:700">TRACK A · 인사노무</div>
+        <div style="font-size:11.5px;color:var(--text-2);margin-top:3px">A3 조직설계 · 노무법인 위 협업 · 14명 체제</div>
+      </div>
+      <div style="padding:14px 18px;border-right:1px solid var(--line-soft);text-align:center">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--t-meet-deep);font-weight:700">TRACK B · 진료협력</div>
+        <div style="font-size:11.5px;color:var(--text-2);margin-top:3px">A7-1 대외협력·MOU · 진료협력 매니저 · MSO 채널</div>
+      </div>
+      <div style="padding:14px 18px;text-align:center">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--t-event-deep);font-weight:700">TRACK C · 내부운영시스템화</div>
+        <div style="font-size:11.5px;color:var(--text-2);margin-top:3px">A2 SOP 21종 · A4 BEP·예약제 · CRM·AI 대시보드</div>
+      </div>
+    </div>
+
+    <div class="usp-grid">
+
+      <!-- 월 (11일) -->
+      <div class="usp-card">
+        <div class="usp-card-h">
+          <div class="usp-card-hL">
+            <div class="usp-day-num">11</div>
+            <div class="usp-day-info">
+              <div class="usp-day-dow">월요일</div>
+              <div class="usp-day-time">15:00 — 16:00</div>
+              <div class="usp-day-tag"><b>주간 킥오프 · 19개 산출물 진척도</b></div>
+            </div>
+          </div>
+          <div class="usp-card-hR">
+            <span class="usp-dday-pill">D-7</span>
+          </div>
+        </div>
+        <ol class="usp-agenda">
+          <li class="priority"><span class="num">1</span><span><span class="deliv kor">A5</span><b>PM 코디네이션 · 주간 4대 마일스톤</b> — 5/12 보건소실사 + MSO회의 / 5/14 LBC강의 / 5/15 인터뷰 / 5/18 ★ 가오픈 <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">2</span><span><span class="deliv usp">A2</span><b>SOP 21종 이식·커스터마이징 진척도</b> — 천안김안과 SOP 중 인사·원무·CS 우선 정렬 <span class="trk sys">SYS</span></span></li>
+          <li class="priority"><span class="num">3</span><span><span class="deliv usp">A3</span><b>14명 채용 확정 · 직무기술서 6종</b> — 외래·시술 +1, 원무 +1 입사일 / 표준 근로계약서 (포괄임금 <code>✕</code>) 양식 <span class="trk hr">HR</span></span></li>
+          <li><span class="num">4</span><span><span class="deliv usp">A4</span><b>운영기획 · BEP · 예약제</b> — 캡 60% 1주차 시뮬레이션 / 패키지 6종 설계 <span class="trk sys">SYS</span></span></li>
+          <li class="priority"><span class="num">5</span><span><span class="deliv kor">A1</span><b>5/12 보건소 실사 응대 시나리오</b> — 점검리스트 · 응대자 · 동선 · 비상플랜 <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">6</span><span><span class="deliv kor">A7-1</span><b>대외협력 네트워크 진척</b> — 진료협력 매니저 입사일 · 약국·안경원·기업검진 MOU 템플릿 <span class="trk collab">COLLAB</span></span></li>
+          <li><span class="num">7</span><span><span class="deliv nzw">CRM</span><span class="deliv nzw">AI</span>성민 CRM 세팅 + AI 대시보드 (CAC·LTV·전환) 사전 설계 <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">8</span><span><b>익일 (화) 어젠다 사전공유</b> — 보건소실사 + 16시 MSO 인허가·회계 회의 + USP 동행</span></li>
+        </ol>
+      </div>
+
+      <!-- 화 (12일) -->
+      <div class="usp-card">
+        <div class="usp-card-h">
+          <div class="usp-card-hL">
+            <div class="usp-day-num">12</div>
+            <div class="usp-day-info">
+              <div class="usp-day-dow">화요일 · D-6</div>
+              <div class="usp-day-time">15:00 — <span style="color:var(--st-critical)">보건소 실사 동행</span></div>
+              <div class="usp-day-tag"><b>실사 + MSO 법인 가동</b> · 16시 회의 연결</div>
+            </div>
+          </div>
+          <div class="usp-card-hR">
+            <span class="usp-dday-pill">D-6</span>
+            <span class="usp-merge-pill">실사 통합</span>
+          </div>
+        </div>
+        <ol class="usp-agenda">
+          <li class="priority"><span class="num">1</span><span><span class="deliv kor">A1</span><b>보건소 실사 응대 (15:00)</b> — USP 동행 · 회의 통합 진행 <span class="trk sys">SYS</span></span></li>
+          <li class="priority"><span class="num">2</span><span><span class="deliv kor">A1</span><b>실사 디브리프</b> — 통과 / 보완사항 / 추가서류 / 수리 일정 <span class="trk sys">SYS</span></span></li>
+          <li class="priority"><span class="num">3</span><span><span class="deliv usp">B2</span><b>16시 MSO 인허가·회계 회의</b> — 사무장병원 4대 기준 충족도 / 신승회계 동석 / 자금흐름 분리 점검 <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">4</span><span><span class="deliv usp">A2</span>SOP 21종 — 인사·원무·CS·접수 우선 4종 D-7 마감 점검 <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">5</span><span><span class="deliv usp">A3</span><b>표준 근로계약서 14명 양식</b> — 포괄임금 <code>✕</code> · 통상임금 항목 명시 / 출퇴근 디지털(지문·QR) 설치 <span class="trk hr">HR</span></span></li>
+          <li><span class="num">6</span><span><span class="deliv usp">A4</span>캡 60% 운영 시뮬레이션 — 환자수 슬롯 · 시간당 처리량 · 대기시간 KPI <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">7</span><span><span class="deliv kor">A7-1</span>진료협력 매니저 — 첫 출근일 확정 · 약국·안경원 인사 SOP <span class="trk collab">COLLAB</span></span></li>
+          <li><span class="num">8</span><span><b>익일 (수) 노무사 방문 사전 안건</b> — 취업규칙·보상휴가·성과급 그로스제 정렬</span></li>
+        </ol>
+      </div>
+
+      <!-- 수 (13일) -->
+      <div class="usp-card">
+        <div class="usp-card-h">
+          <div class="usp-card-hL">
+            <div class="usp-day-num">13</div>
+            <div class="usp-day-info">
+              <div class="usp-day-dow">수요일 · D-5</div>
+              <div class="usp-day-time">15:00 — <span style="color:var(--t-meet-deep)">노무사 방문 동행</span></div>
+              <div class="usp-day-tag"><b>인사노무 마감 · 진료협력 SOP</b></div>
+            </div>
+          </div>
+          <div class="usp-card-hR">
+            <span class="usp-dday-pill">D-5</span>
+            <span class="usp-merge-pill">노무사 통합</span>
+          </div>
+        </div>
+        <ol class="usp-agenda">
+          <li class="priority"><span class="num">1</span><span><span class="deliv partner">노무법인 위</span><b>노무사 방문 (15:00)</b> — USP·KOR 동행 <span class="trk hr">HR</span></span></li>
+          <li class="priority"><span class="num">2</span><span><span class="deliv usp">A3</span><b>보상휴가제 노사 서면합의서</b> — 14명 입사 시 서명 양식 확정 (시간외 50% 가산 → 휴가 대체) <span class="trk hr">HR</span></span></li>
+          <li><span class="num">3</span><span><span class="deliv usp">A3</span>취업규칙 — 공휴일 약정오프 · 보상휴가제 · 시프트제 · <code>근로기준법 §93</code> 10인↑ 신고의무 <span class="trk hr">HR</span></span></li>
+          <li class="priority"><span class="num">4</span><span><span class="deliv usp">A3</span><b>성과급 그로스제 규정 초안</b> — 천안김안과 V5 모델 적용 / 외래과 시범 / 3개월 후 재검토 <span class="trk hr">HR</span></span></li>
+          <li><span class="num">5</span><span><span class="deliv usp">A2</span><b>진료협력팀 SOP</b> — 약국·안경원 인사 / 환자 의뢰 채널 / 역의뢰 SOP 정립 <span class="trk collab">COLLAB</span></span></li>
+          <li><span class="num">6</span><span><span class="deliv kor">A7-1</span>진료협력 매니저 — 인근 약국·안경원·기업·관공서 리스트업 + MOU 우선순위 <span class="trk collab">COLLAB</span></span></li>
+          <li><span class="num">7</span><span><span class="deliv usp">A4</span>예약시스템 슬롯 설계 — 캡 60% 1주차 운영안 (성민 CRM 연계) <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">8</span><span><b>익일 (목) LBC 강의 + 검안팀 4종 교육 + 가오픈 D-5 점검</b></span></li>
+        </ol>
+      </div>
+
+      <!-- 목 (14일) -->
+      <div class="usp-card">
+        <div class="usp-card-h">
+          <div class="usp-card-hL">
+            <div class="usp-day-num">14</div>
+            <div class="usp-day-info">
+              <div class="usp-day-dow">목요일 · D-4</div>
+              <div class="usp-day-time">15:00 — 16:00</div>
+              <div class="usp-day-tag"><b>가오픈 카운트다운 · 시스템화 마무리</b></div>
+            </div>
+          </div>
+          <div class="usp-card-hR">
+            <span class="usp-dday-pill">D-4</span>
+          </div>
+        </div>
+        <ol class="usp-agenda">
+          <li class="priority"><span class="num">1</span><span><b>LBC 조중현 대표 강의 (14시) 후속</b> — 직원 동기부여 평가 · 메시지 정렬 · 가오픈 마인드셋</span></li>
+          <li><span class="num">2</span><span><span class="deliv usp">A2</span>검안팀 4종 교육 완료 점검 — Optos · 소독기 · FAG · 내피세포 SOP 이식 <span class="trk sys">SYS</span></span></li>
+          <li class="priority"><span class="num">3</span><span><span class="deliv nzw">CRM</span><span class="deliv nzw">AI</span><b>성민 CRM 세팅 + AI 대시보드 진행률</b> — D-4 단말기·개통 일정 / CAC·LTV·전환 KPI <span class="trk sys">SYS</span></span></li>
+          <li class="priority"><span class="num">4</span><span><span class="deliv usp">A3</span><b>14명 입사일 확정 + 보상휴가 합의서 서명 일정</b> <span class="trk hr">HR</span></span></li>
+          <li><span class="num">5</span><span><span class="deliv usp">A4</span>5/18 가오픈 캡 60% 운영 시뮬레이션 — 첫 주 환자수 슬롯 확정 · 노쇼율 5%↓ 목표 <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">6</span><span><span class="deliv nzw">FUNNEL</span><span class="deliv nzw">CALL</span>가오픈 풀퍼널 사전준비 — 네이버·메타 광고 · 플레이스 · DB 5분룰 콜센터 <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">7</span><span><span class="deliv kor">A7-1</span>진료협력 매니저 — 5/15 인터뷰 동선 + 5/18 ★ 가오픈 + 본원 인사 매핑 <span class="trk collab">COLLAB</span></span></li>
+          <li><span class="num">8</span><span>사이니지 작업 D-5 진행률 — 진료동선 · 촬영동선 · 가오픈 외관 영향 점검</span></li>
+        </ol>
+      </div>
+
+      <!-- 금 (15일) -->
+      <div class="usp-card" data-usp-day="15">
+        <div class="usp-card-h">
+          <div class="usp-card-hL">
+            <div class="usp-day-num">15</div>
+            <div class="usp-day-info">
+              <div class="usp-day-dow">금요일 · D-3</div>
+              <div class="usp-day-time">15:00 — 16:00</div>
+              <div class="usp-day-tag"><b>SOP 진척도 · 인터뷰 정렬</b></div>
+            </div>
+          </div>
+          <div class="usp-card-hR">
+            <span class="usp-dday-pill">D-3</span>
+          </div>
+        </div>
+        <ol class="usp-agenda">
+          <li class="priority"><span class="num">1</span><span><span class="deliv sop">SOP-A</span><b>팀별 직무교육 3차 디브리프</b> — 진료협력·미디어·MSO 직무 매트릭스 완료 점검 <span class="trk hr">HR</span></span></li>
+          <li class="priority"><span class="num">2</span><span><span class="deliv sop">SOP-B</span><b>환자동선 모의진료 1차 결과</b> — 신환 3+재진 2 시나리오 · 동선 보완사항 <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">3</span><span><span class="deliv sop">SOP-C</span>16시 상품별 SOP 1차 사전점검 — 라식·라섹·렌즈삽입 인수인계 <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">4</span><span><span class="deliv nzw">📹</span>인터뷰 촬영 진행상황 — NEWZWAVE 동선 정렬, CRM교육·SOP 워크숍과 충돌 점검 <span class="trk collab">COLLAB</span></span></li>
+          <li><span class="num">5</span><span><span class="deliv kor">A7-1</span>원장님 본원건물 개원 인사 — 진료협력팀 동행 · 사전조율 <span class="trk collab">COLLAB</span></span></li>
+          <li><span class="num">6</span><span><span class="deliv usp">A4</span>가오픈 D-4 캡 60% 시뮬레이션 — 환자수 슬롯·예약시스템 슬롯 락인 <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">7</span><span><span class="deliv usp">A3</span>14명 채용·근로계약 100% 마감 확인 — 미서명 0명 목표 <span class="trk hr">HR</span></span></li>
+          <li><span class="num">8</span><span><b>익일 (토) 어젠다 사전공유</b> — 동선 오전 집중 시뮬(09~11시) + 상품 SOP 2차(11~12시) · 13시 마감</span></li>
+        </ol>
+      </div>
+
+      <!-- 토 (16일) -->
+      <div class="usp-card" data-usp-day="16">
+        <div class="usp-card-h">
+          <div class="usp-card-hL">
+            <div class="usp-day-num">16</div>
+            <div class="usp-day-info">
+              <div class="usp-day-dow">토요일 · D-2 · <span style="color:var(--st-warning)">13시 마감</span></div>
+              <div class="usp-day-time">12:00 — 13:00 · 마감 전 디브리프</div>
+              <div class="usp-day-tag"><b>오전 SOP 디브리프 · D+0 가오픈 정렬</b></div>
+            </div>
+          </div>
+          <div class="usp-card-hR">
+            <span class="usp-dday-pill">D-2</span>
+          </div>
+        </div>
+        <ol class="usp-agenda">
+          <li class="priority"><span class="num">1</span><span><span class="deliv sop">SOP-B</span><b>환자동선 오전 시뮬레이션 디브리프</b> — 09~11시 노쇼·컴플레인·이상 케이스 결과 분석 <span class="trk sys">SYS</span></span></li>
+          <li class="priority"><span class="num">2</span><span><span class="deliv sop">SOP-C</span><b>상품별 SOP 2차 디브리프</b> — 11~12시 드림렌즈·백내장 인수인계 보완 <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">3</span><span><span class="deliv usp">A4</span>가오픈 D-3 캡 60% 최종 검토 — 노쇼율 5%↓·CS 응대 매트릭스 락인 <span class="trk sys">SYS</span></span></li>
+          <li class="priority"><span class="num">4</span><span><span class="deliv sop">SOP-A·B·C</span><b>5/18 D+0 새벽 통합점검 어젠다 확정</b> — 3트랙 + GO/NO-GO 결정 매트릭스 <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">5</span><span><span class="deliv kor">A7-1</span>5/18 가오픈 D+0 일일 운영보고 정렬 — 서광/성민/MD 시간 락인 <span class="trk collab">COLLAB</span></span></li>
+          <li><span class="num">6</span><span><span class="deliv nzw">FUNNEL</span><span class="deliv nzw">CALL</span>가오픈 풀퍼널 D-3 점검 — 광고·플레이스·콜센터 LIVE 직전 검수 <span class="trk sys">SYS</span></span></li>
+          <li><span class="num">7</span><span><span class="deliv usp">A3</span>14명 입사 동의서 100% 확보 확인 — 5/19 첫 출근 명단 <span class="trk hr">HR</span></span></li>
+          <li><span class="num">8</span><span><b>5/18 (월) D+0 가오픈 어젠다 사전공유</b> — SOP 통합점검 + GO/NO-GO 리허설 (마감 직전 송부)</span></li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 03 — SOP Boost Schedule -->
+  <div class="sec-title">
+    <span class="num">[03]</span>
+    <h2>SOP 보강 <em>스케줄</em></h2>
+    <div class="line"></div>
+    <span class="badge">D-6 → D+0 · 10 EVENTS · 3 GAPS</span>
+  </div>
+
+  <section class="sop-block">
+    <header class="sop-header">
+      <div class="sop-header-L">
+        <div class="sop-eyebrow">SOP GAP CLOSURE — 가오픈 전 필수 보강</div>
+        <h3>부재 SOP 3대 영역 <em>보강 스케줄</em></h3>
+        <div class="sop-desc"><b>팀별 직무교육 · 환자동선 · 상품별 인수인계 SOP</b> 부재 — D-6부터 D+0(가오픈 직전)까지 일정에 분산 배치하여 5/18 가오픈 전 1차 완성. USP 일일회의 안건에 진척도 점검 항목 통합.</div>
+      </div>
+      <div class="sop-stat">
+        <div class="sop-stat-b"><div class="sop-stat-l">신규</div><div class="sop-stat-v">10</div></div>
+        <div class="sop-stat-b"><div class="sop-stat-l">트랙</div><div class="sop-stat-v">3</div></div>
+      </div>
+    </header>
+
+    <div class="sop-tracks" id="sopTracksContainer">
+      <!-- Rendered by JS -->
+    </div>
+    <button class="sop-add-track" data-act="add-sop-track">+ 새 SOP 트랙 추가 (예: D · 의료광고심의 / E · 진료품질관리)</button>
+  </section>
+
+  <!-- Section 04 — Track Legend -->
+  <div class="sec-title">
+    <span class="num">[04]</span>
+    <h2>트랙 <em>분류</em> & 처리 가이드</h2>
+    <div class="line"></div>
+  </div>
+
+  <section class="legend" id="legendSection">
+    <div class="legend-title-row">
+      <div class="legend-title" id="legendTitle">Track Color Legend · — Categories</div>
+      <span class="legend-count-tag" id="legendCountTag">호버하여 추가/삭제/수정/정렬</span>
+    </div>
+    <div class="legend-grid" id="legendGrid">
+      <!-- Rendered by JS -->
+    </div>
+  </section>
+
+  <section class="notes">
+    <div class="note">
+      <div class="note-t">⚠ 즉시 조정 필요 — 5건</div>
+      <div class="note-c">
+        <ul>
+          <li><b>14일(목) 11시 동시진행</b> — 외래팀 소독기 / 검안팀 FAG → 별도공간·강사 사전 확정</li>
+          <li><b>15일(금) 인터뷰 촬영 시간 확정</b> — NEWZWAVE 촬영팀 + 원장님 일정 정렬, SOP 워크숍과 충돌 방지</li>
+          <li><b>16일(토) 출근 안내</b> — 휴무에서 <b>오전 집중 SOP</b>로 전환 (09~13시) → 직원 사전 통지 必</li>
+          <li><b>18일(월) 방문 3건 시간조정</b> — 서광/성민/MD를 SOP 일정 사이로 분산</li>
+          <li><b>11일(월) DS메디칼 시간확정</b> — 로덱 유니트 설치(10시)와 동선 충돌 방지</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">
+      <div class="note-t">📌 핵심 마일스톤 — 가오픈까지 (SOP 보강 통합)</div>
+      <div class="note-c">
+        <ul>
+          <li><b>5/12 화 D-6</b> — 보건소실사 + MSO 회의 + <span style="color:var(--t-hr-deep)">팀별 직무교육 1차</span></li>
+          <li><b>5/13 수 D-5</b> — 노무사 + <span style="color:var(--t-hr-deep)">팀별 직무교육 2차</span> (검안·수술)</li>
+          <li><b>5/14 목 D-4</b> — LBC 강의 + USP 회의 + <span style="color:var(--t-hr-deep)">환자동선 시뮬 1차</span></li>
+          <li><b>5/15 금 D-3</b> — <span style="color:var(--t-hr-deep)">팀교육 3차 + 모의진료 1차 + 상품 SOP 1차</span> + 인터뷰</li>
+          <li><b>5/16 토 D-2</b> — <span style="color:var(--t-hr-deep)">오전 집중 SOP</span> · 09~13시 (동선 시뮬 + 상품 SOP 2차 + USP 디브리프)</li>
+          <li><b>5/18 월 D+0 ★</b> — <b style="color:var(--st-critical)">가오픈</b> · 07:30 SOP 최종 점검 + 08:30 GO/NO-GO + 09:00 진료 개시 + 18:00 마감보고</li>
+          <li><b>5/19 화 D+1</b> — 첫 화요일 진료 · 캡 60% 안착</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 05 — Next Week Preview -->
+  <div class="sec-title">
+    <span class="num">[05]</span>
+    <h2>차주 <em>미리보기</em> · M1 W1 가오픈 주간</h2>
+    <div class="line"></div>
+    <span class="badge">5/19 → 5/25 · D+0 ~ D+6</span>
+  </div>
+
+  <section class="next-week">
+    <header class="nw-header">
+      <div class="nw-header-L">
+        <div class="nw-eyebrow">NEXT WEEK · M1 W1 — POST-GAOPEN 안착 주간</div>
+        <h3>가오픈 첫 주 — <em>안착 운영 모드</em></h3>
+        <div class="nw-desc">5/18 (월) D+0 가오픈 (본주 D-Day) → <b>일별 환자수 캡 60%</b> 진입 · USP 일일회의 <b>Tier 1 정기 → Tier 3 안착 모드</b> 전환 · <b>안구건조증 NEW 캠페인</b> 본격 가동 (M2→M1 앞당김) · D+15 1:1 면담 14명 준비 · <b style="color:var(--t-visit-deep)">5/23 신승 30인 검진</b> + <b style="color:var(--t-visit-deep)">5/31 농협 NH MOU</b> 추진. <span style="color:var(--text-3)">M1 목표: 매출 8,541만 · 신환 42명 (시력 18·ICL 2·백내장 6·드림렌즈 3·안구건조증 13) · 마케팅 ROI 3.7배</span></div>
+      </div>
+      <div class="nw-dday">
+        <div class="nw-dday-l">★ GAOPEN</div>
+        <div class="nw-dday-v">5/18</div>
+        <div class="nw-dday-d">월요일 D+0 (본주)</div>
+      </div>
+    </header>
+
+    <!-- KPI Targets -->
+    <div class="nw-kpi-grid">
+      <div class="nw-kpi-c">
+        <div class="nw-kpi-l">일별 환자수 캡</div>
+        <div class="nw-kpi-v">60<span>%</span></div>
+        <div class="nw-kpi-d">월·금 60명 / 화목 50명 / 토 21명</div>
+      </div>
+      <div class="nw-kpi-c">
+        <div class="nw-kpi-l">노쇼율 목표</div>
+        <div class="nw-kpi-v">&lt;5<span>%</span></div>
+        <div class="nw-kpi-d">예약 슬롯 + DB 5분룰 리콜</div>
+      </div>
+      <div class="nw-kpi-c">
+        <div class="nw-kpi-l">NPS 목표</div>
+        <div class="nw-kpi-v">≥7<span>.0</span></div>
+        <div class="nw-kpi-d">D+15 1:1 면담 시작 (5/26)</div>
+      </div>
+      <div class="nw-kpi-c">
+        <div class="nw-kpi-l">운영 사고</div>
+        <div class="nw-kpi-v">0<span>건</span></div>
+        <div class="nw-kpi-d">의료·시스템·CS 전 영역</div>
+      </div>
+    </div>
+
+    <!-- 7-day Strip -->
+    <div class="nw-strip-grid">
+      <div class="nw-day-c d-day">
+        <div class="nw-dn">화·D+1</div>
+        <div class="nw-dd">19</div>
+        <div class="nw-dl">M1 W1 시작</div>
+      </div>
+      <div class="nw-day-c">
+        <div class="nw-dn">수·D+2</div>
+        <div class="nw-dd">20</div>
+        <div class="nw-dl">캡 60%</div>
+      </div>
+      <div class="nw-day-c">
+        <div class="nw-dn">목·D+3</div>
+        <div class="nw-dd">21</div>
+        <div class="nw-dl">캡 60%</div>
+      </div>
+      <div class="nw-day-c">
+        <div class="nw-dn">금·D+4</div>
+        <div class="nw-dd">22</div>
+        <div class="nw-dl">11h 시프트</div>
+      </div>
+      <div class="nw-day-c" style="background:linear-gradient(180deg,#E8F6EF,var(--surface));border-top:2px solid var(--t-visit-deep)">
+        <div class="nw-dn">토·D+5</div>
+        <div class="nw-dd">23</div>
+        <div class="nw-dl" style="color:var(--t-visit-deep);font-weight:600">⚑ 신승 검진 1차</div>
+      </div>
+      <div class="nw-day-c off">
+        <div class="nw-dn">일·D+6</div>
+        <div class="nw-dd">24</div>
+        <div class="nw-dl">휴진</div>
+      </div>
+      <div class="nw-day-c hybrid">
+        <div class="nw-dn">월·D+7</div>
+        <div class="nw-dd">25</div>
+        <div class="nw-dl">⚠ Hybrid C</div>
+      </div>
+    </div>
+
+    <!-- Actions + Risks -->
+    <div class="nw-bottom-grid">
+      <div class="nw-actions">
+        <div class="nw-bh" id="nwActionsHeader">차주 핵심 액션 — 8건</div>
+        <ol id="nwActionsList">
+          <!-- Rendered by JS -->
+        </ol>
+        <button class="nw-add-btn" data-act="add-nwa">+ 차주 액션 추가</button>
+      </div>
+      <div class="nw-risks">
+        <div class="nw-bh risk" id="nwRisksHeader">차주 리스크 — 5건</div>
+        <ol id="nwRisksList">
+          <!-- Rendered by JS -->
+        </ol>
+        <button class="nw-add-btn risk" data-act="add-nwr">+ 차주 리스크 추가</button>
+      </div>
+    </div>
+
+    <!-- P1-P6 Activation Map -->
+    <div class="nw-pmap">
+      <div class="nw-bh">P1~P6 차주 활성화 매트릭스</div>
+      <div class="nw-pmap-grid">
+        <div class="nw-p"><span class="pn">P1</span><span class="pl">시스템이식+안착</span><span class="ok">LIVE</span></div>
+        <div class="nw-p"><span class="pn">P2</span><span class="pl">운영기획+사업계획</span><span class="active">M1 측정</span></div>
+        <div class="nw-p"><span class="pn">P3</span><span class="pl">마케팅전략+신환</span><span class="ok">NEW 가동</span></div>
+        <div class="nw-p"><span class="pn">P4</span><span class="pl">조직체계+인사</span><span class="active">Hybrid C</span></div>
+        <div class="nw-p"><span class="pn">P5</span><span class="pl">CRM+환자경험</span><span class="active">NPS·노쇼</span></div>
+        <div class="nw-p"><span class="pn">P6</span><span class="pl">월간부스터</span><span class="active">Tier 3 전환</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 06 — 진료협력 3트랙 -->
+  <div class="sec-title">
+    <span class="num">[06]</span>
+    <h2>진료협력 <em>3트랙</em> · 차주 실행 매트릭스</h2>
+    <div class="line"></div>
+    <span class="badge">D+30 실장 채용 · 신승 5/23 시작 · 농협 5/31 MOU</span>
+  </div>
+
+  <section class="sop-block" style="border-color:var(--t-visit-line)">
+    <header class="sop-header" style="background:linear-gradient(180deg,var(--t-visit-bg),var(--surface))">
+      <div class="sop-header-L">
+        <div class="sop-eyebrow" style="color:var(--t-visit-deep)">CLINICAL PARTNERSHIP — D+30 실행 트랙</div>
+        <h3>진료협력 3트랙 — <em>가오픈 직후 실행</em></h3>
+        <div class="sop-desc"><b>Track 1 진료협력팀 신설(D+30) · Track 2 신승 30인 PREMIUM(5/23 시작) · Track 3 농협 NH(5/31 첫 MOU)</b>. 의료법 §27 준수 (금전 리워드/의뢰수당 금지 · '정기 임상 교류' 표기 · 광고매체비 의원 직접 집행). <b style="color:var(--st-critical)">단일 결재선</b>: 원장 → MSO 대표 → 실장.</div>
+      </div>
+      <div class="sop-stat">
+        <div class="sop-stat-b" style="background:var(--t-visit-bg);border-color:var(--t-visit-line)">
+          <div class="sop-stat-l" style="color:var(--t-visit-deep)">M1 잠재</div>
+          <div class="sop-stat-v" style="color:var(--t-visit-deep)">~2.4억</div>
+        </div>
+        <div class="sop-stat-b" style="background:var(--t-visit-bg);border-color:var(--t-visit-line)">
+          <div class="sop-stat-l" style="color:var(--t-visit-deep)">트랙</div>
+          <div class="sop-stat-v" style="color:var(--t-visit-deep)">3</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="sop-tracks">
+
+      <!-- Track 1 — 진료협력팀 신설 -->
+      <div class="sop-track">
+        <div class="sop-track-h">
+          <div class="sop-track-letter" style="background:var(--t-visit-bg);color:var(--t-visit-deep);border-color:var(--t-visit-line)">1</div>
+          <div style="flex:1">
+            <div class="sop-track-name">진료협력팀 <em>신설</em> (14→15명)</div>
+          </div>
+        </div>
+        <div class="sop-track-sub">D+30 실장 1명 신설 → D+60 +1 추가. <b>천안 모델</b>: 5명(실장+마케팅+미디어+대외협력+미디어 주임) · <b>선안과</b>: 단계적 확장.</div>
+        <ul class="sop-milestones">
+          <li class="sop-ms">
+            <div class="sop-ms-num" style="background:var(--t-visit-bg);color:var(--t-visit-deep);border-color:var(--t-visit-line)">차주</div>
+            <div class="sop-ms-c"><b>채용 공고 기획</b> — 380~450만/월 · 총괄·B2B·MOU<span class="when">5/26 (월) D+7 · 차주</span></div>
+          </li>
+          <li class="sop-ms">
+            <div class="sop-ms-num" style="background:var(--t-visit-bg);color:var(--t-visit-deep);border-color:var(--t-visit-line)">D+15</div>
+            <div class="sop-ms-c"><b>면접 + 후보 3~5명 선별</b><span class="when">6/3 ~ 6/10 · M1 W2~W3</span></div>
+          </li>
+          <li class="sop-ms final">
+            <div class="sop-ms-num">D+30</div>
+            <div class="sop-ms-c"><b>실장 입사</b> — 단일 결재선 가동<span class="when">6/18 (수) · M2 시작</span></div>
+          </li>
+          <li class="sop-ms">
+            <div class="sop-ms-num" style="background:var(--t-visit-bg);color:var(--t-visit-deep);border-color:var(--t-visit-line)">D+60</div>
+            <div class="sop-ms-c"><b>+1 추가</b> (대외협력 또는 상담 겸직)<span class="when">7/18 · M3 시점</span></div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Track 2 — 신승 30인 PREMIUM -->
+      <div class="sop-track">
+        <div class="sop-track-h">
+          <div class="sop-track-letter" style="background:var(--t-visit-bg);color:var(--t-visit-deep);border-color:var(--t-visit-line)">2</div>
+          <div style="flex:1">
+            <div class="sop-track-name">신승 <em>30인 PREMIUM</em></div>
+          </div>
+        </div>
+        <div class="sop-track-sub"><b>5/15 MOU 체결 → 5/23 시행 → 6/15 사후 회신</b>. 33만/인×30 = 990만 (1차) + 사후 진료 전환 250~1,200만 (전환율 10~30%).</div>
+        <ul class="sop-milestones">
+          <li class="sop-ms">
+            <div class="sop-ms-num" style="background:var(--t-visit-bg);color:var(--t-visit-deep);border-color:var(--t-visit-line)">1단계</div>
+            <div class="sop-ms-c"><b>MOU 체결</b> — 대치동 신승 본사 (MSO 대표 + 한선협 원장)<span class="when">5/15 (금) · 본주 D-4</span></div>
+          </li>
+          <li class="sop-ms">
+            <div class="sop-ms-num" style="background:var(--t-visit-bg);color:var(--t-visit-deep);border-color:var(--t-visit-line)">2단계</div>
+            <div class="sop-ms-c"><b>직원 명단 30인 + 일정 조율</b> — 실장 → 신승 인사담당<span class="when">5/16 ~ 22 · 본주 토 ~ 차주 목</span></div>
+          </li>
+          <li class="sop-ms final">
+            <div class="sop-ms-num">3단계</div>
+            <div class="sop-ms-c"><b>검진 6일 분산 시행</b> — 일 5명 · 원무·검안·외래·처치<span class="when">5/23 ~ 30 · 차주 토 시작</span></div>
+          </li>
+          <li class="sop-ms">
+            <div class="sop-ms-num" style="background:var(--t-visit-bg);color:var(--t-visit-deep);border-color:var(--t-visit-line)">4단계</div>
+            <div class="sop-ms-c"><b>결과 회신 + 사후관리</b> — 상담·검안 + 실장<span class="when">6/1 ~ 15 · M2 W1~W2</span></div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Track 3 — 농협 NH MOU -->
+      <div class="sop-track">
+        <div class="sop-track-h">
+          <div class="sop-track-letter" style="background:var(--t-visit-bg);color:var(--t-visit-deep);border-color:var(--t-visit-line)">3</div>
+          <div style="flex:1">
+            <div class="sop-track-name">농협 NH <em>본부 복지팀 MOU</em></div>
+          </div>
+        </div>
+        <div class="sop-track-sub"><b>5/12~16 어프로치 → 5/31 첫 MOU</b>. 직원·임원 650명 풀 · 정밀검사·IPL·시력교정·백내장·드림렌즈 5라인 · 잠재 <b>1.09억(보수) ~ 2.17억(적극)</b>.</div>
+        <ul class="sop-milestones">
+          <li class="sop-ms">
+            <div class="sop-ms-num" style="background:var(--t-visit-bg);color:var(--t-visit-deep);border-color:var(--t-visit-line)">어프로치</div>
+            <div class="sop-ms-c"><b>본부 복지팀 컨택</b> — 5건 사전 미팅<span class="when">5/12 ~ 16 · 본주 화 ~ 금</span></div>
+          </li>
+          <li class="sop-ms">
+            <div class="sop-ms-num" style="background:var(--t-visit-bg);color:var(--t-visit-deep);border-color:var(--t-visit-line)">차주</div>
+            <div class="sop-ms-c"><b>제안서·견적·MOU 자료 준비</b> — 5라인 패키지<span class="when">5/19 ~ 25 · 차주 M1 W1</span></div>
+          </li>
+          <li class="sop-ms final">
+            <div class="sop-ms-num">MOU</div>
+            <div class="sop-ms-c"><b>첫 MOU 체결</b> — 본부 복지팀 대표<span class="when">5/31 (토) · 차차주</span></div>
+          </li>
+          <li class="sop-ms">
+            <div class="sop-ms-num" style="background:var(--t-visit-bg);color:var(--t-visit-deep);border-color:var(--t-visit-line)">시행</div>
+            <div class="sop-ms-c"><b>650명 검진 시행</b> — 평균 17~34% 전환<span class="when">6월 ~ · M2 ~ M3</span></div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- B2B Ratchet Rule banner -->
+  <section style="margin-top:18px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--st-critical);border-radius:var(--r-md);padding:18px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px">
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--st-critical);font-weight:700">⛔ Ratchet Rule · B2B MOU 표준 패키지 가격 고정</div>
+      <div style="font-size:13.5px;color:var(--text-2);margin-top:6px;line-height:1.5"><b>PREMIUM 33만/인 · STANDARD 22만/인 · BASIC 12만/인</b> — <b style="color:var(--st-critical)">절대 인하 금지</b>. 신승 990만은 PREMIUM 표준가. 협상 시 패키지 다운그레이드(STANDARD)로 대응 · 단가 인하 절대 불가.</div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <div style="text-align:center;padding:8px 14px;background:#FCEDED;border:1px solid #F4C9C9;border-radius:var(--r-sm)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--st-critical);font-weight:700">PREMIUM</div>
+        <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--ink);font-style:italic">33만</div>
+      </div>
+      <div style="text-align:center;padding:8px 14px;background:var(--surface-alt);border:1px solid var(--line);border-radius:var(--r-sm)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-3);font-weight:700">STANDARD</div>
+        <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--ink);font-style:italic">22만</div>
+      </div>
+      <div style="text-align:center;padding:8px 14px;background:var(--surface-alt);border:1px solid var(--line);border-radius:var(--r-sm)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-3);font-weight:700">BASIC</div>
+        <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--ink);font-style:italic">12만</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="mark">선안과 주간업무 대시보드</span> · v5.5 · build 2026.05.10<br>
+    USP COMPANY × KORSMES × NEWZWAVE — <b>[05] 차주 액션·리스크 CRUD 탑재 · 직원 이름 삭제</b><br>
+    <span style="color:var(--text-4);font-size:11px">5영역 CRUD: 일정·USP안건·트랙·SOP·차주(액션/리스크) · 자동저장 · ↺ 초기화 권장</span>
+  </footer>
+
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <div class="modal-h">
+      <h3 id="modalTitle">항목 <em>편집</em></h3>
+      <button class="modal-x" id="modalClose">×</button>
+    </div>
+    <div class="modal-b" id="modalBody"></div>
+    <div class="modal-f">
+      <button class="btn btn-danger" id="modalDelete" style="display:none">삭제</button>
+      <div style="display:flex;gap:8px;margin-left:auto">
+        <button class="btn btn-secondary" id="modalCancel">취소</button>
+        <button class="btn btn-primary" id="modalSave">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  const STORAGE_KEY = 'suneye_dashboard_v54';
+  const TRACKS = {
+    edu:{label:'교육',icon:'교'},
+    install:{label:'설치·세팅',icon:'설'},
+    meet:{label:'외부미팅',icon:'미'},
+    event:{label:'행사·강의',icon:'★'},
+    visit:{label:'관리차',icon:'차'},
+    ops:{label:'사이니지',icon:'사'},
+    usp:{label:'USP 회의',icon:'USP'},
+    sop:{label:'SOP 보강',icon:'SOP'}
+  };
+  const AGENDA_TRACKS = {
+    hr:{label:'HR · 인사노무'},
+    collab:{label:'COLLAB · 진료협력'},
+    sys:{label:'SYS · 내부운영시스템화'}
+  };
+  const DELIV_PARTIES = {
+    usp:'USP',kor:'KORSMES',nzw:'NEWZWAVE',partner:'파트너사'
+  };
+
+  // ─── Track Color Schemes (CSS variables) ───
+  const SCHEMES = {
+    edu:    {bg:'--t-edu-bg',    fg:'--t-edu',     border:'--t-edu-line',     name:'블루 (교육)'},
+    install:{bg:'--t-install-bg',fg:'--t-install', border:'--t-install-line', name:'앰버 (설치)'},
+    meet:   {bg:'--t-meet-bg',   fg:'--t-meet',    border:'--t-meet-line',    name:'레드 (미팅)'},
+    event:  {bg:'--t-event-bg',  fg:'--t-event',   border:'--t-event-line',   name:'퍼플 (행사)'},
+    visit:  {bg:'--t-visit-bg',  fg:'--t-visit',   border:'--t-visit-line',   name:'그린 (방문)'},
+    ops:    {bg:'--t-ops-bg',    fg:'--t-ops',     border:'--t-ops-line',     name:'옐로 (작업)'},
+    hr:     {bg:'--t-hr-bg',     fg:'--t-hr-deep', border:'--t-hr-line',      name:'틸 (인사)'},
+    usp:    {bg:'--t-usp-bg',    fg:'--t-usp',     border:'--t-usp-line',     name:'네이비 (USP)'}
+  };
+
+  const DEFAULT_TRACKS = [
+    {id:'tr_edu',     label:'교육',              icon:'교',   desc:'수술/검안/CS/CRM',  scheme:'edu'},
+    {id:'tr_install', label:'설치·세팅',          icon:'설',   desc:'장비·시설',          scheme:'install'},
+    {id:'tr_meet',    label:'외부미팅·실사',       icon:'미·실',desc:'',                  scheme:'meet'},
+    {id:'tr_event',   label:'행사·외부강의·미디어', icon:'★',   desc:'',                  scheme:'event'},
+    {id:'tr_visit',   label:'관리차 방문',        icon:'차',   desc:'',                  scheme:'visit'},
+    {id:'tr_ops',     label:'사이니지',          icon:'사',   desc:'진행작업',           scheme:'ops'},
+    {id:'tr_sop',     label:'SOP 보강',          icon:'SOP',  desc:'팀교육·동선·인수인계',scheme:'hr'},
+    {id:'tr_usp',     label:'USP 일일회의',      icon:'USP',  desc:'15시 고정',          scheme:'usp'}
+  ];
+
+  const DEFAULT_SOP_TRACKS = [
+    {
+      id:'sop_a', letter:'A', name:'팀별 <em>직무교육</em>',
+      desc:'9개 직군 직무 매트릭스 정렬 — <b>책임범위·R&R·KPI·SOP</b> 통합 교육. 천안김안과 SOP 21종 이식 기반.',
+      milestones:[
+        {id:'sa_1', label:'1차', text:'<b>외래 · 원무 · 상담</b> 3개 팀', when:'5/12 (화) 17:00 · D-6', final:false},
+        {id:'sa_2', label:'2차', text:'<b>검안 · 수술</b> 2개 팀', when:'5/13 (수) 16:00 · D-5', final:false},
+        {id:'sa_3', label:'3차', text:'<b>진료협력 · 미디어</b> 2개 팀 + MSO', when:'5/15 (금) 09:00 · D-3', final:false}
+      ]
+    },
+    {
+      id:'sop_b', letter:'B', name:'환자 <em>동선 시뮬레이션</em>',
+      desc:'신환→접수→검안→진료→상담→수술결정→결제→follow-up <b>전 동선 모의진료</b>. 노쇼·컴플레인 시나리오 포함.',
+      milestones:[
+        {id:'sb_1', label:'1차', text:'<b>동선 시뮬레이션</b> — 정상 케이스', when:'5/14 (목) 16:00 · D-4', final:false},
+        {id:'sb_2', label:'2차', text:'<b>모의진료</b> — 신환 3 + 재진 2', when:'5/15 (금) 13:00 · D-3', final:false},
+        {id:'sb_3', label:'2차', text:'<b>오전 집중 시뮬레이션</b> — 노쇼·컴플레인 포함', when:'5/16 (토) 09:00 · D-2 (마감 13시)', final:false},
+        {id:'sb_4', label:'D+0', text:'<b>GO/NO-GO 결정</b> — 가오픈 개시 직전 최종', when:'5/18 (월) 08:30 · D+0 가오픈 직전', final:true}
+      ]
+    },
+    {
+      id:'sop_c', letter:'C', name:'상품별 <em>인수인계 SOP</em>',
+      desc:'검안→상담→수술→follow-up <b>인수인계 매뉴얼</b>. 환자 정보·검사결과·수술계획 단절 없이 인계.',
+      milestones:[
+        {id:'sc_1', label:'1차', text:'<b>라식 · 라섹 · 렌즈삽입</b> 3종', when:'5/15 (금) 16:00 · D-3', final:false},
+        {id:'sc_2', label:'2차', text:'<b>드림렌즈 · 백내장</b> 2종', when:'5/16 (토) 11:00 · D-2 (마감 13시)', final:false},
+        {id:'sc_3', label:'D+0', text:'<b>최종 SOP 통합 점검</b> — 5종 통합 (가오픈 직전)', when:'5/18 (월) 07:30 · D+0 가오픈 직전', final:true}
+      ]
+    }
+  ];
+
+  const DEFAULT_NW_ACTIONS = [
+    {id:'nwa_1', priority:true,  html:'<b>5/19(화) D+1 첫 화요일</b> — 가오픈 후 캡 60% 안착 운영 · AI CRM 대시보드 운영 · DB 5분룰 콜센터'},
+    {id:'nwa_2', priority:false, html:'<b>매일 08:30 부서장 스탠딩 15분</b> + <b>매일 18:00 일일 운영보고</b> 정착 (대시보드 + 카톡)'},
+    {id:'nwa_3', priority:false, html:'<b>매일 15:00 USP 회의</b> — Tier 1 정기 → <b>Tier 3 안착 운영</b> 전환 · 일일 KPI 리뷰 중심'},
+    {id:'nwa_4', priority:true,  html:'<b>5/23(토) 신승 검진 1차 시작</b> — <b style="color:var(--t-visit-deep)">30인 PREMIUM 990만</b> · 6일 분산 시행 · 사후 진료 전환 250~1,200만 (전환율 10~30%)'},
+    {id:'nwa_5', priority:true,  html:'<b>5/25(월) Hybrid C 운영</b> — 전원 출근 + 약정오프 갈음 + 보상휴가 50% + 인센티브 (5/13 노무사 점검 결과 적용)'},
+    {id:'nwa_6', priority:false, html:'<b>안구건조증 NEW 캠페인 W1~W4</b> — M1 본격 가동, W2~W4 강도↑, 신규 13명 (M1 매출 8,541만 견인)'},
+    {id:'nwa_7', priority:true,  html:'<b>농협 NH 5/31 첫 MOU 추진</b> — 차주 미팅·자료 준비 · 본부 복지팀 대상 · <b style="color:var(--t-visit-deep)">잠재 1.09~2.17억</b> (650명 평균 17~34% 전환)'},
+    {id:'nwa_8', priority:false, html:'<b>5/26(화) D+15 면담 + 진료협력팀 실장 D+30 채용 공고</b> — 14명 1:1 면담 양식 + 실장 1명 380~450만/월 (총괄·B2B·MOU)'}
+  ];
+
+  const DEFAULT_NW_RISKS = [
+    {id:'nwr_1', high:true,  html:'<b>보건소 개설신고 수리 지연</b> — 5/12 실사 후 1~2주 처리 예상. 5/18 가오픈 전 미수리 시 비상플랜 (리허설로 운영 + 수리 후 정식)'},
+    {id:'nwr_2', high:true,  html:'<b>5/25 Hybrid C 직원 동의</b> — 5/13 노무사 방문 시 합의서 양식 확정 必. 인센티브 합의 미흡 시 노무 분쟁 리스크'},
+    {id:'nwr_3', high:true,  html:'<b>진료협력팀 실장 부재</b> — D+30(6/18) 채용까지 신승·농협 운영을 USP·MSO 대표가 짊어짐. <b>단일 결재선 임시 운영</b> (원장→MSO 대표)'},
+    {id:'nwr_4', high:false, html:'<b>첫 주 운영 사고 0건 목표</b> — 의료·시스템·CS 핫라인 가동 + 즉시 대응 매뉴얼 준비. 사이니지·동선 모의진료 결과 실전 검증'},
+    {id:'nwr_5', high:false, html:'<b>NEW 캠페인 응답률 미달</b> — W1 광고 데이터 보고 W2 강도 조정 (예산·채널 믹스 즉시 변경 가능 구조 필수)'}
+  ];
+
+  // ─── State ───
+  let state = null;
+  let editMode = true;  // FIXED ON
+  let modalCtx = null;
+
+  // ─── Mark elements with data attrs ───
+  function tagDOM(){
+    document.querySelectorAll('.day').forEach(d=>{
+      const id = d.id; if(!id) return;
+      const num = id.replace('d','');
+      d.dataset.day = num;
+    });
+    document.querySelectorAll('.usp-card').forEach(c=>{
+      const dn = c.querySelector('.usp-day-num')?.textContent.trim();
+      if(dn) c.dataset.uspDay = dn;
+    });
+  }
+
+  // ─── Extract initial state from DOM ───
+  function extractFromDOM(){
+    const days = {};
+    document.querySelectorAll('.day').forEach(d=>{
+      const num = d.dataset.day;
+      const events = [];
+      d.querySelectorAll('.event').forEach((e,i)=>{
+        const cls = e.className;
+        let track = 'meet';
+        Object.keys(TRACKS).forEach(t=>{ if(cls.includes('track-'+t)) track = t; });
+        events.push({
+          id: `e_${num}_${Date.now()}_${i}`,
+          time: e.querySelector('.event-time')?.textContent.trim() || '',
+          tbd: e.querySelector('.event-time')?.classList.contains('tbd') || false,
+          track: track,
+          icon: e.querySelector('.event-icon')?.textContent.trim() || '',
+          title: e.querySelector('.event-title')?.innerHTML.trim() || '',
+          team: e.querySelector('.event-team')?.textContent.trim() || '',
+          tags: Array.from(e.querySelectorAll('.tag')).map(t=>({
+            text: t.textContent.trim(),
+            type: ['crit','star','conflict','new','usp','todo'].find(c=>t.classList.contains(c)) || 'new'
+          })),
+          flags: {
+            critical: e.classList.contains('is-critical'),
+            star: e.classList.contains('is-star'),
+            usp: e.classList.contains('is-usp'),
+            conflict: e.classList.contains('is-conflict')
+          }
+        });
+      });
+      days[num] = { events };
+    });
+
+    const agendas = {};
+    document.querySelectorAll('.usp-card').forEach(c=>{
+      const num = c.dataset.uspDay;
+      const items = [];
+      c.querySelectorAll('.usp-agenda li').forEach((li,i)=>{
+        const span = li.querySelector('span:nth-of-type(2)');
+        items.push({
+          id: `a_${num}_${Date.now()}_${i}`,
+          num: i+1,
+          priority: li.classList.contains('priority'),
+          html: span ? span.innerHTML.trim() : ''
+        });
+      });
+      agendas[num] = { items };
+    });
+
+    return {
+      days,
+      agendas,
+      tracks: JSON.parse(JSON.stringify(DEFAULT_TRACKS)),
+      sopTracks: JSON.parse(JSON.stringify(DEFAULT_SOP_TRACKS)),
+      nwActions: JSON.parse(JSON.stringify(DEFAULT_NW_ACTIONS)),
+      nwRisks: JSON.parse(JSON.stringify(DEFAULT_NW_RISKS)),
+      _v: '5.5', _ts: Date.now()
+    };
+  }
+
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(raw){
+        const parsed = JSON.parse(raw);
+        if(parsed && parsed.days){
+          // Migrate: ensure tracks/sopTracks/nwActions/nwRisks exist
+          if(!parsed.tracks || !Array.isArray(parsed.tracks)){
+            parsed.tracks = JSON.parse(JSON.stringify(DEFAULT_TRACKS));
+          }
+          if(!parsed.sopTracks || !Array.isArray(parsed.sopTracks)){
+            parsed.sopTracks = JSON.parse(JSON.stringify(DEFAULT_SOP_TRACKS));
+          }
+          if(!parsed.nwActions || !Array.isArray(parsed.nwActions)){
+            parsed.nwActions = JSON.parse(JSON.stringify(DEFAULT_NW_ACTIONS));
+          }
+          if(!parsed.nwRisks || !Array.isArray(parsed.nwRisks)){
+            parsed.nwRisks = JSON.parse(JSON.stringify(DEFAULT_NW_RISKS));
+          }
+          return parsed;
+        }
+      }
+    }catch(e){console.warn('localStorage load failed',e);}
+    return extractFromDOM();
+  }
+
+  function saveState(){
+    try{
+      state._ts = Date.now();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      const badge = document.getElementById('saveBadge');
+      badge.classList.add('show');
+      setTimeout(()=>badge.classList.remove('show'), 1500);
+    }catch(e){console.warn('localStorage save failed',e);}
+  }
+
+  // ─── Render ───
+  function escAttr(s){return (s||'').replace(/"/g,'&quot;')}
+
+  function renderEvent(e){
+    const cls = ['event','track-'+e.track];
+    if(e.flags.critical) cls.push('is-critical');
+    if(e.flags.star) cls.push('is-star');
+    if(e.flags.usp) cls.push('is-usp');
+    if(e.flags.conflict) cls.push('is-conflict');
+    const timeCls = e.tbd ? 'event-time tbd' : 'event-time';
+    const tagsHtml = (e.tags||[]).map(t=>`<span class="tag ${t.type}">${t.text}</span>`).join(' ');
+    return `
+      <div class="${cls.join(' ')}" data-event-id="${e.id}">
+        <div class="${timeCls}">${e.time}</div>
+        <div class="event-icon">${e.icon}</div>
+        <div class="event-c">
+          <div class="event-title">${e.title}</div>
+          <div class="event-meta">
+            ${e.team?`<span class="event-team">${e.team}</span>`:''}
+            ${tagsHtml}
+          </div>
+        </div>
+        <div class="action-btns">
+          <button class="act-btn edit" data-act="edit-event" data-id="${e.id}" title="수정">✎</button>
+          <button class="act-btn del" data-act="del-event" data-id="${e.id}" title="삭제">×</button>
+        </div>
+      </div>`;
+  }
+
+  function renderAgendaItem(it){
+    const cls = it.priority ? 'priority' : '';
+    return `
+      <li class="${cls}" data-agenda-id="${it.id}">
+        <span class="num">${it.num}</span>
+        <span>${it.html}</span>
+        <div class="action-btns">
+          <button class="act-btn edit" data-act="edit-agenda" data-id="${it.id}" title="수정">✎</button>
+          <button class="act-btn del" data-act="del-agenda" data-id="${it.id}" title="삭제">×</button>
+        </div>
+      </li>`;
+  }
+
+  function renderDay(num){
+    const dayEl = document.querySelector(`[data-day="${num}"]`);
+    if(!dayEl) return;
+    const tracks = dayEl.querySelector('.tracks');
+    if(!tracks) return;
+    const data = state.days[num];
+    if(!data) return;
+    const events = data.events.map(renderEvent).join('');
+    const addBtn = `<button class="add-btn" data-act="add-event" data-day="${num}">+ ${num}일 일정 추가</button>`;
+    // Preserve existing day-divider banners (사이니지 etc) by placing add-btn after tracks
+    tracks.innerHTML = events;
+    let addEl = dayEl.querySelector('.add-btn');
+    if(!addEl){
+      const wrap = document.createElement('div');
+      wrap.innerHTML = addBtn;
+      tracks.parentElement.appendChild(wrap.firstElementChild);
+    }
+  }
+
+  function renderAgenda(num){
+    const cardEl = document.querySelector(`[data-usp-day="${num}"]`);
+    if(!cardEl) return;
+    const ol = cardEl.querySelector('.usp-agenda');
+    if(!ol) return;
+    const data = state.agendas[num];
+    if(!data) return;
+    // Re-number sequentially
+    data.items.forEach((it,i)=>it.num = i+1);
+    ol.innerHTML = data.items.map(renderAgendaItem).join('');
+    let addEl = cardEl.querySelector('.add-btn[data-act="add-agenda"]');
+    if(!addEl){
+      const btn = document.createElement('button');
+      btn.className = 'add-btn';
+      btn.dataset.act = 'add-agenda';
+      btn.dataset.day = num;
+      btn.textContent = `+ ${num}일 안건 추가`;
+      cardEl.appendChild(btn);
+    }
+  }
+
+  function renderAll(){
+    Object.keys(state.days).forEach(renderDay);
+    Object.keys(state.agendas).forEach(renderAgenda);
+    renderLegend();
+    renderSopTracks();
+    renderNwActions();
+    renderNwRisks();
+    updateCounters();
+  }
+
+  // ─── SOP Boost Tracks ───
+  function renderSopTracks(){
+    const container = document.getElementById('sopTracksContainer');
+    if(!container) return;
+    const tracks = state.sopTracks || DEFAULT_SOP_TRACKS;
+    container.innerHTML = tracks.map(renderSopTrack).join('');
+    // Update stat counter
+    const statV = document.querySelector('.sop-stat-b:nth-child(2) .sop-stat-v');
+    if(statV) statV.textContent = tracks.length;
+    const totalMs = tracks.reduce((acc,t)=>acc+(t.milestones?.length||0),0);
+    const statV2 = document.querySelector('.sop-stat-b:nth-child(1) .sop-stat-v');
+    if(statV2) statV2.textContent = totalMs;
+  }
+
+  function renderSopTrack(t){
+    const ms = (t.milestones||[]).map(renderSopMilestone).join('');
+    return `
+      <div class="sop-track" data-sop-track-id="${t.id}">
+        <div class="sop-track-h">
+          <div class="sop-track-letter">${t.letter||''}</div>
+          <div style="flex:1">
+            <div class="sop-track-name">${t.name||''}</div>
+          </div>
+        </div>
+        <div class="action-btns">
+          <button class="act-btn edit" data-act="edit-sop-track" data-id="${t.id}" title="트랙 수정">✎</button>
+          <button class="act-btn del" data-act="del-sop-track" data-id="${t.id}" title="트랙 삭제">×</button>
+        </div>
+        <div class="sop-track-sub">${t.desc||''}</div>
+        <ul class="sop-milestones">
+          ${ms}
+        </ul>
+        <button class="sop-add-ms" data-act="add-sop-ms" data-track-id="${t.id}">+ ${t.letter} 마일스톤 추가</button>
+      </div>`;
+  }
+
+  function renderSopMilestone(m){
+    const cls = m.final ? 'sop-ms final' : 'sop-ms';
+    return `
+      <li class="${cls}" data-sop-ms-id="${m.id}">
+        <div class="sop-ms-num">${m.label||''}</div>
+        <div class="sop-ms-c">${m.text||''}<span class="when">${m.when||''}</span></div>
+        <div class="action-btns">
+          <button class="act-btn edit" data-act="edit-sop-ms" data-id="${m.id}" title="수정">✎</button>
+          <button class="act-btn del" data-act="del-sop-ms" data-id="${m.id}" title="삭제">×</button>
+        </div>
+      </li>`;
+  }
+
+  function findSopTrack(id){
+    if(!state.sopTracks) return null;
+    const idx = state.sopTracks.findIndex(t=>t.id===id);
+    return idx>=0 ? {idx, t: state.sopTracks[idx]} : null;
+  }
+  function findSopMilestone(id){
+    if(!state.sopTracks) return null;
+    for(const t of state.sopTracks){
+      const idx = (t.milestones||[]).findIndex(m=>m.id===id);
+      if(idx>=0) return {trackId: t.id, idx, m: t.milestones[idx]};
+    }
+    return null;
+  }
+
+  function deleteSopTrack(id){
+    const f = findSopTrack(id); if(!f) return;
+    if(!confirm(`SOP 트랙 "${f.t.letter} - ${(f.t.name||'').replace(/<[^>]+>/g,'')}"을(를) 삭제하시겠습니까?\n(트랙과 모든 마일스톤이 함께 제거됩니다)`)) return;
+    state.sopTracks.splice(f.idx,1);
+    saveState(); renderSopTracks();
+  }
+  function deleteSopMilestone(id){
+    const f = findSopMilestone(id); if(!f) return;
+    if(!confirm(`마일스톤 "${f.m.label}"을(를) 삭제하시겠습니까?`)) return;
+    const t = findSopTrack(f.trackId);
+    if(t) t.t.milestones.splice(f.idx,1);
+    saveState(); renderSopTracks();
+  }
+
+  function openSopTrackModal(mode, t){
+    modalCtx = {mode, type:'sopTrack', id: t?.id};
+    document.getElementById('modalTitle').innerHTML = mode==='add' ? `SOP 트랙 <em>추가</em>` : `SOP 트랙 <em>수정</em>`;
+    document.getElementById('modalDelete').style.display = mode==='edit' ? 'block' : 'none';
+    const tr = t || {letter:'',name:'',desc:''};
+    document.getElementById('modalBody').innerHTML = `
+      <div class="fld">
+        <label>트랙 레터 (1~3자)</label>
+        <input type="text" id="f_st_letter" value="${escAttr(tr.letter)}" placeholder="A · B · C · D · E" maxlength="3">
+      </div>
+      <div class="fld">
+        <label>트랙 이름 (HTML 가능 — <em>이탤릭</em> 강조)</label>
+        <input type="text" id="f_st_name" value="${escAttr(tr.name)}" placeholder="예: 의료광고심의 <em>SOP</em>">
+      </div>
+      <div class="fld">
+        <label>트랙 설명 (HTML 가능)</label>
+        <textarea id="f_st_desc" rows="3" placeholder="예: 의료법 §57 · 사전심의 5건 (시안 → 심의 → 송출).">${escAttr(tr.desc)}</textarea>
+      </div>`;
+    document.getElementById('modalOverlay').classList.add('show');
+  }
+
+  function openSopMilestoneModal(mode, trackId, m){
+    modalCtx = {mode, type:'sopMs', trackId, id: m?.id};
+    const tr = findSopTrack(trackId);
+    const trackLetter = tr ? tr.t.letter : '';
+    document.getElementById('modalTitle').innerHTML = mode==='add' ? `${trackLetter} 마일스톤 <em>추가</em>` : `${trackLetter} 마일스톤 <em>수정</em>`;
+    document.getElementById('modalDelete').style.display = mode==='edit' ? 'block' : 'none';
+    const ms = m || {label:'',text:'',when:'',final:false};
+    document.getElementById('modalBody').innerHTML = `
+      <div class="fld-row">
+        <div class="fld">
+          <label>차수 라벨 (배지 텍스트)</label>
+          <input type="text" id="f_sm_label" value="${escAttr(ms.label)}" placeholder="1차 · 2차 · 풀데이 · 최종" maxlength="6">
+        </div>
+        <div class="fld" style="display:flex;align-items:flex-end">
+          <label class="fld-check">
+            <input type="checkbox" id="f_sm_final" ${ms.final?'checked':''}>
+            <span>🔴 Final/Critical (빨간 배지)</span>
+          </label>
+        </div>
+      </div>
+      <div class="fld">
+        <label>마일스톤 내용 (HTML 가능)</label>
+        <input type="text" id="f_sm_text" value="${escAttr(ms.text)}" placeholder="예: <b>외래·원무·상담</b> 3개 팀">
+      </div>
+      <div class="fld">
+        <label>일자/시간 메타</label>
+        <input type="text" id="f_sm_when" value="${escAttr(ms.when)}" placeholder="예: 5/12 (화) 17:00 · D-7">
+      </div>`;
+    document.getElementById('modalOverlay').classList.add('show');
+  }
+
+  // ─── Next-Week Actions / Risks ───
+  function renderNwActions(){
+    const ol = document.getElementById('nwActionsList');
+    if(!ol) return;
+    const list = state.nwActions || DEFAULT_NW_ACTIONS;
+    ol.innerHTML = list.map(a => `
+      <li class="${a.priority?'prio':''}" data-nwa-id="${a.id}">
+        ${a.html||''}
+        <div class="action-btns">
+          <button class="act-btn edit" data-act="edit-nwa" data-id="${a.id}" title="수정">✎</button>
+          <button class="act-btn del" data-act="del-nwa" data-id="${a.id}" title="삭제">×</button>
+        </div>
+      </li>`).join('');
+    const header = document.getElementById('nwActionsHeader');
+    if(header) header.textContent = `차주 핵심 액션 — ${list.length}건`;
+  }
+
+  function renderNwRisks(){
+    const ol = document.getElementById('nwRisksList');
+    if(!ol) return;
+    const list = state.nwRisks || DEFAULT_NW_RISKS;
+    ol.innerHTML = list.map(r => `
+      <li class="${r.high?'high':''}" data-nwr-id="${r.id}">
+        ${r.html||''}
+        <div class="action-btns">
+          <button class="act-btn edit" data-act="edit-nwr" data-id="${r.id}" title="수정">✎</button>
+          <button class="act-btn del" data-act="del-nwr" data-id="${r.id}" title="삭제">×</button>
+        </div>
+      </li>`).join('');
+    const header = document.getElementById('nwRisksHeader');
+    if(header) header.textContent = `차주 리스크 — ${list.length}건`;
+  }
+
+  function findNwAction(id){
+    if(!state.nwActions) return null;
+    const idx = state.nwActions.findIndex(a=>a.id===id);
+    return idx>=0 ? {idx, a: state.nwActions[idx]} : null;
+  }
+  function findNwRisk(id){
+    if(!state.nwRisks) return null;
+    const idx = state.nwRisks.findIndex(r=>r.id===id);
+    return idx>=0 ? {idx, r: state.nwRisks[idx]} : null;
+  }
+
+  function deleteNwAction(id){
+    const f = findNwAction(id); if(!f) return;
+    if(!confirm('이 차주 액션을 삭제하시겠습니까?')) return;
+    state.nwActions.splice(f.idx,1);
+    saveState(); renderNwActions();
+  }
+  function deleteNwRisk(id){
+    const f = findNwRisk(id); if(!f) return;
+    if(!confirm('이 차주 리스크를 삭제하시겠습니까?')) return;
+    state.nwRisks.splice(f.idx,1);
+    saveState(); renderNwRisks();
+  }
+
+  function openNwActionModal(mode, a){
+    modalCtx = {mode, type:'nwAction', id: a?.id};
+    document.getElementById('modalTitle').innerHTML = mode==='add' ? `차주 액션 <em>추가</em>` : `차주 액션 <em>수정</em>`;
+    document.getElementById('modalDelete').style.display = mode==='edit' ? 'block' : 'none';
+    const ac = a || {priority:false, html:''};
+    document.getElementById('modalBody').innerHTML = `
+      <div class="fld">
+        <label class="fld-check">
+          <input type="checkbox" id="f_nwa_priority" ${ac.priority?'checked':''}>
+          <span>🔴 우선 (Priority — 빨간 번호)</span>
+        </label>
+      </div>
+      <div class="fld">
+        <label>액션 내용 (HTML 가능 — &lt;b&gt;강조&lt;/b&gt; · &lt;span style="color:..."&gt;색상&lt;/span&gt;)</label>
+        <textarea id="f_nwa_html" rows="4" placeholder="예: <b>5/19(화) D+1 첫 화요일</b> — 가오픈 후 캡 60% 안착 운영...">${escAttr(ac.html)}</textarea>
+      </div>`;
+    document.getElementById('modalOverlay').classList.add('show');
+  }
+
+  function openNwRiskModal(mode, r){
+    modalCtx = {mode, type:'nwRisk', id: r?.id};
+    document.getElementById('modalTitle').innerHTML = mode==='add' ? `차주 리스크 <em>추가</em>` : `차주 리스크 <em>수정</em>`;
+    document.getElementById('modalDelete').style.display = mode==='edit' ? 'block' : 'none';
+    const rs = r || {high:false, html:''};
+    document.getElementById('modalBody').innerHTML = `
+      <div class="fld">
+        <label class="fld-check">
+          <input type="checkbox" id="f_nwr_high" ${rs.high?'checked':''}>
+          <span>🔴 High (높음 — 빨간 번호)</span>
+        </label>
+      </div>
+      <div class="fld">
+        <label>리스크 내용 (HTML 가능 — &lt;b&gt;강조&lt;/b&gt;)</label>
+        <textarea id="f_nwr_html" rows="4" placeholder="예: <b>보건소 개설신고 수리 지연</b> — 5/12 실사 후 1~2주 처리 예상...">${escAttr(rs.html)}</textarea>
+      </div>`;
+    document.getElementById('modalOverlay').classList.add('show');
+  }
+
+  // ─── Legend (Tracks) ───
+  function renderLegend(){
+    const grid = document.getElementById('legendGrid');
+    const titleEl = document.getElementById('legendTitle');
+    if(!grid) return;
+    const tracks = state.tracks || DEFAULT_TRACKS;
+    if(titleEl) titleEl.textContent = `Track Color Legend · ${tracks.length} Categories`;
+    const items = tracks.map((t,i)=>renderTrackItem(t,i,tracks.length)).join('');
+    const addBtn = `<button class="lg-add" data-act="add-track">+ 트랙 추가</button>`;
+    grid.innerHTML = items + addBtn;
+  }
+
+  function renderTrackItem(t, idx, total){
+    const s = SCHEMES[t.scheme] || SCHEMES.edu;
+    const fontSize = (t.icon||'').length>=3 ? 'font-size:9px;font-weight:700' : '';
+    const swStyle = `background:var(${s.bg});color:var(${s.fg});border:1px solid var(${s.border});${fontSize}`;
+    const desc = t.desc ? ` · ${t.desc}` : '';
+    return `
+      <div class="lg-item" data-track-id="${t.id}">
+        <div class="lg-sw" style="${swStyle}">${t.icon||''}</div>
+        <span><b>${t.label||''}</b>${desc}</span>
+        <div class="order-btns">
+          <button class="order-btn" data-act="up-track" data-id="${t.id}" ${idx===0?'disabled':''} title="위로">▲</button>
+          <button class="order-btn" data-act="down-track" data-id="${t.id}" ${idx===total-1?'disabled':''} title="아래로">▼</button>
+        </div>
+        <div class="action-btns">
+          <button class="act-btn edit" data-act="edit-track" data-id="${t.id}" title="수정">✎</button>
+          <button class="act-btn del" data-act="del-track" data-id="${t.id}" title="삭제">×</button>
+        </div>
+      </div>`;
+  }
+
+  function findTrack(id){
+    if(!state.tracks) return null;
+    const idx = state.tracks.findIndex(t=>t.id===id);
+    return idx>=0 ? {idx, t: state.tracks[idx]} : null;
+  }
+
+  function deleteTrack(id){
+    const f = findTrack(id); if(!f) return;
+    if(!confirm(`"${f.t.label}" 트랙을 삭제하시겠습니까?\n(레전드에서만 제거되며 기존 일정의 색상은 유지됩니다)`)) return;
+    state.tracks.splice(f.idx,1);
+    saveState(); renderLegend();
+  }
+
+  function moveTrack(id, dir){
+    const f = findTrack(id); if(!f) return;
+    const newIdx = f.idx + dir;
+    if(newIdx<0 || newIdx>=state.tracks.length) return;
+    const [item] = state.tracks.splice(f.idx,1);
+    state.tracks.splice(newIdx,0,item);
+    saveState(); renderLegend();
+  }
+
+  function openTrackModal(mode, t){
+    modalCtx = {mode, type:'track', id: t?.id};
+    document.getElementById('modalTitle').innerHTML = mode==='add' ? `트랙 <em>추가</em>` : `트랙 <em>수정</em>`;
+    document.getElementById('modalDelete').style.display = mode==='edit' ? 'block' : 'none';
+    const tr = t || {label:'',icon:'',desc:'',scheme:'edu'};
+    const schemeOpts = Object.entries(SCHEMES).map(([k,v])=>{
+      const sel = tr.scheme===k ? 'selected' : '';
+      return `<option value="${k}" ${sel}>${v.name}</option>`;
+    }).join('');
+    document.getElementById('modalBody').innerHTML = `
+      <div class="fld-row">
+        <div class="fld">
+          <label>아이콘 (1~4자)</label>
+          <input type="text" id="f_t_icon" value="${escAttr(tr.icon)}" placeholder="교/설/미·실/★/USP" maxlength="4">
+        </div>
+        <div class="fld">
+          <label>색상 스키마</label>
+          <select id="f_t_scheme">${schemeOpts}</select>
+        </div>
+      </div>
+      <div class="fld">
+        <label>라벨 (트랙 이름)</label>
+        <input type="text" id="f_t_label" value="${escAttr(tr.label)}" placeholder="예: 교육, 외부미팅·실사">
+      </div>
+      <div class="fld">
+        <label>설명 (선택)</label>
+        <input type="text" id="f_t_desc" value="${escAttr(tr.desc)}" placeholder="예: 수술/검안/CS/CRM">
+      </div>
+      <div class="fld" style="background:var(--surface-alt);padding:14px;border-radius:8px;margin-top:18px">
+        <label style="margin-bottom:8px">🎨 미리보기</label>
+        <div class="lg-item" id="f_t_preview" style="margin-top:6px;padding:6px 8px;border:1px solid var(--line);border-radius:8px"></div>
+      </div>`;
+    document.getElementById('modalOverlay').classList.add('show');
+    // Live preview
+    const updatePreview = ()=>{
+      const icon = document.getElementById('f_t_icon').value || '?';
+      const label = document.getElementById('f_t_label').value || '(라벨)';
+      const desc = document.getElementById('f_t_desc').value;
+      const scheme = document.getElementById('f_t_scheme').value;
+      const s = SCHEMES[scheme];
+      const fontSize = icon.length>=3 ? 'font-size:9px;font-weight:700' : '';
+      const swStyle = `background:var(${s.bg});color:var(${s.fg});border:1px solid var(${s.border});${fontSize}`;
+      document.getElementById('f_t_preview').innerHTML = `
+        <div class="lg-sw" style="${swStyle}">${icon}</div>
+        <span><b>${label}</b>${desc?' · '+desc:''}</span>`;
+    };
+    ['f_t_icon','f_t_label','f_t_desc','f_t_scheme'].forEach(id=>{
+      document.getElementById(id).addEventListener('input', updatePreview);
+      document.getElementById(id).addEventListener('change', updatePreview);
+    });
+    updatePreview();
+  }
+
+  function updateCounters(){
+    let total = 0;
+    Object.entries(state.days).forEach(([num,d])=>{
+      const cnt = d.events.length;
+      total += cnt;
+      const stripCnt = document.querySelector(`a[href="#d${num}"] .strip-cnt`);
+      if(stripCnt && cnt > 0) stripCnt.innerHTML = `<b>${cnt}</b> 일정`;
+      else if(stripCnt) stripCnt.innerHTML = '휴무';
+    });
+    const badge = document.querySelector('.sec-title .badge');
+    if(badge && badge.textContent.includes('EVENTS')) badge.textContent = `7 DAYS · ${total} EVENTS`;
+    const dday = document.querySelector('.dday-d');
+    if(dday) dday.innerHTML = dday.innerHTML.replace(/개원 전 핵심 일정 <strong>\d+건<\/strong>/, `개원 전 핵심 일정 <strong>${total}건</strong>`);
+  }
+
+  // ─── CRUD ───
+  function findEvent(id){
+    for(const num in state.days){
+      const idx = state.days[num].events.findIndex(e=>e.id===id);
+      if(idx>=0) return {num, idx, ev: state.days[num].events[idx]};
+    }
+    return null;
+  }
+  function findAgenda(id){
+    for(const num in state.agendas){
+      const idx = state.agendas[num].items.findIndex(a=>a.id===id);
+      if(idx>=0) return {num, idx, ag: state.agendas[num].items[idx]};
+    }
+    return null;
+  }
+
+  function deleteEvent(id){
+    const f = findEvent(id); if(!f) return;
+    if(!confirm('이 일정을 삭제하시겠습니까?')) return;
+    state.days[f.num].events.splice(f.idx,1);
+    saveState();
+    renderDay(f.num);
+    updateCounters();
+  }
+  function deleteAgenda(id){
+    const f = findAgenda(id); if(!f) return;
+    if(!confirm('이 안건을 삭제하시겠습니까?')) return;
+    state.agendas[f.num].items.splice(f.idx,1);
+    saveState();
+    renderAgenda(f.num);
+  }
+
+  // ─── Modal ───
+  function openEventModal(mode, day, ev){
+    modalCtx = {mode, type:'event', day, id: ev?.id};
+    document.getElementById('modalTitle').innerHTML = mode==='add' ? `${day}일 일정 <em>추가</em>` : `${day}일 일정 <em>수정</em>`;
+    document.getElementById('modalDelete').style.display = mode==='edit' ? 'block' : 'none';
+    const e = ev || {time:'',tbd:false,track:'meet',icon:'',title:'',team:'',tags:[],flags:{}};
+    const trackOpts = Object.entries(TRACKS).map(([k,v])=>`<option value="${k}" ${e.track===k?'selected':''}>${v.label}</option>`).join('');
+    document.getElementById('modalBody').innerHTML = `
+      <div class="fld-row">
+        <div class="fld">
+          <label>시간</label>
+          <input type="text" id="f_time" value="${escAttr(e.time)}" placeholder="10:00 또는 시간미정">
+        </div>
+        <div class="fld">
+          <label>트랙</label>
+          <select id="f_track">${trackOpts}</select>
+        </div>
+      </div>
+      <div class="fld-row">
+        <div class="fld">
+          <label>아이콘</label>
+          <input type="text" id="f_icon" value="${escAttr(e.icon)}" placeholder="교/설/미/★ 등" maxlength="4">
+        </div>
+        <div class="fld" style="display:flex;align-items:flex-end">
+          <label class="fld-check">
+            <input type="checkbox" id="f_tbd" ${e.tbd?'checked':''}>
+            <span>시간미정</span>
+          </label>
+        </div>
+      </div>
+      <div class="fld">
+        <label>제목 (HTML 가능)</label>
+        <input type="text" id="f_title" value="${escAttr(e.title)}" placeholder="이벤트 제목">
+      </div>
+      <div class="fld">
+        <label>담당팀</label>
+        <input type="text" id="f_team" value="${escAttr(e.team)}" placeholder="예: 수술팀 · IT 등">
+      </div>
+      <div class="fld-row">
+        <div class="fld">
+          <label>스타일 플래그</label>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <label class="fld-check"><input type="checkbox" id="f_critical" ${e.flags?.critical?'checked':''}> 🔴 Critical</label>
+            <label class="fld-check"><input type="checkbox" id="f_star" ${e.flags?.star?'checked':''}> ⭐ Star Event</label>
+            <label class="fld-check"><input type="checkbox" id="f_usp" ${e.flags?.usp?'checked':''}> 🔵 USP 강조</label>
+          </div>
+        </div>
+        <div class="fld">
+          <label>태그 (1줄당 1개, 형식: TYPE|TEXT)</label>
+          <textarea id="f_tags" rows="4" placeholder="crit|CRITICAL&#10;new|UPDATE&#10;usp|USP 회의 동행">${(e.tags||[]).map(t=>`${t.type}|${t.text}`).join('\n')}</textarea>
+        </div>
+      </div>`;
+    document.getElementById('modalOverlay').classList.add('show');
+  }
+
+  function openAgendaModal(mode, day, ag){
+    modalCtx = {mode, type:'agenda', day, id: ag?.id};
+    document.getElementById('modalTitle').innerHTML = mode==='add' ? `${day}일 안건 <em>추가</em>` : `${day}일 안건 <em>수정</em>`;
+    document.getElementById('modalDelete').style.display = mode==='edit' ? 'block' : 'none';
+    const a = ag || {priority:false,html:''};
+    document.getElementById('modalBody').innerHTML = `
+      <div class="fld">
+        <label>안건 내용 (HTML 가능 — 산출물 코드·트랙 태그 포함)</label>
+        <textarea id="f_html" rows="5" placeholder="&lt;span class='deliv usp'&gt;A3&lt;/span&gt;&lt;b&gt;안건 내용&lt;/b&gt; &lt;span class='trk hr'&gt;HR&lt;/span&gt;">${(a.html||'').replace(/</g,'&lt;')}</textarea>
+      </div>
+      <div class="fld">
+        <label class="fld-check">
+          <input type="checkbox" id="f_priority" ${a.priority?'checked':''}>
+          <span>🔥 우선순위 안건 (강조 표시)</span>
+        </label>
+      </div>
+      <div class="fld" style="background:var(--surface-alt);padding:14px;border-radius:8px;margin-top:18px">
+        <label style="margin-bottom:8px">💡 빠른 입력 도우미</label>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
+          <button type="button" class="tb-btn" onclick="document.getElementById('f_html').value+='&lt;span class=&quot;deliv usp&quot;&gt;A3&lt;/span&gt;'">+ A3 (USP)</button>
+          <button type="button" class="tb-btn" onclick="document.getElementById('f_html').value+='&lt;span class=&quot;deliv kor&quot;&gt;A1&lt;/span&gt;'">+ A1 (KOR)</button>
+          <button type="button" class="tb-btn" onclick="document.getElementById('f_html').value+='&lt;span class=&quot;deliv nzw&quot;&gt;CRM&lt;/span&gt;'">+ CRM (NZW)</button>
+          <button type="button" class="tb-btn" onclick="document.getElementById('f_html').value+='&lt;span class=&quot;trk hr&quot;&gt;HR&lt;/span&gt;'">+ HR</button>
+          <button type="button" class="tb-btn" onclick="document.getElementById('f_html').value+='&lt;span class=&quot;trk collab&quot;&gt;COLLAB&lt;/span&gt;'">+ COLLAB</button>
+          <button type="button" class="tb-btn" onclick="document.getElementById('f_html').value+='&lt;span class=&quot;trk sys&quot;&gt;SYS&lt;/span&gt;'">+ SYS</button>
+        </div>
+      </div>`;
+    document.getElementById('modalOverlay').classList.add('show');
+  }
+
+  function closeModal(){
+    document.getElementById('modalOverlay').classList.remove('show');
+    modalCtx = null;
+  }
+
+  function saveModal(){
+    if(!modalCtx) return;
+    if(modalCtx.type==='event'){
+      const tagsRaw = document.getElementById('f_tags').value.trim();
+      const tags = tagsRaw ? tagsRaw.split('\n').map(l=>{
+        const p = l.split('|');
+        return p.length>=2 ? {type:p[0].trim(),text:p.slice(1).join('|').trim()} : null;
+      }).filter(Boolean) : [];
+      const ev = {
+        time: document.getElementById('f_time').value.trim(),
+        tbd: document.getElementById('f_tbd').checked,
+        track: document.getElementById('f_track').value,
+        icon: document.getElementById('f_icon').value.trim(),
+        title: document.getElementById('f_title').value.trim(),
+        team: document.getElementById('f_team').value.trim(),
+        tags: tags,
+        flags: {
+          critical: document.getElementById('f_critical').checked,
+          star: document.getElementById('f_star').checked,
+          usp: document.getElementById('f_usp').checked,
+          conflict: false
+        }
+      };
+      if(modalCtx.mode==='add'){
+        ev.id = `e_${modalCtx.day}_${Date.now()}`;
+        if(!state.days[modalCtx.day]) state.days[modalCtx.day] = {events:[]};
+        state.days[modalCtx.day].events.push(ev);
+      } else {
+        const f = findEvent(modalCtx.id);
+        if(f) state.days[f.num].events[f.idx] = {...f.ev, ...ev, id: f.ev.id};
+      }
+      saveState(); renderDay(modalCtx.day); updateCounters();
+    } else if(modalCtx.type==='agenda'){
+      const ag = {
+        priority: document.getElementById('f_priority').checked,
+        html: document.getElementById('f_html').value
+      };
+      if(modalCtx.mode==='add'){
+        ag.id = `a_${modalCtx.day}_${Date.now()}`;
+        ag.num = (state.agendas[modalCtx.day]?.items.length || 0) + 1;
+        if(!state.agendas[modalCtx.day]) state.agendas[modalCtx.day] = {items:[]};
+        state.agendas[modalCtx.day].items.push(ag);
+      } else {
+        const f = findAgenda(modalCtx.id);
+        if(f) state.agendas[f.num].items[f.idx] = {...f.ag, ...ag, id: f.ag.id};
+      }
+      saveState(); renderAgenda(modalCtx.day);
+    } else if(modalCtx.type==='track'){
+      const tr = {
+        icon: document.getElementById('f_t_icon').value.trim(),
+        label: document.getElementById('f_t_label').value.trim(),
+        desc: document.getElementById('f_t_desc').value.trim(),
+        scheme: document.getElementById('f_t_scheme').value
+      };
+      if(!tr.label){alert('라벨을 입력해주세요.');return;}
+      if(modalCtx.mode==='add'){
+        tr.id = `tr_custom_${Date.now()}`;
+        if(!state.tracks) state.tracks = JSON.parse(JSON.stringify(DEFAULT_TRACKS));
+        state.tracks.push(tr);
+      } else {
+        const f = findTrack(modalCtx.id);
+        if(f) state.tracks[f.idx] = {...f.t, ...tr, id: f.t.id};
+      }
+      saveState(); renderLegend();
+    } else if(modalCtx.type==='sopTrack'){
+      const tr = {
+        letter: document.getElementById('f_st_letter').value.trim(),
+        name: document.getElementById('f_st_name').value.trim(),
+        desc: document.getElementById('f_st_desc').value.trim()
+      };
+      if(!tr.letter){alert('트랙 레터를 입력해주세요.');return;}
+      if(!tr.name){alert('트랙 이름을 입력해주세요.');return;}
+      if(modalCtx.mode==='add'){
+        tr.id = `sop_custom_${Date.now()}`;
+        tr.milestones = [];
+        if(!state.sopTracks) state.sopTracks = JSON.parse(JSON.stringify(DEFAULT_SOP_TRACKS));
+        state.sopTracks.push(tr);
+      } else {
+        const f = findSopTrack(modalCtx.id);
+        if(f) state.sopTracks[f.idx] = {...f.t, ...tr, id: f.t.id, milestones: f.t.milestones};
+      }
+      saveState(); renderSopTracks();
+    } else if(modalCtx.type==='sopMs'){
+      const ms = {
+        label: document.getElementById('f_sm_label').value.trim(),
+        text: document.getElementById('f_sm_text').value,
+        when: document.getElementById('f_sm_when').value.trim(),
+        final: document.getElementById('f_sm_final').checked
+      };
+      if(!ms.label){alert('차수 라벨을 입력해주세요.');return;}
+      if(modalCtx.mode==='add'){
+        ms.id = `sm_${modalCtx.trackId}_${Date.now()}`;
+        const ft = findSopTrack(modalCtx.trackId);
+        if(ft){
+          if(!ft.t.milestones) ft.t.milestones = [];
+          ft.t.milestones.push(ms);
+        }
+      } else {
+        const f = findSopMilestone(modalCtx.id);
+        if(f){
+          const t = findSopTrack(f.trackId);
+          if(t) t.t.milestones[f.idx] = {...f.m, ...ms, id: f.m.id};
+        }
+      }
+      saveState(); renderSopTracks();
+    } else if(modalCtx.type==='nwAction'){
+      const ac = {
+        priority: document.getElementById('f_nwa_priority').checked,
+        html: document.getElementById('f_nwa_html').value
+      };
+      if(!ac.html.trim()){alert('액션 내용을 입력해주세요.');return;}
+      if(modalCtx.mode==='add'){
+        ac.id = `nwa_${Date.now()}`;
+        if(!state.nwActions) state.nwActions = JSON.parse(JSON.stringify(DEFAULT_NW_ACTIONS));
+        state.nwActions.push(ac);
+      } else {
+        const f = findNwAction(modalCtx.id);
+        if(f) state.nwActions[f.idx] = {...f.a, ...ac, id: f.a.id};
+      }
+      saveState(); renderNwActions();
+    } else if(modalCtx.type==='nwRisk'){
+      const rs = {
+        high: document.getElementById('f_nwr_high').checked,
+        html: document.getElementById('f_nwr_html').value
+      };
+      if(!rs.html.trim()){alert('리스크 내용을 입력해주세요.');return;}
+      if(modalCtx.mode==='add'){
+        rs.id = `nwr_${Date.now()}`;
+        if(!state.nwRisks) state.nwRisks = JSON.parse(JSON.stringify(DEFAULT_NW_RISKS));
+        state.nwRisks.push(rs);
+      } else {
+        const f = findNwRisk(modalCtx.id);
+        if(f) state.nwRisks[f.idx] = {...f.r, ...rs, id: f.r.id};
+      }
+      saveState(); renderNwRisks();
+    }
+    closeModal();
+  }
+
+  function deleteFromModal(){
+    if(!modalCtx || modalCtx.mode!=='edit') return;
+    closeModal();
+    if(modalCtx.type==='event') deleteEvent(modalCtx.id);
+    else if(modalCtx.type==='agenda') deleteAgenda(modalCtx.id);
+    else if(modalCtx.type==='track') deleteTrack(modalCtx.id);
+    else if(modalCtx.type==='sopTrack') deleteSopTrack(modalCtx.id);
+    else if(modalCtx.type==='sopMs') deleteSopMilestone(modalCtx.id);
+    else if(modalCtx.type==='nwAction') deleteNwAction(modalCtx.id);
+    else if(modalCtx.type==='nwRisk') deleteNwRisk(modalCtx.id);
+  }
+
+  // ─── Export / Import / Reset ───
+  function exportJSON(){
+    const blob = new Blob([JSON.stringify(state,null,2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `선안과_대시보드_${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+  function importJSON(file){
+    const reader = new FileReader();
+    reader.onload = e=>{
+      try{
+        const parsed = JSON.parse(e.target.result);
+        if(parsed.days && parsed.agendas){
+          if(confirm('기존 데이터를 덮어쓰시겠습니까?\n(현재 데이터는 사라집니다)')){
+            state = parsed; saveState(); renderAll();
+          }
+        } else alert('잘못된 JSON 형식입니다.');
+      }catch(err){ alert('파일 읽기 실패: '+err.message); }
+    };
+    reader.readAsText(file);
+  }
+  function resetData(){
+    if(confirm('모든 변경사항을 폐기하고 초기 상태로 되돌리시겠습니까?\n(이 작업은 되돌릴 수 없습니다)')){
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+  }
+
+  // ─── Init ───
+  document.addEventListener('DOMContentLoaded', ()=>{
+    tagDOM();
+    state = loadState();
+    document.body.classList.add('edit-mode');  // FIXED edit mode
+    renderAll();
+
+    // Toolbar
+    document.getElementById('btnExport').addEventListener('click', exportJSON);
+    document.getElementById('btnReset').addEventListener('click', resetData);
+    document.getElementById('btnImport').addEventListener('click', ()=>document.getElementById('importFile').click());
+    document.getElementById('importFile').addEventListener('change', e=>{
+      if(e.target.files[0]) importJSON(e.target.files[0]);
+      e.target.value = '';
+    });
+
+    // Modal
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('modalCancel').addEventListener('click', closeModal);
+    document.getElementById('modalSave').addEventListener('click', saveModal);
+    document.getElementById('modalDelete').addEventListener('click', deleteFromModal);
+    document.getElementById('modalOverlay').addEventListener('click', e=>{
+      if(e.target.id==='modalOverlay') closeModal();
+    });
+    document.addEventListener('keydown', e=>{
+      if(e.key==='Escape' && document.getElementById('modalOverlay').classList.contains('show')) closeModal();
+    });
+
+    // Delegated event handlers
+    document.body.addEventListener('click', e=>{
+      const btn = e.target.closest('[data-act]');
+      if(!btn) return;
+      const act = btn.dataset.act;
+      const id = btn.dataset.id;
+      const day = btn.dataset.day;
+      if(act==='edit-event'){
+        const f = findEvent(id); if(f) openEventModal('edit', f.num, f.ev);
+      } else if(act==='del-event'){
+        deleteEvent(id);
+      } else if(act==='add-event'){
+        openEventModal('add', day, null);
+      } else if(act==='edit-agenda'){
+        const f = findAgenda(id); if(f) openAgendaModal('edit', f.num, f.ag);
+      } else if(act==='del-agenda'){
+        deleteAgenda(id);
+      } else if(act==='add-agenda'){
+        openAgendaModal('add', day, null);
+      } else if(act==='edit-track'){
+        const f = findTrack(id); if(f) openTrackModal('edit', f.t);
+      } else if(act==='del-track'){
+        deleteTrack(id);
+      } else if(act==='add-track'){
+        openTrackModal('add', null);
+      } else if(act==='up-track'){
+        moveTrack(id, -1);
+      } else if(act==='down-track'){
+        moveTrack(id, 1);
+      } else if(act==='edit-sop-track'){
+        const f = findSopTrack(id); if(f) openSopTrackModal('edit', f.t);
+      } else if(act==='del-sop-track'){
+        deleteSopTrack(id);
+      } else if(act==='add-sop-track'){
+        openSopTrackModal('add', null);
+      } else if(act==='edit-sop-ms'){
+        const f = findSopMilestone(id); if(f) openSopMilestoneModal('edit', f.trackId, f.m);
+      } else if(act==='del-sop-ms'){
+        deleteSopMilestone(id);
+      } else if(act==='add-sop-ms'){
+        openSopMilestoneModal('add', btn.dataset.trackId, null);
+      } else if(act==='edit-nwa'){
+        const f = findNwAction(id); if(f) openNwActionModal('edit', f.a);
+      } else if(act==='del-nwa'){
+        deleteNwAction(id);
+      } else if(act==='add-nwa'){
+        openNwActionModal('add', null);
+      } else if(act==='edit-nwr'){
+        const f = findNwRisk(id); if(f) openNwRiskModal('edit', f.r);
+      } else if(act==='del-nwr'){
+        deleteNwRisk(id);
+      } else if(act==='add-nwr'){
+        openNwRiskModal('add', null);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
